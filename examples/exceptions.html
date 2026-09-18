@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AiXFreight — Exceptions</title>
+<!--
+  AiXFreight control tower · Exceptions (Mode A static prototype).
+  Served from DS_ROOT/examples/, so DS_BASE is "..". Built with the Claude Code skill in .claude/skills/aixfreight-design-system.
+  Demo states for the table region: ?state=loading  ?state=error  ?state=empty
+  Theme: <html data-theme="dark"> or the toggle in the top bar.
+-->
+<script>
+  window.DS_BASE = '..';
+  (function () {
+    var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = DS_BASE + '/styles.css'; document.head.appendChild(l);
+  })();
+</script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script>document.write('<script src="' + DS_BASE + '/_ds_bundle.js"><\/script>');</script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  html, body, #root { height: 100%; }
+  body { overflow: hidden; background: var(--surface-page); }
+  .aix-page { padding: 28px; display: grid; gap: 20px; align-content: start; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  .aix-stats { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .aix-side { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .aix-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 12px 20px 0; border-bottom: 1px solid var(--border-default); }
+  .aix-toolbar-tabs { flex: 1 1 320px; min-width: 0; }
+  .aix-toolbar-tags { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 12px; }
+  .aix-bulk { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 20px; background: var(--surface-sunken); border-bottom: 1px solid var(--border-default); }
+  .aix-kv { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+  .aix-kv-value { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-top: 4px; }
+  .aix-kv-value.mono { font-family: var(--font-mono); }
+  .aix-queue { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+  .aix-queue button { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 12px; align-items: center; width: 100%; min-height: 44px; padding: 8px 10px; border: 1px solid transparent; border-radius: var(--radius-md); background: transparent; color: var(--text-primary); font-family: var(--font-body); font-size: 13px; text-align: left; cursor: pointer; transition: background var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out); }
+  .aix-queue button:hover { background: var(--surface-sunken); border-color: var(--border-default); }
+  .aix-queue button:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+  .aix-topnav { flex: none; display: flex; align-items: center; gap: 16px; padding: 10px 16px; background: var(--surface-inverse); }
+  .aix-topnav-tabs { flex: 1 1 auto; min-width: 0; overflow-x: auto; }
+  .aix-numbers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+  .aix-numbers > div { padding: 12px; background: var(--surface-sunken); border-radius: var(--radius-md); min-width: 0; }
+  .aix-numbers .val { font-family: var(--font-mono); font-weight: 500; font-size: 15px; color: var(--text-primary); margin-top: 4px; overflow-wrap: anywhere; }
+  @media (max-width: 1279px) {
+    .aix-page { grid-template-columns: minmax(0, 1fr); }
+    .aix-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 899px) {
+    .aix-page { padding: 16px; gap: 16px; }
+    .aix-toolbar { padding: 8px 16px 0; }
+    .aix-bulk { padding: 10px 16px; }
+  }
+  @media (max-width: 479px) {
+    .aix-numbers { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const DS = window.AiXFreightDesignSystem_0c3a26;
+const { SidebarNav, Topbar, Card, Table, StatCard, Badge, ModeBadge, Tag, Tabs, Button, IconButton, Icon, Logo, RouteLine, Timeline, Drawer, Dialog, Toast, Alert, Skeleton, EmptyState, Pagination } = DS;
+
+/* ---------- Demo data ---------- */
+
+const NAV = [
+  { value: 'dashboard', label: 'Dashboard', icon: 'layoutDashboard' },
+  { value: 'shipments', label: 'Shipments', icon: 'package' },
+  { value: 'exceptions', label: 'Exceptions', icon: 'alertTriangle' },
+  { value: 'routes', label: 'Routes', icon: 'route' },
+  { value: 'docs', label: 'Documents', icon: 'fileText' },
+  { value: 'settings', label: 'Settings', icon: 'settings' },
+];
+
+const SEV = {
+  critical: { tone: 'danger', label: 'Critical', rank: 3 },
+  high: { tone: 'warning', label: 'High', rank: 2 },
+  medium: { tone: 'info', label: 'Medium', rank: 1 },
+};
+
+const MODES = [['ocean', 'Ocean'], ['air', 'Air'], ['land', 'Land'], ['rail', 'Rail']];
+
+const SHIPMENTS = [
+  { id: 'AIX-48203', origin: 'Ho Chi Minh City, VN', dest: 'Long Beach, US', mode: 'ocean', legs: ['land', 'ocean'], type: 'Capacity · rolled booking', severity: 'critical',
+    carrier: 'ONE', cargo: '2 × 40HC · 36,400 kg', value: '$18,900', valueNum: 18900, etaPlanned: '24 Sep · 06:00', eta: '01 Oct · 06:00', delayHrs: 168, progress: 12,
+    proposal: { title: 'Rebook on CMA CGM Kerguelen · 21 Sep', question: 'Rebook on the 21 Sep sailing?', body: 'ONE rolled the booking at Cat Lai for lack of space. CMA CGM Kerguelen departs 21 Sep with confirmed slots and lands 26 Sep.', cost: '+$420', impact: '−5.0 days', impactHrs: 120, confidence: 86, event: 'AI rebooked on CMA CGM Kerguelen', toastTitle: 'Booking updated', toastMsg: 'AIX-48203 moved to CMA CGM Kerguelen · 21 Sep.' },
+    events: [
+      { time: '05 Sep · 09:10', title: 'Picked up · Binh Duong', where: 'Ho Chi Minh City, VN', done: true },
+      { time: '06 Sep · 15:40', title: 'Gated in · Cat Lai terminal', where: 'Ho Chi Minh City, VN', done: true },
+      { time: '08 Sep · 07:20', title: 'Booking rolled by carrier', where: 'Cat Lai terminal', done: true, current: true },
+      { time: '01 Oct', title: 'Arrival · Long Beach', where: 'Long Beach, US' },
+    ] },
+  { id: 'AIX-48176', origin: 'Rotterdam, NL', dest: 'Santos, BR', mode: 'ocean', legs: ['land', 'ocean'], type: 'Delayed · port congestion', severity: 'critical',
+    carrier: 'Maersk', cargo: '4 × 20GP · 44,000 kg', value: '$21,300', valueNum: 21300, etaPlanned: '15 Sep · 07:00', eta: '19 Sep · 07:00', delayHrs: 96, progress: 30,
+    proposal: { title: 'Transship via Algeciras', question: 'Transship via Algeciras?', body: 'Santos anchorage wait is 6.1 days and rising. A transshipment at Algeciras onto Maersk Lima reaches Santos 16 Sep.', cost: '+$640', impact: '−2.5 days', impactHrs: 60, confidence: 88, event: 'AI rerouted via Algeciras', toastTitle: 'Route updated', toastMsg: 'AIX-48176 transships via Algeciras.' },
+    events: [
+      { time: '02 Sep · 11:30', title: 'Departed · Rotterdam Maasvlakte', where: 'Rotterdam, NL', done: true },
+      { time: '04 Sep · 20:15', title: 'Vessel Maersk Ohio underway', where: 'Bay of Biscay', done: true },
+      { time: '08 Sep · 06:00', title: 'ETA revised +4 days', where: 'Santos anchorage queue', done: true, current: true },
+      { time: '19 Sep · 07:00', title: 'Arrival · Santos', where: 'Santos, BR' },
+    ] },
+  { id: 'AIX-48132', origin: 'Mumbai, IN', dest: 'Dubai, AE', mode: 'air', legs: ['land', 'air'], type: 'Documentation · DG declaration missing', severity: 'critical',
+    carrier: 'Emirates SkyCargo', cargo: '3 pallets · 1,120 kg', value: '$5,300', valueNum: 5300, etaPlanned: '09 Sep · 04:30', eta: '10 Sep · 16:30', delayHrs: 36, progress: 20,
+    proposal: { title: 'Request DGD from shipper · rebook EK 503', question: 'Rebook on EK 503 once the DGD arrives?', body: 'The shipment is held at BOM cargo village without a dangerous goods declaration. The shipper has the template; EK 503 on 10 Sep has capacity.', cost: '$0', impact: '−30 h', impactHrs: 30, confidence: 82, event: 'AI requested DGD and rebooked EK 503', toastTitle: 'Booking updated', toastMsg: 'AIX-48132 rebooked on EK 503 · DGD requested from shipper.' },
+    events: [
+      { time: '07 Sep · 18:00', title: 'Picked up · Bhiwandi', where: 'Mumbai, IN', done: true },
+      { time: '08 Sep · 02:20', title: 'Tendered · BOM cargo village', where: 'Mumbai, IN', done: true },
+      { time: '08 Sep · 09:45', title: 'Held · DG declaration missing', where: 'BOM cargo village', done: true, current: true },
+      { time: '10 Sep · 16:30', title: 'Arrival · DXB', where: 'Dubai, AE' },
+    ] },
+  { id: 'AIX-48197', origin: 'Chicago, US', dest: 'Monterrey, MX', mode: 'land', legs: ['land', 'land'], type: 'Customs hold · Laredo', severity: 'high',
+    carrier: 'Schneider', cargo: '1 × 53ft · 21,000 kg', value: '$3,940', valueNum: 3940, etaPlanned: '11 Sep · 16:00', eta: '12 Sep · 20:00', delayHrs: 28, progress: 58,
+    proposal: { title: 'File pedimento correction', question: 'File the pedimento correction?', body: 'Mexican customs flagged an HS code mismatch on line 4. A corrected pedimento clears the hold within one shift; the broker has the fix ready.', cost: '+$180', impact: '−22 h', impactHrs: 22, confidence: 91, event: 'AI filed pedimento correction', toastTitle: 'Correction filed', toastMsg: 'Pedimento correction sent for AIX-48197.' },
+    events: [
+      { time: '08 Sep · 06:30', title: 'Departed · Chicago DC', where: 'Chicago, US', done: true },
+      { time: '09 Sep · 14:10', title: 'Arrived · Laredo yard', where: 'Laredo, US', done: true },
+      { time: '09 Sep · 17:45', title: 'Customs hold · HS code mismatch', where: 'Nuevo Laredo, MX', done: true, current: true },
+      { time: '12 Sep · 20:00', title: 'Delivery · Apodaca plant', where: 'Monterrey, MX' },
+    ] },
+  { id: 'AIX-48188', origin: 'Frankfurt, DE', dest: 'Nairobi, KE', mode: 'air', legs: ['land', 'air'], type: 'Capacity · offloaded', severity: 'high',
+    carrier: 'Lufthansa Cargo', cargo: '6 pallets · 2,400 kg', value: '$8,120', valueNum: 8120, etaPlanned: '10 Sep · 22:15', eta: '12 Sep · 06:40', delayHrs: 32, progress: 25,
+    proposal: { title: 'Split to two flights via Addis Ababa', question: 'Split across two flights via Addis Ababa?', body: 'LH 590 offloaded 4 of 6 pallets. Ethiopian ET 707 and ET 709 via Addis Ababa take the remainder and land within 6 hours of each other.', cost: '+$960', impact: '−26 h', impactHrs: 26, confidence: 79, event: 'AI split shipment via Addis Ababa', toastTitle: 'Route updated', toastMsg: 'AIX-48188 split across ET 707 and ET 709.' },
+    events: [
+      { time: '08 Sep · 12:00', title: 'Tendered · FRA CargoCity', where: 'Frankfurt, DE', done: true },
+      { time: '09 Sep · 21:30', title: '2 pallets departed · LH 590', where: 'Frankfurt, DE', done: true },
+      { time: '09 Sep · 21:35', title: '4 pallets offloaded · capacity', where: 'FRA CargoCity', done: true, current: true },
+      { time: '12 Sep · 06:40', title: 'Arrival · NBO', where: 'Nairobi, KE' },
+    ] },
+  { id: 'AIX-48145', origin: 'Dallas, US', dest: 'Toronto, CA', mode: 'land', legs: ['land', 'land'], type: 'Weather · I-75 closure', severity: 'high',
+    carrier: 'XPO', cargo: '12 pallets · 8,900 kg', value: '$2,760', valueNum: 2760, etaPlanned: '09 Sep · 18:00', eta: '10 Sep · 14:00', delayHrs: 20, progress: 46,
+    proposal: { title: 'Reroute via I-65 and Detroit crossing', question: 'Reroute via I-65 and Detroit?', body: 'I-75 is closed near Chattanooga after flooding. I-65 to the Ambassador Bridge adds 140 miles and avoids the 14-hour queue.', cost: '+$140', impact: '−14 h', impactHrs: 14, confidence: 90, event: 'AI rerouted via I-65 and Detroit', toastTitle: 'Route updated', toastMsg: 'AIX-48145 rerouted via I-65 and the Detroit crossing.' },
+    events: [
+      { time: '08 Sep · 05:00', title: 'Departed · Dallas cross-dock', where: 'Dallas, US', done: true },
+      { time: '08 Sep · 19:20', title: 'Driver swap · Nashville', where: 'Nashville, US', done: true },
+      { time: '09 Sep · 02:10', title: 'Held · I-75 closure', where: 'Chattanooga, US', done: true, current: true },
+      { time: '10 Sep · 14:00', title: 'Delivery · Mississauga DC', where: 'Toronto, CA' },
+    ] },
+  { id: 'AIX-48120', origin: 'Antwerp, BE', dest: 'New York, US', mode: 'ocean', legs: ['land', 'ocean'], type: 'Reefer · temperature excursion', severity: 'high',
+    carrier: 'Hapag-Lloyd', cargo: '1 × 40RH · 22,800 kg', value: '$32,400', valueNum: 32400, etaPlanned: '17 Sep · 06:00', eta: '17 Sep · 06:00', delayHrs: 0, progress: 55,
+    proposal: { title: 'Dispatch surveyor at arrival · pre-file claim', question: 'Book a surveyor for arrival?', body: 'The reefer logged +4.2 °C above set point for 3 h 40 min on 07 Sep. A surveyor at Port Newark documents the cargo before release and keeps the claim window open.', cost: '+$350', impact: 'Protects $32,400', impactHrs: 0, confidence: 76, event: 'AI booked surveyor · Port Newark', toastTitle: 'Surveyor booked', toastMsg: 'Surveyor dispatched for AIX-48120 at Port Newark.' },
+    events: [
+      { time: '03 Sep · 08:00', title: 'Departed · Antwerp Deurganck', where: 'Antwerp, BE', done: true },
+      { time: '07 Sep · 13:20', title: 'Temperature excursion · +4.2 °C', where: 'North Atlantic', done: true, current: true },
+      { time: '17 Sep · 06:00', title: 'Arrival · Port Newark', where: 'New York, US' },
+      { time: '18 Sep', title: 'Delivery · Secaucus cold store', where: 'New Jersey, US' },
+    ] },
+  { id: 'AIX-48171', origin: 'Duisburg, DE', dest: 'Chengdu, CN', mode: 'rail', legs: ['rail', 'rail'], type: 'Delayed · border dwell', severity: 'medium',
+    carrier: 'DB Cargo Eurasia', cargo: '3 × 40HC · 52,000 kg', value: '$15,760', valueNum: 15760, etaPlanned: '22 Sep · 12:00', eta: '24 Sep · 08:00', delayHrs: 44, progress: 34,
+    proposal: { title: 'Keep the plan · notify consignee', question: 'Keep the current plan?', body: 'Gauge change at Małaszewicze is running 44 h behind. Trucking from Warsaw would cost $3,900 and save 9 h. Keeping the train and notifying the consignee is the better trade.', cost: '$0', impact: '0 h', impactHrs: 0, confidence: 93, event: 'AI confirmed plan · consignee notified', toastTitle: 'Consignee notified', toastMsg: 'AIX-48171 plan kept · revised ETA sent.' },
+    events: [
+      { time: '04 Sep · 22:00', title: 'Departed · Duisburg DIT', where: 'Duisburg, DE', done: true },
+      { time: '07 Sep · 06:30', title: 'Arrived · Małaszewicze', where: 'Poland / Belarus border', done: true },
+      { time: '07 Sep · 06:35', title: 'Waiting · gauge change', where: 'Małaszewicze', done: true, current: true },
+      { time: '24 Sep · 08:00', title: 'Arrival · Chengdu Qingbaijiang', where: 'Chengdu, CN' },
+    ] },
+  { id: 'AIX-48159', origin: 'Shanghai, CN', dest: 'Melbourne, AU', mode: 'ocean', legs: ['land', 'ocean'], type: 'Customs hold · biosecurity', severity: 'medium',
+    carrier: 'COSCO', cargo: '1 × 40HC · 17,300 kg', value: '$9,480', valueNum: 9480, etaPlanned: '20 Sep · 10:00', eta: '23 Sep · 10:00', delayHrs: 72, progress: 48,
+    proposal: { title: 'Pre-file fumigation certificate', question: 'Pre-file the fumigation certificate?', body: 'DAFF flagged the timber pallets for inspection. Filing the fumigation certificate now moves the container to the documentary lane and skips the physical check.', cost: '+$210', impact: '−48 h', impactHrs: 48, confidence: 84, event: 'AI pre-filed fumigation certificate', toastTitle: 'Certificate filed', toastMsg: 'Fumigation certificate pre-filed for AIX-48159.' },
+    events: [
+      { time: '01 Sep · 16:00', title: 'Departed · Yangshan', where: 'Shanghai, CN', done: true },
+      { time: '06 Sep · 04:00', title: 'Vessel COSCO Harmony underway', where: 'Coral Sea', done: true },
+      { time: '08 Sep · 10:30', title: 'Biosecurity inspection ordered', where: 'DAFF · Melbourne', done: true, current: true },
+      { time: '23 Sep · 10:00', title: 'Arrival · Melbourne', where: 'Melbourne, AU' },
+    ] },
+  { id: 'AIX-48108', origin: 'Busan, KR', dest: 'Rotterdam, NL', mode: 'ocean', legs: ['ocean', 'rail'], type: 'Delayed · Suez transit slot', severity: 'medium',
+    carrier: 'HMM', cargo: '2 × 40HC · 39,000 kg', value: '$14,200', valueNum: 14200, etaPlanned: '28 Sep · 09:00', eta: '30 Sep · 09:00', delayHrs: 48, progress: 40,
+    proposal: { title: 'Switch to rail from Piraeus', question: 'Switch to rail from Piraeus?', body: 'HMM Algeciras lost its Suez convoy slot. Discharging at Piraeus onto the Rotterdam rail shuttle lands 25 Sep, three days before the original plan.', cost: '+$1,380', impact: '−5.0 days', impactHrs: 120, confidence: 71, event: 'AI switched to rail from Piraeus', toastTitle: 'Route updated', toastMsg: 'AIX-48108 discharges at Piraeus for the rail shuttle.' },
+    events: [
+      { time: '28 Aug · 19:00', title: 'Departed · Busan New Port', where: 'Busan, KR', done: true },
+      { time: '05 Sep · 08:15', title: 'Transit · Indian Ocean', where: 'HMM Algeciras', done: true },
+      { time: '09 Sep · 01:00', title: 'Suez slot moved +48 h', where: 'Red Sea', done: true, current: true },
+      { time: '30 Sep · 09:00', title: 'Arrival · Rotterdam', where: 'Rotterdam, NL' },
+    ] },
+];
+
+/* ---------- Helpers ---------- */
+
+const fmtK = (n) => '$' + (n / 1000).toFixed(1) + 'k';
+const rankOf = (s) => SEV[s.severity].rank;
+const fmtDelay = (h) => (h > 0 ? '+' + h + ' h' : '—');
+const numbersLine = (p) => p.cost + ' · ' + p.impact + ' · ' + p.confidence + '%';
+
+function useBreakpoint() {
+  const get = () => (window.innerWidth >= 1280 ? 'wide' : window.innerWidth >= 900 ? 'compact' : 'narrow');
+  const [bp, setBp] = React.useState(get);
+  React.useEffect(() => { const h = () => setBp(get()); window.addEventListener('resize', h); return () => window.removeEventListener('resize', h); }, []);
+  return bp;
+}
+
+function withAppliedEvent(s) {
+  const lastDone = s.events.reduce((acc, e, i) => (e.done ? i : acc), -1);
+  const events = s.events.map((e) => ({ ...e, current: false }));
+  events.splice(lastDone + 1, 0, { time: 'Now', title: s.proposal.event, where: 'AI copilot', done: true, ai: true, current: true });
+  return { ...s, applied: true, events };
+}
+
+/* ---------- Pieces ---------- */
+
+function AiCopilotCard({ waiting }) {
+  return (
+    <div style={{ background: 'var(--surface-inverse-raised)', borderRadius: 'var(--radius-lg)', padding: 16 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+        <Icon name="sparkles" size={16} color="var(--accent)" />
+        <span className="aix-caption" style={{ color: 'var(--accent)' }}>AI copilot</span>
+      </div>
+      <p style={{ fontSize: 13, color: 'var(--text-on-inverse-muted)', lineHeight: 1.45, margin: 0 }}>
+        {waiting} recommendations waiting. Recoverable this week: <b style={{ color: 'var(--text-on-inverse)' }}>18 days</b>
+      </p>
+    </div>
+  );
+}
+
+function KeyValue({ label, value, mono }) {
+  return (
+    <div style={{ minWidth: 0 }}>
+      <div className="aix-caption">{label}</div>
+      <div className={'aix-kv-value' + (mono ? ' mono' : '')}>{value}</div>
+    </div>
+  );
+}
+
+function RecommendationCard({ s, onReview, compact }) {
+  const p = s.proposal;
+  if (s.applied) {
+    return (
+      <Card inverse eyebrow={'AI recommendation · ' + s.id} title="Applied" actions={<Badge tone="ai">AI applied</Badge>}>
+        <p style={{ color: 'var(--text-on-inverse-muted)', fontSize: 13, lineHeight: 1.5, margin: 0 }}>{p.event}. Undo from the notification while it shows; the milestone records the change.</p>
+      </Card>
+    );
+  }
+  return (
+    <Card inverse eyebrow={'AI recommendation · ' + s.id} title={p.title}
+      footer={<>
+        <span className="aix-caption" style={{ color: 'var(--text-on-inverse-muted)' }}>Confidence {p.confidence}%</span>
+        <Button size="sm" icon="sparkles" onClick={onReview}>Review</Button>
+      </>}>
+      <p style={{ color: 'var(--text-on-inverse-muted)', fontSize: compact ? 13 : 14, lineHeight: 1.5, margin: 0 }}>{p.body}</p>
+      <p style={{ marginTop: 12, marginBottom: 0, fontFamily: 'var(--font-mono)', fontWeight: 500, fontSize: 13, color: 'var(--text-on-inverse)' }}>
+        {p.cost} · {p.impact} · Confidence {p.confidence}%
+      </p>
+    </Card>
+  );
+}
+
+/* ---------- Page ---------- */
+
+function App() {
+  const bp = useBreakpoint();
+  const demoState = new URLSearchParams(window.location.search).get('state');
+
+  const [page, setPage] = React.useState('exceptions');
+  const [shipments, setShipments] = React.useState(demoState === 'empty' ? [] : SHIPMENTS);
+  const [load, setLoad] = React.useState('loading');
+  const [tab, setTab] = React.useState('all');
+  const [modes, setModes] = React.useState([]);
+  const [query, setQuery] = React.useState('');
+  const [sort, setSort] = React.useState({ key: 'severity', dir: 'desc' });
+  const [selected, setSelected] = React.useState([]);
+  const [drawerId, setDrawerId] = React.useState(null);
+  const [dialogId, setDialogId] = React.useState(null);
+  const [toast, setToast] = React.useState(null);
+  const timer = React.useRef(null);
+
+  const fetchExceptions = React.useCallback(() => {
+    setLoad('loading');
+    if (demoState === 'loading') return;
+    window.setTimeout(() => setLoad(demoState === 'error' ? 'error' : 'ready'), 700);
+  }, [demoState]);
+  React.useEffect(() => { fetchExceptions(); }, [fetchExceptions]);
+
+  const showToast = (t) => {
+    window.clearTimeout(timer.current);
+    setToast(t);
+    timer.current = window.setTimeout(() => setToast(null), 4000);
+  };
+  const dismissToast = () => { window.clearTimeout(timer.current); setToast(null); };
+
+  /* derived */
+  const open = shipments.filter((s) => !s.snoozed);
+  const pending = open.filter((s) => !s.applied);
+  const q = query.trim().toLowerCase();
+  const byModeAndQuery = open.filter((s) =>
+    (modes.length === 0 || modes.includes(s.mode)) &&
+    (q === '' || [s.id, s.origin, s.dest, s.type, s.carrier].join(' ').toLowerCase().includes(q)));
+  const counts = { all: byModeAndQuery.length, critical: 0, high: 0, medium: 0 };
+  byModeAndQuery.forEach((s) => { counts[s.severity] += 1; });
+  const cmp = {
+    id: (a, b) => a.id.localeCompare(b.id),
+    severity: (a, b) => rankOf(a) - rankOf(b) || a.delayHrs - b.delayHrs,
+    delayHrs: (a, b) => a.delayHrs - b.delayHrs,
+    valueNum: (a, b) => a.valueNum - b.valueNum,
+  };
+  const rows = byModeAndQuery
+    .filter((s) => tab === 'all' || s.severity === tab)
+    .sort((a, b) => (sort.dir === 'asc' ? 1 : -1) * (cmp[sort.key] || cmp.id)(a, b));
+  const filtersActive = tab !== 'all' || modes.length > 0 || q !== '';
+  const clearFilters = () => { setTab('all'); setModes([]); setQuery(''); };
+
+  const top = pending.filter((s) => s.proposal.impactHrs > 0).sort((a, b) => rankOf(b) - rankOf(a) || b.proposal.impactHrs - a.proposal.impactHrs)[0];
+  const queue = pending.filter((s) => !top || s.id !== top.id).sort((a, b) => rankOf(b) - rankOf(a) || b.delayHrs - a.delayHrs).slice(0, 4);
+  const criticalCount = pending.filter((s) => s.severity === 'critical').length;
+  const valueAtRisk = pending.reduce((n, s) => n + s.valueNum, 0);
+  const recoverable = pending.reduce((n, s) => n + s.proposal.impactHrs, 0);
+  const appliedCount = open.filter((s) => s.applied).length;
+
+  const drawerShipment = drawerId ? shipments.find((s) => s.id === drawerId) : null;
+  const dialogShipment = dialogId ? shipments.find((s) => s.id === dialogId) : null;
+
+  /* actions */
+  const applyRecommendation = () => {
+    const s = dialogShipment;
+    if (!s) return;
+    const before = shipments;
+    setShipments((prev) => prev.map((x) => (x.id === s.id ? withAppliedEvent(x) : x)));
+    setDialogId(null);
+    showToast({ tone: 'ai', title: s.proposal.toastTitle, message: s.proposal.toastMsg, action: 'Undo', onAction: () => { setShipments(before); dismissToast(); } });
+  };
+  const snoozeSelected = () => {
+    const ids = selected;
+    const before = shipments;
+    setShipments((prev) => prev.map((x) => (ids.includes(x.id) ? { ...x, snoozed: true } : x)));
+    setSelected([]);
+    showToast({ tone: 'info', title: 'Snoozed ' + ids.length + (ids.length === 1 ? ' exception' : ' exceptions'), message: 'Back in the queue tomorrow at 09:00.', action: 'Undo', onAction: () => { setShipments(before); dismissToast(); } });
+  };
+  const assignSelected = () => {
+    const n = selected.length;
+    setSelected([]);
+    showToast({ tone: 'success', title: 'Assigned ' + n + (n === 1 ? ' exception' : ' exceptions'), message: 'Owner set to Maya Krishnan.' });
+  };
+  const shareTracking = (s) => showToast({ tone: 'info', title: 'Tracking link copied', message: 'Public link for ' + s.id + ' is on your clipboard for 24 h.' });
+
+  const columns = [
+    { key: 'id', label: 'Shipment', mono: true, nowrap: true, width: 120, sortable: true },
+    { key: 'lane', label: 'Lane', muted: true, nowrap: true, maxWidth: 240, truncate: true, render: (v, r) => <span title={r.origin + ' → ' + r.dest}>{r.origin} → {r.dest}</span> },
+    { key: 'mode', label: 'Mode', width: 90, render: (m) => <ModeBadge mode={m} size="sm" /> },
+    { key: 'severity', label: 'Severity', width: 110, sortable: true, render: (v) => <Badge tone={SEV[v].tone} dot>{SEV[v].label}</Badge> },
+    { key: 'type', label: 'Exception', muted: true, nowrap: true, maxWidth: 220, truncate: true, render: (v) => <span title={v}>{v}</span> },
+    { key: 'eta', label: 'ETA', mono: true, nowrap: true },
+    { key: 'delayHrs', label: 'Delay', mono: true, nowrap: true, align: 'right', sortable: true, render: (h) => <span style={{ color: h >= 48 ? 'var(--color-danger)' : h > 0 ? 'var(--text-primary)' : 'var(--text-muted)' }}>{fmtDelay(h)}</span> },
+    { key: 'proposal', label: 'AI proposes', maxWidth: 280, render: (p, r) => r.applied
+        ? <Badge tone="ai">Applied</Badge>
+        : <div style={{ minWidth: 0 }}>
+            <div className="aix-truncate" title={p.title} style={{ fontWeight: 500, color: 'var(--text-primary)' }}>{p.title}</div>
+            <div className="aix-caption" style={{ marginTop: 2 }}>{numbersLine(p)}</div>
+          </div> },
+    { key: 'valueNum', label: 'Value', mono: true, nowrap: true, align: 'right', sortable: true, render: (v, r) => r.value },
+  ];
+
+  /* table region states */
+  let tableRegion;
+  if (load === 'loading') {
+    tableRegion = <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 16 }}><Skeleton lines={2} /><Skeleton lines={4} /><Skeleton lines={4} /></div>;
+  } else if (load === 'error') {
+    tableRegion = <div style={{ padding: 20 }}><Alert tone="danger" title="Exceptions did not load" action="Retry" onAction={fetchExceptions}>The control-tower feed timed out after 30 s. Retry now; if it keeps failing, check the carrier connections under Settings.</Alert></div>;
+  } else if (rows.length === 0 && filtersActive) {
+    tableRegion = <EmptyState compact icon="search" title="No exceptions match" description="Try clearing a filter." action={<Button variant="secondary" size="sm" onClick={clearFilters}>Clear filters</Button>} />;
+  } else if (rows.length === 0) {
+    tableRegion = <EmptyState compact icon="circleCheck" title="No open exceptions" description="Every shipment is on plan. We'll alert you when one drifts." />;
+  } else {
+    tableRegion = <Table columns={columns} rows={rows} rowKey="id" stickyHeader selectable selected={selected} onSelect={setSelected}
+      sort={sort} onSort={(k) => setSort((s) => ({ key: k, dir: s.key === k && s.dir === 'desc' ? 'asc' : 'desc' }))}
+      onRowClick={(r) => setDrawerId(r.id)} />;
+  }
+
+  const topbarAction = bp === 'narrow'
+    ? <IconButton icon="plus" label="New quote" variant="outline" />
+    : <Button variant="navy" size="sm" icon="plus">New quote</Button>;
+
+  return (
+    <div style={{ display: 'flex', flexDirection: bp === 'narrow' ? 'column' : 'row', height: '100%' }}>
+      {bp === 'narrow'
+        ? <div className="aix-topnav">
+            <Logo variant="mark" inverse height={28} base={DS_BASE} />
+            <div className="aix-topnav-tabs"><Tabs variant="pill" inverse items={NAV.map((n) => ({ value: n.value, label: n.label }))} value={page} onChange={setPage} /></div>
+          </div>
+        : <SidebarNav base={DS_BASE} value={page} onChange={setPage} items={NAV} collapsed={bp === 'compact'} footer={bp === 'wide' ? <AiCopilotCard waiting={pending.length} /> : null} />}
+
+      <main style={{ flex: 1, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <Topbar title="Exceptions" search={bp !== 'narrow'} searchPlaceholder="Search shipments, lanes, carriers…" onSearch={setQuery}
+          user={{ name: 'Maya Krishnan' }} notifications themeToggle actions={topbarAction} />
+
+        <div style={{ flex: 1, overflow: 'auto' }}>
+          <div className="aix-page">
+            <div className="aix-stats">
+              <StatCard label="Open exceptions" value={pending.length} delta={criticalCount + ' critical'} deltaTone={criticalCount ? 'danger' : 'neutral'} hint="Updated 2 min ago" />
+              <StatCard label="Value at risk" value={fmtK(valueAtRisk)} delta={pending.length + ' shipments'} deltaTone="neutral" hint="Declared value" />
+              <StatCard label="AI proposals ready" value={pending.length} delta={appliedCount + ' applied today'} deltaTone="ai" hint="Cost, impact and confidence per row" />
+              <StatCard label="Recoverable delay" value={recoverable + ' h'} delta={(recoverable / 24).toFixed(1) + ' days'} deltaTone="success" hint="If every proposal is applied" />
+            </div>
+
+            <Card padding={0} style={{ minWidth: 0 }}>
+              <div className="aix-toolbar">
+                <div className="aix-toolbar-tabs">
+                  <Tabs style={{ borderBottom: 0 }} value={tab} onChange={setTab} items={[
+                    { value: 'all', label: 'All', count: counts.all },
+                    { value: 'critical', label: 'Critical', count: counts.critical },
+                    { value: 'high', label: 'High', count: counts.high },
+                    { value: 'medium', label: 'Medium', count: counts.medium },
+                  ]} />
+                </div>
+                <div className="aix-toolbar-tags" role="group" aria-label="Filter by mode">
+                  <span className="aix-caption" style={{ alignSelf: 'center', marginRight: 4 }}>Mode</span>
+                  {MODES.map(([m, l]) => <Tag key={m} selected={modes.includes(m)} onClick={() => setModes((cur) => (cur.includes(m) ? cur.filter((x) => x !== m) : [...cur, m]))}>{l}</Tag>)}
+                  {filtersActive ? <Button variant="ghost" size="sm" onClick={clearFilters}>Clear</Button> : null}
+                </div>
+              </div>
+
+              {selected.length > 0 ? (
+                <div className="aix-bulk">
+                  <span className="aix-caption" style={{ color: 'var(--text-primary)' }}>{selected.length} selected</span>
+                  <Button variant="secondary" size="sm" icon="user" onClick={assignSelected}>Assign to me</Button>
+                  <Button variant="secondary" size="sm" icon="clock" onClick={snoozeSelected}>Snooze 24 h</Button>
+                  <Button variant="ghost" size="sm" onClick={() => setSelected([])}>Clear selection</Button>
+                </div>
+              ) : null}
+
+              {tableRegion}
+
+              {load === 'ready' && rows.length > 0 ? (
+                <div style={{ padding: '12px 20px', borderTop: '1px solid var(--border-default)' }}>
+                  <Pagination page={1} pageCount={1} total={rows.length} pageSize={25} />
+                </div>
+              ) : null}
+            </Card>
+
+            <div className="aix-side">
+              {load === 'loading' ? (
+                <Card inverse eyebrow="AI recommendation" title="Reading the queue"><Skeleton lines={3} /></Card>
+              ) : load === 'error' ? (
+                <Card inverse eyebrow="AI copilot" title="Waiting for the feed"><p style={{ color: 'var(--text-on-inverse-muted)', fontSize: 13, lineHeight: 1.5, margin: 0 }}>Recommendations resume when the exception feed reconnects.</p></Card>
+              ) : top ? (
+                <RecommendationCard s={top} compact onReview={() => setDialogId(top.id)} />
+              ) : (
+                <Card inverse eyebrow="AI copilot" title="No action needed"><p style={{ color: 'var(--text-on-inverse-muted)', fontSize: 13, lineHeight: 1.5, margin: 0 }}>Every open exception has its plan. We'll surface the next recommendation the moment an ETA moves.</p></Card>
+              )}
+
+              <Card eyebrow="Queue" title="Next recommendations">
+                {load !== 'ready' ? <Skeleton lines={4} /> : queue.length === 0 ? (
+                  <EmptyState compact icon="circleCheck" title="Queue is clear" description="Nothing else is waiting for a decision." />
+                ) : (
+                  <ul className="aix-queue">
+                    {queue.map((s) => (
+                      <li key={s.id}>
+                        <button type="button" onClick={() => setDrawerId(s.id)} aria-label={'Open ' + s.id}>
+                          <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 500, fontSize: 12 }}>{s.id}</span>
+                          <span style={{ minWidth: 0 }}>
+                            <span className="aix-truncate" title={s.proposal.title} style={{ display: 'block', fontWeight: 500 }}>{s.proposal.title}</span>
+                            <span className="aix-caption" style={{ display: 'block', marginTop: 2 }}>{numbersLine(s.proposal)}</span>
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </Card>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {drawerShipment ? (
+        <Drawer open eyebrow={'Shipment · ' + drawerShipment.type} title={drawerShipment.id} width={480} style={{ width: 'min(480px, 100vw)' }}
+          onClose={dialogId ? undefined : () => setDrawerId(null)}
+          footer={<>
+            <Button variant="ghost" onClick={() => setDrawerId(null)}>Close</Button>
+            <Button variant="secondary" icon="route" onClick={() => shareTracking(drawerShipment)}>Share tracking</Button>
+          </>}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+              <ModeBadge mode={drawerShipment.mode} size="sm" />
+              <Badge tone={SEV[drawerShipment.severity].tone} dot>{SEV[drawerShipment.severity].label}</Badge>
+              {drawerShipment.applied ? <Badge tone="ai">AI applied</Badge> : null}
+              <span className="aix-caption" style={{ marginLeft: 'auto' }}>{drawerShipment.carrier}</span>
+            </div>
+            <div style={{ fontSize: 17, fontWeight: 600, color: 'var(--text-primary)', minWidth: 0 }}>
+              {drawerShipment.origin} <span style={{ color: 'var(--text-muted)' }}>→</span> {drawerShipment.dest}
+            </div>
+            <RouteLine from={drawerShipment.legs[0]} to={drawerShipment.legs[1]} progress={drawerShipment.progress} aiAt={drawerShipment.applied ? drawerShipment.progress / 100 : undefined} />
+            <div className="aix-kv">
+              <KeyValue label="Cargo" value={drawerShipment.cargo} mono />
+              <KeyValue label="Declared value" value={drawerShipment.value} mono />
+              <KeyValue label="Planned ETA" value={drawerShipment.etaPlanned} mono />
+              <KeyValue label="Revised ETA" value={drawerShipment.eta} mono />
+              <KeyValue label="Delay" value={fmtDelay(drawerShipment.delayHrs)} mono />
+              <KeyValue label="Exception" value={drawerShipment.type} />
+            </div>
+            <RecommendationCard s={drawerShipment} compact onReview={() => setDialogId(drawerShipment.id)} />
+            <div>
+              <div className="aix-caption" style={{ marginBottom: 16 }}>Milestones</div>
+              <Timeline orientation="vertical" events={drawerShipment.events} />
+            </div>
+          </div>
+        </Drawer>
+      ) : null}
+
+      {dialogShipment ? (
+        <Dialog open eyebrow={'AI recommendation · ' + dialogShipment.id} title={dialogShipment.proposal.question} onClose={() => setDialogId(null)}
+          footer={<>
+            <Button variant="ghost" onClick={() => setDialogId(null)}>Dismiss</Button>
+            <Button icon="sparkles" onClick={applyRecommendation}>Apply recommendation</Button>
+          </>}>
+          <p style={{ margin: 0 }}>{dialogShipment.proposal.body}</p>
+          <div className="aix-numbers">
+            <div><div className="aix-caption">Cost</div><div className="val">{dialogShipment.proposal.cost}</div></div>
+            <div><div className="aix-caption">Impact</div><div className="val">{dialogShipment.proposal.impact}</div></div>
+            <div><div className="aix-caption">Confidence</div><div className="val">{dialogShipment.proposal.confidence}%</div></div>
+          </div>
+          <p className="aix-caption" style={{ marginTop: 16, marginBottom: 0 }}>{dialogShipment.origin} → {dialogShipment.dest} · {dialogShipment.carrier} · revised ETA {dialogShipment.eta}</p>
+        </Dialog>
+      ) : null}
+
+      {toast ? (
+        <div style={{ position: 'fixed', right: 24, bottom: 24, zIndex: 200, maxWidth: 'calc(100vw - 48px)' }}>
+          <Toast tone={toast.tone} title={toast.title} message={toast.message} action={toast.action} onAction={toast.onAction} onClose={dismissToast} />
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

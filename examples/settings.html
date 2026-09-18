@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AiXFreight — Settings</title>
+<!--
+  AiXFreight control tower · Settings (Mode A static prototype).
+  Served from DS_ROOT/examples/, so DS_BASE is "..". Built with the Claude Code skill in .claude/skills/aixfreight-design-system.
+  Demo states: ?state=loading  ?state=error  ?state=empty
+  Theme: ?theme=dark or <html data-theme="dark">, or the toggle in the top bar / Appearance section.
+  Breakpoints: >=1280 full sidebar · 900–1279 collapsed rail · <900 menu button + nav Drawer, single column.
+-->
+<script>
+  window.DS_BASE = '..';
+  (function () {
+    // The bundle's ThemeToggle module calls AiXTheme.apply() on load, which removes a data-theme attribute
+    // when no preference is stored. Remember what the page (or ?theme=) asked for so it can be restored.
+    var q = null;
+    try { q = new URLSearchParams(window.location.search).get('theme'); } catch (e) {}
+    window.__AIX_THEME_PRESET = { query: q, attr: document.documentElement.getAttribute('data-theme') };
+    var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = DS_BASE + '/styles.css'; document.head.appendChild(l);
+  })();
+</script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script>document.write('<script src="' + DS_BASE + '/_ds_bundle.js"><\/script>');</script>
+<script>
+  (function () {
+    var p = window.__AIX_THEME_PRESET || {};
+    var stored = null;
+    try { stored = window.localStorage.getItem('aix-theme'); } catch (e) {}
+    var want = p.query || (!stored ? p.attr : null);
+    if (want === 'dark' || want === 'light') document.documentElement.setAttribute('data-theme', want);
+  })();
+</script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  html, body, #root { height: 100%; }
+  body { overflow: hidden; background: var(--surface-page); }
+
+  /* Settings recipe: 240px section nav + 760px form column */
+  .aix-settings { padding: 28px; display: grid; grid-template-columns: 240px minmax(0, var(--container-narrow)); gap: 28px; align-items: start; }
+  .aix-form { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .aix-section { scroll-margin-top: 16px; min-width: 0; }
+
+  /* Desktop section nav */
+  .aix-secnav { position: sticky; top: 28px; display: flex; flex-direction: column; gap: 2px; }
+  .aix-secnav button { display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border: 1px solid transparent; border-radius: var(--radius-md); background: transparent; color: var(--text-secondary); font-family: var(--font-body); font-weight: 500; font-size: 14px; text-align: left; cursor: pointer; min-width: 0; transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out); }
+  .aix-secnav button:hover { background: var(--surface-sunken); color: var(--text-primary); }
+  .aix-secnav button[aria-current="true"] { background: var(--surface-card); border-color: var(--border-default); color: var(--text-primary); font-weight: 600; box-shadow: var(--shadow-sm); }
+  .aix-secnav button:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+  .aix-secnav .lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+  /* Mobile section nav: sticky pill row that scrolls sideways */
+  .aix-secnav-mobile { position: sticky; top: 0; z-index: 5; margin: -16px -16px 0; padding: 8px 16px; background: var(--surface-page); border-bottom: 1px solid var(--border-default); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .aix-secnav-mobile [role="tablist"] { width: max-content; min-width: 100%; }
+  .aix-secnav-mobile [role="tab"] { flex: none; height: 40px !important; }
+
+  /* Field grids */
+  .aix-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 20px; }
+  .aix-fields .span2 { grid-column: 1 / -1; }
+  .aix-stack { display: flex; flex-direction: column; gap: 20px; }
+  .aix-group-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+  .aix-group-desc { font-size: 13px; color: var(--text-secondary); margin-top: 2px; line-height: 1.5; }
+  .aix-divider { height: 1px; background: var(--border-default); }
+  .aix-kv-value { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-top: 4px; }
+  .aix-kv-value.mono { font-family: var(--font-mono); }
+
+  /* Switch row: label text left, control right */
+  .aix-switchrow { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; min-height: 44px; }
+  .aix-switchrow .text { min-width: 0; flex: 1 1 auto; }
+  .aix-switchrow > label { min-height: 44px; flex: none; }
+  /* The Switch's own label is its accessible name; the row already prints that text, so hide the duplicate visually. */
+  .aix-switchrow > label > span:nth-child(2) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* Notification matrix: event × channel */
+  .aix-matrix { display: flex; flex-direction: column; }
+  .aix-matrix-head { display: grid; grid-template-columns: minmax(0, 1fr) 88px 88px 88px; padding: 0 0 10px; border-bottom: 1px solid var(--border-default); }
+  .aix-matrix-head span:not(:first-child) { text-align: center; }
+  .aix-matrix-row { display: grid; grid-template-columns: minmax(0, 1fr) 88px 88px 88px; align-items: center; min-height: 56px; padding: 8px 0; border-bottom: 1px solid var(--border-default); }
+  .aix-matrix-row:last-child { border-bottom: 0; }
+  .aix-matrix-cells { display: contents; }
+  .aix-matrix-cell { display: flex; justify-content: center; }
+  .aix-matrix-cell label { gap: 0 !important; }
+  .aix-matrix-cell label > span:nth-child(2) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* Lanes */
+  .aix-lanes { display: flex; flex-direction: column; }
+  .aix-lane { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 52px; padding: 8px 0; border-bottom: 1px solid var(--border-default); }
+  .aix-lane:last-child { border-bottom: 0; }
+  .aix-lane > label { flex: 1 1 auto; min-width: 0; }
+
+  /* Billing */
+  .aix-billing-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+
+  /* Sticky save bar: the page's one orange call to action lives here */
+  .aix-savebar { position: sticky; bottom: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; margin-top: 4px; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+  .aix-savebar .status { min-width: 0; }
+  .aix-savebar .actions { display: flex; gap: 8px; flex: none; }
+
+  .aix-toast { position: fixed; right: 24px; bottom: 96px; z-index: 200; max-width: calc(100vw - 48px); }
+
+  @media (max-width: 1279px) {
+    .aix-settings { grid-template-columns: 200px minmax(0, 1fr); }
+  }
+  @media (max-width: 899px) {
+    /* Flex column, not grid: a sticky grid item is boxed by its own row, so the pill nav could never stick. */
+    .aix-settings { display: flex; flex-direction: column; padding: 16px; gap: 16px; }
+    .aix-form { gap: 16px; }
+    .aix-section { scroll-margin-top: 64px; }
+    .aix-savebar { border-radius: var(--radius-lg) var(--radius-lg) 0 0; margin: 0 -16px; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+    .aix-toast { right: 16px; bottom: 88px; max-width: calc(100vw - 32px); }
+  }
+  @media (max-width: 599px) {
+    .aix-fields { grid-template-columns: minmax(0, 1fr); }
+    .aix-billing-stats { grid-template-columns: minmax(0, 1fr); }
+    .aix-matrix-head { display: none; }
+    .aix-matrix-row { display: flex; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 0; }
+    .aix-matrix-cells { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+    .aix-matrix-cell { justify-content: flex-start; }
+    .aix-matrix-cell label { gap: 10px !important; min-height: 44px; align-items: center !important; }
+    .aix-matrix-cell label > span:nth-child(2) { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; }
+    .aix-savebar .status { display: none; }
+    .aix-savebar .actions { width: 100%; justify-content: space-between; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const DS = window.AiXFreightDesignSystem_0c3a26;
+const { SidebarNav, Topbar, Card, Table, StatCard, Badge, ModeBadge, Tabs, Button, IconButton, Icon, Input, Select, Checkbox, Radio, Switch, ThemeToggle, Avatar, Alert, Skeleton, EmptyState, Drawer, Dialog, Toast } = DS;
+
+/* ---------- Demo data ---------- */
+
+const NAV = [
+  { value: 'dashboard', label: 'Dashboard', icon: 'layoutDashboard' },
+  { value: 'shipments', label: 'Shipments', icon: 'package' },
+  { value: 'exceptions', label: 'Exceptions', icon: 'alertTriangle', count: 3 },
+  { value: 'routes', label: 'Routes', icon: 'route' },
+  { value: 'docs', label: 'Documents', icon: 'fileText' },
+  { value: 'settings', label: 'Settings', icon: 'settings' },
+];
+
+const SECTIONS = [
+  { value: 'account', label: 'Account', icon: 'user' },
+  { value: 'notifications', label: 'Notifications', icon: 'bell' },
+  { value: 'automation', label: 'AI automation', icon: 'sparkles' },
+  { value: 'appearance', label: 'Appearance', icon: 'monitor' },
+  { value: 'billing', label: 'Billing', icon: 'dollar' },
+];
+
+const EVENTS = [
+  { key: 'eta', label: 'ETA change over 6 hours', desc: 'Any leg, any mode' },
+  { key: 'exception', label: 'Exception opened', desc: 'Capacity, weather, documentation' },
+  { key: 'customs', label: 'Customs hold', desc: 'Held at a border or port' },
+  { key: 'recommendation', label: 'AI recommendation ready', desc: 'Cost, impact and confidence attached' },
+  { key: 'autoApplied', label: 'AI auto-applied a reroute', desc: 'Undo stays open for 30 minutes' },
+  { key: 'delivered', label: 'Delivery confirmed', desc: 'Proof of delivery attached' },
+  { key: 'weekly', label: 'Weekly savings summary', desc: 'Mondays at 07:00 local time' },
+  { key: 'invoice', label: 'Invoice issued', desc: 'Sent to the billing email' },
+];
+const CHANNELS = [['email', 'Email'], ['sms', 'SMS'], ['app', 'In-app']];
+
+const LANES = [
+  { id: 'SZX-HAM', from: 'Shenzhen, CN', to: 'Hamburg, DE', mode: 'ocean', volume: 38 },
+  { id: 'CHI-MTY', from: 'Chicago, US', to: 'Monterrey, MX', mode: 'land', volume: 52 },
+  { id: 'FRA-NBO', from: 'Frankfurt, DE', to: 'Nairobi, KE', mode: 'air', volume: 11 },
+  { id: 'DUI-CTU', from: 'Duisburg, DE', to: 'Chengdu, CN', mode: 'rail', volume: 9 },
+  { id: 'RTM-SSZ', from: 'Rotterdam, NL', to: 'Santos, BR', mode: 'ocean', volume: 17 },
+  { id: 'BOM-DXB', from: 'Mumbai, IN', to: 'Dubai, AE', mode: 'air', volume: 24 },
+];
+
+// Reroute recommendations from the last 30 days: lane, confidence, added cost. Drives the impact preview.
+const PAST = [
+  ['SZX-HAM', 96, 1120], ['SZX-HAM', 91, 640], ['SZX-HAM', 84, 2310], ['SZX-HAM', 93, 380],
+  ['CHI-MTY', 97, 140], ['CHI-MTY', 92, 180], ['CHI-MTY', 88, 420], ['CHI-MTY', 95, 260], ['CHI-MTY', 79, 1900],
+  ['FRA-NBO', 90, 960], ['FRA-NBO', 86, 3400], ['FRA-NBO', 94, 720],
+  ['DUI-CTU', 93, 0], ['DUI-CTU', 71, 3900],
+  ['RTM-SSZ', 89, 640], ['RTM-SSZ', 92, 1380], ['RTM-SSZ', 96, 210],
+  ['BOM-DXB', 91, 0], ['BOM-DXB', 82, 540], ['BOM-DXB', 95, 330], ['BOM-DXB', 90, 1750], ['BOM-DXB', 98, 120],
+].map(([lane, conf, cost]) => ({ lane, conf, cost }));
+
+const INVOICES = [
+  { id: 'INV-2026-0901', date: '01 Sep 2026', period: 'Aug 2026', amount: '$51,940', status: { tone: 'warning', label: 'Due 30 Sep' } },
+  { id: 'INV-2026-0801', date: '01 Aug 2026', period: 'Jul 2026', amount: '$48,210', status: { tone: 'success', label: 'Paid' } },
+  { id: 'INV-2026-0701', date: '01 Jul 2026', period: 'Jun 2026', amount: '$46,780', status: { tone: 'success', label: 'Paid' } },
+];
+
+const ROLES = ['Operations lead', 'Dispatcher', 'Finance', 'Admin'];
+const TIMEZONES = ['Europe/Berlin', 'Europe/London', 'America/Chicago', 'America/Los_Angeles', 'Asia/Shanghai', 'Asia/Dubai'];
+const QUIET_HOURS = ['Off', '22:00 – 06:00', '20:00 – 07:00'];
+
+const DEFAULTS = {
+  name: 'Maya Krishnan',
+  email: 'maya.krishnan@nordwind.example',
+  phone: '+49 151 2345 6789',
+  role: 'Operations lead',
+  tz: 'Europe/Berlin',
+  notify: {
+    eta: { email: true, sms: true, app: true },
+    exception: { email: true, sms: true, app: true },
+    customs: { email: true, sms: false, app: true },
+    recommendation: { email: false, sms: false, app: true },
+    autoApplied: { email: true, sms: true, app: true },
+    delivered: { email: false, sms: false, app: true },
+    weekly: { email: true, sms: false, app: false },
+    invoice: { email: true, sms: false, app: false },
+  },
+  quietHours: '22:00 – 06:00',
+  autoApply: false,
+  threshold: '90',
+  cap: '2000',
+  lanes: ['SZX-HAM', 'CHI-MTY', 'RTM-SSZ', 'BOM-DXB'],
+  density: 'Comfortable',
+  billingEmail: 'ap@nordwind.example',
+};
+
+/* ---------- Helpers ---------- */
+
+const money = (n) => '$' + Math.round(n).toLocaleString('en-US');
+const laneName = (l) => l.from + ' → ' + l.to;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const anySms = (notify) => Object.values(notify).some((c) => c.sms);
+
+function validate(d) {
+  const e = {};
+  if (!d.name.trim()) e.name = 'Enter your name.';
+  if (!d.email.trim()) e.email = 'Enter your work email.';
+  else if (!EMAIL_RE.test(d.email.trim())) e.email = 'Enter an email like name@company.com.';
+  if (anySms(d.notify) && !d.phone.trim()) e.phone = 'Add a mobile number to receive SMS alerts, or turn SMS off below.';
+  else if (d.phone.trim() && !/^\+?[\d\s-]{7,}$/.test(d.phone.trim())) e.phone = 'Enter a number with country code, like +49 151 2345 6789.';
+  const thr = Number(d.threshold);
+  if (!/^\d+$/.test(d.threshold) || thr < 50 || thr > 99) e.threshold = 'Enter a whole number from 50 to 99.';
+  const cap = Number(String(d.cap).replace(/[,\s]/g, ''));
+  if (!/^[\d,\s]+$/.test(String(d.cap)) || !(cap >= 100)) e.cap = 'Enter an amount of $100 or more.';
+  if (d.autoApply && d.lanes.length === 0) e.lanes = 'Select at least one lane, or turn auto-apply off.';
+  if (!EMAIL_RE.test(d.billingEmail.trim())) e.billingEmail = 'Enter an email like ap@company.com.';
+  return e;
+}
+
+function impactPreview(d) {
+  const thr = Number(d.threshold) || 0;
+  const cap = Number(String(d.cap).replace(/[,\s]/g, '')) || 0;
+  const hits = PAST.filter((r) => r.conf >= thr && r.cost <= cap && d.lanes.includes(r.lane));
+  const total = hits.reduce((n, r) => n + r.cost, 0);
+  const avg = hits.length ? Math.round(hits.reduce((n, r) => n + r.conf, 0) / hits.length) : 0;
+  return { count: hits.length, of: PAST.length, total, avg };
+}
+
+const SECTION_OF_FIELD = { name: 'account', email: 'account', phone: 'account', threshold: 'automation', cap: 'automation', lanes: 'automation', billingEmail: 'billing' };
+
+function useMedia(query) {
+  const [match, setMatch] = React.useState(() => window.matchMedia(query).matches);
+  React.useEffect(() => {
+    const mq = window.matchMedia(query);
+    const on = (e) => setMatch(e.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, [query]);
+  return match;
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById('sec-' + id);
+  if (!el) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+}
+
+/* ---------- Pieces ---------- */
+
+function AiCopilotCard() {
+  return (
+    <div style={{ background: 'var(--surface-inverse-raised)', borderRadius: 'var(--radius-lg)', padding: 16 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+        <Icon name="sparkles" size={16} color="var(--accent)" />
+        <span className="aix-caption" style={{ color: 'var(--accent)' }}>AI copilot</span>
+      </div>
+      <p style={{ fontSize: 13, color: 'var(--text-on-inverse-muted)', lineHeight: 1.45, margin: 0 }}>
+        2 recommendations waiting. Est. savings this week: <b style={{ color: 'var(--text-on-inverse)' }}>$4,320</b>
+      </p>
+    </div>
+  );
+}
+
+function SectionNav({ active, onGo }) {
+  return (
+    <nav className="aix-secnav" aria-label="Settings sections">
+      {SECTIONS.map((s) => (
+        <button key={s.value} type="button" aria-current={active === s.value ? 'true' : undefined} onClick={() => onGo(s.value)}>
+          <Icon name={s.icon} size={16} />
+          <span className="lbl" title={s.label}>{s.label}</span>
+        </button>
+      ))}
+    </nav>
+  );
+}
+
+function SectionCard({ id, eyebrow, title, loading, lines = 4, footer, children }) {
+  return (
+    <div id={'sec-' + id} className="aix-section">
+      <Card eyebrow={eyebrow} title={title} footer={loading ? null : footer}>
+        {loading ? <Skeleton lines={lines} /> : children}
+      </Card>
+    </div>
+  );
+}
+
+function SwitchRow({ label, description, checked, onChange }) {
+  return (
+    <div className="aix-switchrow">
+      <div className="text">
+        <div className="aix-group-title">{label}</div>
+        {description ? <div className="aix-group-desc">{description}</div> : null}
+      </div>
+      {/* The Switch's own label is the accessible name; it is hidden visually because the row already shows the text. */}
+      <Switch checked={checked} onChange={onChange} label={label} style={{ gap: 0, marginTop: 2 }} />
+    </div>
+  );
+}
+
+function KeyValue({ label, value, mono }) {
+  return (
+    <div style={{ minWidth: 0 }}>
+      <div className="aix-caption">{label}</div>
+      <div className={'aix-kv-value' + (mono ? ' mono' : '')}>{value}</div>
+    </div>
+  );
+}
+
+/* ---------- Page ---------- */
+
+function App() {
+  const narrow = useMedia('(max-width: 1279px)');
+  const mobile = useMedia('(max-width: 899px)');
+  const demoState = new URLSearchParams(window.location.search).get('state');
+
+  const [page, setPage] = React.useState('settings');
+  const [menu, setMenu] = React.useState(false);
+  const [load, setLoad] = React.useState('loading');
+  const [saved, setSaved] = React.useState(DEFAULTS);
+  const [draft, setDraft] = React.useState(DEFAULTS);
+  const [touched, setTouched] = React.useState({});
+  const [submitted, setSubmitted] = React.useState(false);
+  const [saving, setSaving] = React.useState(false);
+  const [confirmAuto, setConfirmAuto] = React.useState(false);
+  const [active, setActive] = React.useState('account');
+  const [toast, setToast] = React.useState(null);
+  const timer = React.useRef(null);
+  const scrollRef = React.useRef(null);
+
+  const lanes = demoState === 'empty' ? [] : LANES;
+  const invoices = demoState === 'empty' ? [] : INVOICES;
+
+  const fetchSettings = React.useCallback(() => {
+    setLoad('loading');
+    if (demoState === 'loading') return;
+    window.setTimeout(() => setLoad(demoState === 'error' ? 'error' : 'ready'), 600);
+  }, [demoState]);
+  React.useEffect(() => { fetchSettings(); }, [fetchSettings]);
+
+  const showToast = (t) => {
+    window.clearTimeout(timer.current);
+    setToast(t);
+    timer.current = window.setTimeout(() => setToast(null), 4000);
+  };
+  const dismissToast = () => { window.clearTimeout(timer.current); setToast(null); };
+
+  /* scroll spy for the section nav */
+  const onScroll = () => {
+    const root = scrollRef.current;
+    if (!root) return;
+    const top = root.getBoundingClientRect().top;
+    let cur = SECTIONS[0].value;
+    for (const s of SECTIONS) {
+      const el = document.getElementById('sec-' + s.value);
+      if (el && el.getBoundingClientRect().top - top <= (mobile ? 96 : 120)) cur = s.value;
+    }
+    if (root.scrollTop + root.clientHeight >= root.scrollHeight - 2) cur = SECTIONS[SECTIONS.length - 1].value;
+    setActive(cur);
+  };
+
+  /* form plumbing */
+  const set = (key, value) => setDraft((d) => ({ ...d, [key]: value }));
+  const touch = (key) => setTouched((t) => ({ ...t, [key]: true }));
+  const errors = validate(draft);
+  const show = (key) => (touched[key] || submitted) ? errors[key] : undefined;
+  const dirty = JSON.stringify(draft) !== JSON.stringify(saved);
+  const errorCount = Object.keys(errors).length;
+  const preview = impactPreview(draft);
+
+  const setChannel = (evKey, ch, on) => setDraft((d) => ({ ...d, notify: { ...d.notify, [evKey]: { ...d.notify[evKey], [ch]: on } } }));
+  const toggleLane = (id, on) => setDraft((d) => ({ ...d, lanes: on ? [...d.lanes, id] : d.lanes.filter((x) => x !== id) }));
+  const onAutoApply = (on) => { if (on) setConfirmAuto(true); else set('autoApply', false); };
+
+  const save = () => {
+    setSubmitted(true);
+    if (errorCount) {
+      const first = Object.keys(errors)[0];
+      scrollToSection(SECTION_OF_FIELD[first] || 'account');
+      return;
+    }
+    setSaving(true);
+    const before = saved;
+    window.setTimeout(() => {
+      setSaved(draft);
+      setSaving(false);
+      setSubmitted(false);
+      setTouched({});
+      showToast({ tone: 'success', title: 'Settings saved', message: 'Applies to new shipments from now.', action: 'Undo', onAction: () => { setSaved(before); setDraft(before); dismissToast(); } });
+    }, 800);
+  };
+  const discard = () => { setDraft(saved); setTouched({}); setSubmitted(false); };
+
+  const nav = <SidebarNav base={DS_BASE} value={page} onChange={(p) => { setPage(p); setMenu(false); }} items={NAV} collapsed={narrow && !mobile} footer={narrow && !mobile ? null : <AiCopilotCard />} />;
+  const loading = load === 'loading';
+
+  const invoiceColumns = [
+    { key: 'id', label: 'Invoice', mono: true, nowrap: true, width: 150 },
+    { key: 'period', label: 'Period', muted: true, nowrap: true },
+    { key: 'date', label: 'Issued', mono: true, nowrap: true },
+    { key: 'status', label: 'Status', render: (s) => <Badge tone={s.tone} dot>{s.label}</Badge> },
+    { key: 'amount', label: 'Amount', mono: true, nowrap: true, align: 'right' },
+  ];
+
+  return (
+    <div style={{ display: 'flex', height: '100%' }}>
+      {!mobile && nav}
+      <main style={{ flex: 1, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {/* No Topbar action: the page's one orange call to action is "Save changes" in the sticky bar. */}
+        <Topbar title="Settings" search={false} user={{ name: 'Maya Krishnan' }} notifications themeToggle={!mobile}
+          style={mobile ? { padding: '0 16px' } : undefined}
+          breadcrumb={mobile ? <IconButton icon="menu" label="Open navigation" onClick={() => setMenu(true)} /> : null} />
+
+        <div ref={scrollRef} onScroll={onScroll} style={{ flex: 1, overflow: 'auto' }}>
+          <div className="aix-settings">
+            {mobile ? (
+              <div className="aix-secnav-mobile">
+                <Tabs variant="pill" items={SECTIONS.map((s) => ({ value: s.value, label: s.label }))} value={active} onChange={(v) => { setActive(v); scrollToSection(v); }} />
+              </div>
+            ) : (
+              <SectionNav active={active} onGo={(v) => { setActive(v); scrollToSection(v); }} />
+            )}
+
+            <div className="aix-form">
+              {load === 'error' ? (
+                <Alert tone="danger" title="Settings did not load" action="Retry" onAction={fetchSettings}>
+                  The account service timed out after 30 s. Retry now; if it keeps failing, your saved settings still apply to shipments.
+                </Alert>
+              ) : null}
+
+              {submitted && errorCount > 0 && !loading ? (
+                <Alert tone="danger" title={errorCount === 1 ? '1 field needs attention' : errorCount + ' fields need attention'}>
+                  {Object.values(errors).join(' ')}
+                </Alert>
+              ) : null}
+
+              {load !== 'error' ? (<>
+                {/* ---- Account ---- */}
+                <SectionCard id="account" eyebrow="Account" title="Account details" loading={loading} lines={5}>
+                  <div className="aix-stack">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                      <Avatar name={draft.name || 'Maya Krishnan'} size="md" status="online" />
+                      <div style={{ minWidth: 0 }}>
+                        <div className="aix-group-title aix-truncate" title={draft.name}>{draft.name || 'Your name'}</div>
+                        <div className="aix-caption">{draft.role} · Nordwind Components GmbH</div>
+                      </div>
+                    </div>
+                    <div className="aix-fields">
+                      <Input label="Full name" required value={draft.name} onChange={(e) => set('name', e.target.value)} onBlur={() => touch('name')} error={show('name')} />
+                      <Input label="Work email" required type="email" value={draft.email} onChange={(e) => set('email', e.target.value)} onBlur={() => touch('email')} error={show('email')} hint="Sign-in and email alerts" />
+                      <Input label="Mobile number" type="tel" value={draft.phone} onChange={(e) => set('phone', e.target.value)} onBlur={() => touch('phone')} error={show('phone')} hint="Used for SMS alerts" />
+                      <Select label="Role" options={ROLES} value={draft.role} onChange={(v) => set('role', v)} hint="Changes what the AI may ask you to approve" />
+                      <Select label="Time zone" options={TIMEZONES} value={draft.tz} onChange={(v) => set('tz', v)} hint="ETAs and quiet hours use this" />
+                      <Input label="Organization" value="Nordwind Components GmbH" disabled onChange={() => {}} hint="Managed by your admin" />
+                    </div>
+                  </div>
+                </SectionCard>
+
+                {/* ---- Notifications ---- */}
+                <SectionCard id="notifications" eyebrow="Notifications" title="Notification preferences" loading={loading} lines={8}>
+                  <div className="aix-stack">
+                    <p style={{ margin: 0, fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                      Pick a channel per event. In-app alerts show in the bell; SMS goes to {draft.phone.trim() ? <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 500 }}>{draft.phone}</span> : 'the mobile number above'}.
+                    </p>
+                    <div className="aix-matrix">
+                      <div className="aix-matrix-head" aria-hidden="true">
+                        <span className="aix-caption">Event</span>
+                        {CHANNELS.map(([k, l]) => <span key={k} className="aix-caption">{l}</span>)}
+                      </div>
+                      {EVENTS.map((ev) => (
+                        <div key={ev.key} className="aix-matrix-row" role="group" aria-label={ev.label}>
+                          <div style={{ minWidth: 0 }}>
+                            <div className="aix-group-title" style={{ fontSize: 14 }}>{ev.label}</div>
+                            <div className="aix-group-desc" style={{ fontSize: 12, marginTop: 0 }}>{ev.desc}</div>
+                          </div>
+                          <div className="aix-matrix-cells">
+                            {CHANNELS.map(([ch, l]) => (
+                              <div key={ch} className="aix-matrix-cell">
+                                <Checkbox label={l} checked={draft.notify[ev.key][ch]} onChange={(on) => setChannel(ev.key, ch, on)} />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="aix-fields">
+                      <Select label="SMS quiet hours" options={QUIET_HOURS} value={draft.quietHours} onChange={(v) => set('quietHours', v)} hint="Customs holds and auto-applied reroutes still send" />
+                    </div>
+                  </div>
+                </SectionCard>
+
+                {/* ---- AI automation ---- */}
+                <SectionCard id="automation" eyebrow="AI automation" title="AI automation" loading={loading} lines={7}>
+                  <div className="aix-stack">
+                    <SwitchRow label="Auto-apply reroutes" checked={draft.autoApply} onChange={onAutoApply}
+                      description="Recommendations that clear every rule below apply without review. Each one still sends a notification with Undo and records to the shipment timeline." />
+                    <div className="aix-fields">
+                      <Input label="Confidence threshold" required inputMode="numeric" suffix="%" value={draft.threshold} onChange={(e) => set('threshold', e.target.value)} onBlur={() => touch('threshold')} error={show('threshold')} hint="Reroutes at or above this confidence qualify" mono="true" />
+                      <Input label="Spend cap per shipment" required inputMode="numeric" prefix="$" value={draft.cap} onChange={(e) => set('cap', e.target.value)} onBlur={() => touch('cap')} error={show('cap')} hint="Reroutes that cost more wait for your review" mono="true" />
+                    </div>
+                    <Alert tone="ai" title="Estimated impact · last 30 days">
+                      {preview.count > 0
+                        ? <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 500, fontSize: 13 }}>{preview.count} of {preview.of} reroutes would have applied · {money(preview.total)} total · avg confidence {preview.avg}%</span>
+                        : 'No reroute from the last 30 days clears these rules. Lower the threshold, raise the cap or add a lane to let the AI act.'}
+                    </Alert>
+                    <div className="aix-divider" />
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+                        <div style={{ minWidth: 0 }}>
+                          <div className="aix-group-title">Lanes the AI may touch</div>
+                          <div className="aix-group-desc">Auto-apply only acts on the lanes selected here. Everything else waits for review.</div>
+                        </div>
+                        {lanes.length ? (
+                          <Button variant="ghost" size="sm" onClick={() => set('lanes', draft.lanes.length === lanes.length ? [] : lanes.map((l) => l.id))}>
+                            {draft.lanes.length === lanes.length ? 'Clear' : 'Select all'}
+                          </Button>
+                        ) : null}
+                      </div>
+                      {lanes.length ? (
+                        <div className="aix-lanes" role="group" aria-label="Lanes the AI may touch">
+                          {lanes.map((l) => (
+                            <div key={l.id} className="aix-lane">
+                              <Checkbox label={laneName(l)} description={l.id + ' · ' + l.volume + ' shipments · 30 days'} checked={draft.lanes.includes(l.id)} onChange={(on) => toggleLane(l.id, on)} />
+                              <ModeBadge mode={l.mode} size="sm" />
+                            </div>
+                          ))}
+                          <div className="aix-caption" style={{ paddingTop: 12, color: show('lanes') ? 'var(--color-danger)' : undefined }}>
+                            {show('lanes') || draft.lanes.length + ' of ' + lanes.length + ' lanes selected'}
+                          </div>
+                        </div>
+                      ) : (
+                        <div style={{ marginTop: 12 }}>
+                          <EmptyState compact icon="route" title="No lanes yet" description="Lanes appear here after your first shipment." action={<Button variant="secondary" size="sm" icon="plus">Create a quote</Button>} />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </SectionCard>
+
+                {/* ---- Appearance ---- */}
+                <SectionCard id="appearance" eyebrow="Appearance" title="Appearance" loading={loading} lines={3}>
+                  <div className="aix-stack">
+                    <div>
+                      <div className="aix-caption" style={{ marginBottom: 8 }}>Theme</div>
+                      <ThemeToggle size="md" />
+                      <div className="aix-group-desc" style={{ marginTop: 8 }}>Saved on this device and applied at once. System follows your OS setting.</div>
+                    </div>
+                    <Radio label="Table density" name="density" options={['Comfortable', 'Compact']} value={draft.density} onChange={(v) => set('density', v)} direction={mobile ? 'column' : 'row'} />
+                  </div>
+                </SectionCard>
+
+                {/* ---- Billing ---- */}
+                <SectionCard id="billing" eyebrow="Billing" title="Billing summary" loading={loading} lines={6}
+                  footer={<>
+                    <Button variant="ghost" size="sm">Manage plan</Button>
+                    <Button variant="secondary" size="sm" icon="download">Download invoices</Button>
+                  </>}>
+                  <div className="aix-stack">
+                    <div className="aix-caption">Team plan · 12 seats · renews 01 Jan 2027</div>
+                    <div className="aix-billing-stats">
+                      <StatCard label="Spend · month to date" value="$31,480" delta="18 days" deltaTone="neutral" hint="Across 4 lanes" />
+                      <StatCard label="AI savings · Sep" value="$41,200" delta="Live" deltaTone="ai" hint="Applied recommendations" />
+                      <StatCard label="Next invoice" value="01 Oct" delta="est. $52,000" deltaTone="info" hint="Billed monthly in arrears" />
+                    </div>
+                    {invoices.length ? (
+                      <div style={{ overflowX: 'auto', margin: '0 -24px', padding: '0 24px' }}>
+                        <div style={{ minWidth: mobile ? 560 : 0 }}>
+                          <Table columns={invoiceColumns} rows={invoices} rowKey="id" dense />
+                        </div>
+                      </div>
+                    ) : (
+                      <EmptyState compact icon="fileText" title="No invoices yet" description="Your first invoice arrives on 01 Oct." />
+                    )}
+                    <div className="aix-fields">
+                      <Input label="Billing email" required type="email" value={draft.billingEmail} onChange={(e) => set('billingEmail', e.target.value)} onBlur={() => touch('billingEmail')} error={show('billingEmail')} hint="Invoices and receipts go here" />
+                      <KeyValue label="Payment method" value="Visa · 4421 · exp 08/28" mono />
+                    </div>
+                  </div>
+                </SectionCard>
+
+                {!loading ? (
+                  <div className="aix-savebar" role="region" aria-label="Save changes">
+                    <div className="status">
+                      <span className="aix-caption" style={{ color: dirty ? 'var(--text-primary)' : undefined }}>{dirty ? 'Unsaved changes' : 'All changes saved'}</span>
+                    </div>
+                    <div className="actions">
+                      <Button variant="ghost" onClick={discard} disabled={!dirty || saving}>Discard</Button>
+                      {/* The page's single orange call to action */}
+                      <Button icon="check" onClick={save} disabled={!dirty && !saving} loading={saving}>{saving ? 'Saving…' : 'Save changes'}</Button>
+                    </div>
+                  </div>
+                ) : null}
+              </>) : null}
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {mobile ? (
+        <Drawer open={menu} side="left" width={280} style={{ width: 'min(280px, 100vw)' }} title="Navigation" onClose={() => setMenu(false)}>
+          <div style={{ margin: -24, minHeight: 'calc(100% + 48px)' }}>{nav}</div>
+        </Drawer>
+      ) : null}
+
+      {confirmAuto ? (
+        <Dialog open eyebrow="AI automation" title="Let the AI apply reroutes on its own?" onClose={() => setConfirmAuto(false)}
+          footer={<>
+            <Button variant="ghost" onClick={() => setConfirmAuto(false)}>Keep manual review</Button>
+            <Button icon="sparkles" onClick={() => { set('autoApply', true); setConfirmAuto(false); }}>Turn on auto-apply</Button>
+          </>}>
+          <p style={{ margin: 0 }}>
+            Reroutes at or above {draft.threshold || '–'}% confidence and under {money(Number(String(draft.cap).replace(/[,\s]/g, '')) || 0)} per shipment will apply on {draft.lanes.length} of {lanes.length} lanes without waiting for you. Every change still sends a notification with Undo and records to the shipment timeline.
+          </p>
+          <p style={{ margin: '16px 0 0', fontFamily: 'var(--font-mono)', fontWeight: 500, fontSize: 14, color: 'var(--text-primary)' }}>
+            Last 30 days · {preview.count} reroutes · {money(preview.total)} · avg confidence {preview.avg}%
+          </p>
+          <p className="aix-caption" style={{ margin: '12px 0 0' }}>Takes effect after you save changes.</p>
+        </Dialog>
+      ) : null}
+
+      {toast ? (
+        <div className="aix-toast">
+          <Toast tone={toast.tone} title={toast.title} message={toast.message} action={toast.action} onAction={toast.onAction} onClose={dismissToast} />
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

@@ -147,6 +147,8 @@ node .claude/skills/aixfreight-design-system/scripts/check-page.mjs path/to/page
 
 The root `SKILL.md` is the short entry Claude Design reads; it points at the same full skill.
 
+Two pages built by Claude Code from the skill alone, with no hand edits, live in [examples/](examples/) so the team can see the expected output: an [Exceptions page](examples/exceptions.html) (list, filters, detail drawer, AI recommendation flow) and a [Settings page](examples/settings.html) (account, notification matrix, AI automation controls, appearance, billing, phone layout). Both are served on the live site under `/examples/`.
+
 ## Credits
 
 Brand kit: `uploads/AIXFreight-46c/` (logo option 46c, `THEME.md`). Fonts via Google Fonts (OFL). Icons: Lucide subset (ISC), inlined in `components/core/Icon.jsx`. Proprietary to AiXFreight; not licensed for reuse outside the product (`"license": "UNLICENSED"` in `package.json`).
