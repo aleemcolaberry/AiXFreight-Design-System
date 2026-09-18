@@ -129,9 +129,23 @@ This repo is the unbundled export of the Claude Design project **AiXFreight Desi
 4. Add focus-trap and arrow-key navigation once the target framework is known (Headless UI or Radix if React).
 5. Photography direction and one or two approved hero images.
 
-## Handing this to an AI pair-programmer
+## Building with Claude Code
 
-Point Claude Code (or any agent that reads skills) at `SKILL.md`. It tells the agent to read `DESIGN-GUIDE.md`, the guidelines and the component contracts before generating anything, and lists the non-negotiables above.
+The repo ships a Claude Code skill at [.claude/skills/aixfreight-design-system/](.claude/skills/aixfreight-design-system/). It teaches Claude how to locate the design system, which integration mode to use (static prototype, React app, or non-React port), how to compose pages from the components, the house voice, the AI recommendation pattern, and a definition of done. It also bundles a page starter and a checker script.
+
+Install it in one of three ways:
+
+1. **Working inside this repo:** nothing to do. Claude Code picks up `.claude/skills/` automatically. Ask for "the exceptions page for the control tower" and the skill triggers.
+2. **In your product repo:** copy the folder to `<your-repo>/.claude/skills/aixfreight-design-system/` and commit it, so every developer on the project gets it.
+3. **For yourself on every project:** copy it to `~/.claude/skills/aixfreight-design-system/`, or open the packaged `aixfreight-design-system.skill` file in Claude and choose "Save skill".
+
+Check any page you build against the mechanical rules (palette, gradients, emoji, one orange button per view, labels on icon buttons, overflow) with:
+
+```bash
+node .claude/skills/aixfreight-design-system/scripts/check-page.mjs path/to/page.html
+```
+
+The root `SKILL.md` is the short entry Claude Design reads; it points at the same full skill.
 
 ## Credits
 

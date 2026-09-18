@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AiXFreight — Page title</title>
+<!--
+  AiXFreight static page starter (Mode A).
+  1. Set DS_BASE below to the relative path from this file to the design-system root
+     (the folder that holds styles.css, _ds_bundle.js and assets/).
+  2. Serve over HTTP (npx serve . / python -m http.server); Babel fetches JSX over XHR.
+  3. Keep exactly one orange element per view. Button defaults to variant="primary".
+  4. Breakpoints: >=1280 full sidebar · 900–1279 collapsed rail · <900 menu button + nav Drawer.
+-->
+<script>
+  window.DS_BASE = '..';
+  (function () {
+    var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = DS_BASE + '/styles.css'; document.head.appendChild(l);
+  })();
+</script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script>document.write('<script src="' + DS_BASE + '/_ds_bundle.js"><\/script>');</script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  html, body, #root { height: 100%; }
+  body { overflow: hidden; }
+  .aix-page { padding: 28px; display: grid; gap: 20px; align-content: start; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  .aix-stats { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 1279px) {
+    .aix-page { grid-template-columns: minmax(0, 1fr); }
+    .aix-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 899px) {
+    .aix-page { padding: 16px; gap: 16px; }
+  }
+  @media (max-width: 599px) {
+    .aix-stats { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { SidebarNav, Topbar, Card, Table, StatCard, Badge, ModeBadge, Button, IconButton, Dialog, Drawer, Toast, EmptyState, Icon } = window.AiXFreightDesignSystem_0c3a26;
+
+const NAV = [
+  { value: 'dashboard', label: 'Dashboard', icon: 'layoutDashboard' },
+  { value: 'shipments', label: 'Shipments', icon: 'package', count: 3 },
+  { value: 'routes', label: 'Routes', icon: 'route' },
+  { value: 'docs', label: 'Documents', icon: 'fileText' },
+  { value: 'settings', label: 'Settings', icon: 'settings' },
+];
+
+const ROWS = [
+  { id: 'AIX-48211', lane: 'Shenzhen, CN → Hamburg, DE', mode: 'ocean', status: { tone: 'success', label: 'On time' }, eta: '14 Sep · 09:40' },
+  { id: 'AIX-48197', lane: 'Chicago, US → Monterrey, MX', mode: 'land', status: { tone: 'warning', label: 'At risk' }, eta: '11 Sep · 16:00' },
+  { id: 'AIX-48190', lane: 'Frankfurt, DE → Nairobi, KE', mode: 'air', status: { tone: 'success', label: 'On time' }, eta: '10 Sep · 22:15' },
+];
+
+const COLUMNS = [
+  { key: 'id', label: 'Shipment', mono: true, nowrap: true, width: 120 },
+  { key: 'lane', label: 'Lane', muted: true, maxWidth: 260, truncate: true },
+  { key: 'mode', label: 'Mode', render: (m) => <ModeBadge mode={m} size="sm" /> },
+  { key: 'status', label: 'Status', render: (s) => <Badge tone={s.tone} dot>{s.label}</Badge> },
+  { key: 'eta', label: 'ETA', mono: true, nowrap: true },
+];
+
+// Breakpoint hook: the control tower is desktop-first, but every page still has to survive a narrow window.
+function useMedia(query) {
+  const [match, setMatch] = React.useState(() => window.matchMedia(query).matches);
+  React.useEffect(() => {
+    const mq = window.matchMedia(query);
+    const on = (e) => setMatch(e.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, [query]);
+  return match;
+}
+
+function AiCopilotCard() {
+  return (
+    <div style={{ background: 'var(--surface-inverse-raised)', borderRadius: 'var(--radius-lg)', padding: 16 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+        <Icon name="sparkles" size={16} color="var(--accent)" />
+        <span className="aix-caption" style={{ color: 'var(--accent)' }}>AI copilot</span>
+      </div>
+      <p style={{ fontSize: 13, color: 'var(--text-on-inverse-muted)', lineHeight: 1.45 }}>
+        2 recommendations waiting. Est. savings this week: <b style={{ color: 'var(--text-on-inverse)' }}>$4,320</b>
+      </p>
+    </div>
+  );
+}
+
+function App() {
+  const [page, setPage] = React.useState('dashboard');
+  const [rec, setRec] = React.useState(null);
+  const [toast, setToast] = React.useState(null);
+  const [menu, setMenu] = React.useState(false);
+  const narrow = useMedia('(max-width: 1279px)');
+  const mobile = useMedia('(max-width: 899px)');
+
+  const go = (p) => { setPage(p); setMenu(false); };
+  const apply = () => {
+    setRec(null);
+    setToast({ tone: 'ai', title: 'Route updated', message: 'Lane 2 moved to air for AIX-48197.', action: 'Undo' });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const nav = <SidebarNav base={DS_BASE} value={page} onChange={go} items={NAV} collapsed={narrow && !mobile} footer={narrow && !mobile ? null : <AiCopilotCard />} />;
+
+  return (
+    <div style={{ display: 'flex', height: '100%' }}>
+      {!mobile && nav}
+      <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {/* The Topbar action is this view's one orange element. Demote it to variant="navy" if the AI panel's Review should be the focus instead. */}
+        <Topbar title="Dashboard" search={!mobile} searchPlaceholder="Search shipments, containers…" user={{ name: 'Maya Krishnan' }} notifications themeToggle={!mobile}
+          breadcrumb={mobile ? <IconButton icon="menu" label="Open navigation" onClick={() => setMenu(true)} /> : null}
+          actions={<Button size="sm" icon="plus">New quote</Button>} />
+        <div style={{ flex: 1, overflow: 'auto' }}>
+          <div className="aix-page">
+            <div className="aix-stats">
+              <StatCard label="Active shipments" value="128" delta="+6" deltaTone="info" />
+              <StatCard label="On-time rate" value="96.2%" delta="+1.4" deltaTone="success" />
+              <StatCard label="Exceptions" value="3" delta="2 new" deltaTone="danger" />
+              <StatCard label="AI savings · Sep" value="$41.2k" delta="Live" deltaTone="ai" />
+            </div>
+            <Card eyebrow="Live" title="Shipments in motion" actions={<Button variant="ghost" size="sm" iconRight="arrowRight">All shipments</Button>}>
+              {/* Below 900px a data table scrolls sideways inside its card instead of wrapping cells letter by letter. */}
+              {ROWS.length ? <div style={{ overflowX: 'auto' }}><div style={{ minWidth: mobile ? 640 : 0 }}>
+                  <Table columns={COLUMNS} rows={ROWS} rowKey="id" onRowClick={() => go('shipments')} />
+                </div></div>
+                : <EmptyState icon="package" title="No shipments yet" description="Create a quote to start tracking." compact />}
+            </Card>
+            <Card inverse eyebrow="AI recommendation · AIX-48197" title="Switch lane 2 to air"
+              footer={<div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+                <span className="aix-caption" style={{ color: 'var(--text-on-inverse-muted)' }}>Confidence 94%</span>
+                <Button variant="navy" size="sm" icon="sparkles" onClick={() => setRec({ shipment: 'AIX-48197', title: 'Reroute to air?' })}>Review</Button>
+              </div>}>
+              <p style={{ color: 'var(--text-on-inverse-muted)' }}>Port congestion at Los Angeles adds 4.2 days. Moving the priority pallets to air keeps the delivery window.</p>
+              <p style={{ marginTop: 12, fontFamily: 'var(--font-mono)', fontWeight: 500, fontSize: 13 }}>
+                {/* On navy in the light theme mode colors need their stepped values; eco has no -dark token yet, so the palette literal is used. */}
+                <span style={{ color: 'var(--color-ai-orange-600)' }}>+$1,120</span> · <span style={{ color: '#3FC7CB' }}>−4.1 days</span>
+              </p>
+            </Card>
+          </div>
+        </div>
+      </main>
+      {mobile && (
+        <Drawer open={menu} side="left" width={280} title="Navigation" onClose={() => setMenu(false)}>
+          <div style={{ margin: -24 }}>{nav}</div>
+        </Drawer>
+      )}
+      {rec && (
+        <Dialog open eyebrow={'AI recommendation · ' + rec.shipment} title={rec.title} onClose={() => setRec(null)}
+          footer={<><Button variant="ghost" onClick={() => setRec(null)}>Dismiss</Button><Button icon="sparkles" onClick={apply}>Apply recommendation</Button></>}>
+          <p>Adds $1,120 and protects the Friday delivery window. Confidence 94%.</p>
+        </Dialog>
+      )}
+      {toast && (
+        <div style={{ position: 'fixed', right: 24, bottom: 24, zIndex: 200 }}>
+          <Toast {...toast} onAction={() => setToast(null)} onClose={() => setToast(null)} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
