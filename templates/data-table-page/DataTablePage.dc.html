@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Data table page" description="List view: tabs, filter chips, sortable selectable table, pagination — with drawer detail" -->
+<helmet><script src="./ds-base.js"></script><style>body{margin:0;background:#F8FAFC}</style></helmet>
+<div style="display:flex;min-height:100vh;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#0A1931">
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.SidebarNav" base="../.." value="ship" items="{{ nav }}" hint-size="240px,100vh"></x-import>
+<main style="flex:1;min-width:0;display:flex;flex-direction:column">
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Topbar" title="Shipments" user="{{ user }}" notifications="{{ true }}" hint-size="100%,56px"><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Button" size="sm" icon="plus" hint-size="120px,32px">New quote</x-import></x-import>
+<div style="padding:28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Tabs" items="{{ tabs }}" value="{{ tab }}" on-change="{{ setTab }}" style="flex:1" hint-size="400px,40px"></x-import>
+<div style="display:flex;gap:8px"><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Tag" selected="{{ oceanOn }}" on-click="{{ toggleOcean }}" hint-size="70px,28px">Ocean</x-import><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Tag" selected="{{ airOn }}" on-click="{{ toggleAir }}" hint-size="60px,28px">Air</x-import><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Tag" selected="{{ landOn }}" on-click="{{ toggleLand }}" hint-size="60px,28px">Land</x-import></div></div>
+<section style="background:#fff;border:1px solid #E2E8F0;border-radius:12px;box-shadow:0 1px 2px rgba(10,25,49,.06);overflow:hidden">
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Table" columns="{{ columns }}" rows="{{ rows }}" selectable="{{ true }}" selected="{{ selected }}" on-select="{{ setSelected }}" sort="{{ sort }}" on-sort="{{ onSort }}" on-row-click="{{ openRow }}" hint-size="100%,320px"></x-import>
+<div style="padding:12px 20px;border-top:1px solid #E2E8F0"><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Pagination" page="{{ page }}" page-count="{{ 7 }}" total="{{ 128 }}" page-size="{{ 6 }}" on-change="{{ setPage }}" hint-size="100%,32px"></x-import></div></section>
+</div></main>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Drawer" open="{{ drawerOpen }}" title="{{ drawerTitle }}" eyebrow="Shipment" on-close="{{ closeRow }}" hint-size="0,0"><div style="display:flex;flex-direction:column;gap:14px"><p style="margin:0">{{ drawerLane }}</p><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Progress" value="{{ drawerProgress }}" mode="{{ drawerMode }}" label="Journey" show-value="{{ true }}" hint-size="100%,24px"></x-import><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Timeline" events="{{ events }}" orientation="vertical" hint-size="100%,200px"></x-import></div></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'all', modes: [], selected: [], sort: { key: 'eta', dir: 'asc' }, page: 1, row: null };
+  data = [
+    { id: 'AIX-48211', lane: 'Shenzhen → Hamburg', mode: 'ocean', status: ['success', 'On time'], eta: '14 Sep', value: '$12,480', progress: 62 },
+    { id: 'AIX-48197', lane: 'Chicago → Monterrey', mode: 'land', status: ['warning', 'At risk'], eta: '11 Sep', value: '$3,940', progress: 41 },
+    { id: 'AIX-48190', lane: 'Frankfurt → Nairobi', mode: 'air', status: ['success', 'On time'], eta: '10 Sep', value: '$8,120', progress: 88 },
+    { id: 'AIX-48176', lane: 'Rotterdam → Santos', mode: 'ocean', status: ['danger', 'Delayed'], eta: '19 Sep', value: '$21,300', progress: 30 },
+    { id: 'AIX-48163', lane: 'Duisburg → Chengdu', mode: 'rail', status: ['success', 'On time'], eta: '22 Sep', value: '$15,760', progress: 18 },
+    { id: 'AIX-48150', lane: 'Los Angeles → Tokyo', mode: 'air', status: ['neutral', 'Booked'], eta: '12 Sep', value: '$2,210', progress: 5 },
+  ];
+  toggle(m) { this.setState(s => ({ modes: s.modes.includes(m) ? s.modes.filter(x => x !== m) : [...s.modes, m] })); }
+  renderVals() {
+    const DS = window.AiXFreightDesignSystem_0c3a26 || {}; const s = this.state;
+    const rows = this.data.filter(r => (s.tab === 'all' || (s.tab === 'exc' && ['warning', 'danger'].includes(r.status[0])) || (s.tab === 'done' && false)) && (s.modes.length === 0 || s.modes.includes(r.mode) || (s.modes.includes('land') && r.mode === 'rail')))
+      .sort((a, b) => { const k = s.sort.key; const c = String(a[k]).localeCompare(String(b[k])); return s.sort.dir === 'asc' ? c : -c; });
+    const columns = [
+      { key: 'id', label: 'Shipment', mono: true, sortable: true },
+      { key: 'lane', label: 'Lane', muted: true },
+      { key: 'mode', label: 'Mode', render: (m) => DS.ModeBadge ? React.createElement(DS.ModeBadge, { mode: m, size: 'sm' }) : m },
+      { key: 'status', label: 'Status', render: (st) => DS.Badge ? React.createElement(DS.Badge, { tone: st[0], dot: true }, st[1]) : st[1] },
+      { key: 'eta', label: 'ETA', mono: true, sortable: true, nowrap: true },
+      { key: 'value', label: 'Value', mono: true, align: 'right' },
+    ];
+    const row = s.row;
+    return {
+      nav: [{ value: 'dash', label: 'Dashboard', icon: 'layoutDashboard' }, { value: 'ship', label: 'Shipments', icon: 'package', count: 3 }, { value: 'routes', label: 'Routes', icon: 'route' }, { value: 'docs', label: 'Documents', icon: 'fileText' }, { value: 'settings', label: 'Settings', icon: 'settings' }],
+      user: { name: 'Maya Krishnan' },
+      tabs: [{ value: 'all', label: 'All', count: this.data.length }, { value: 'exc', label: 'Exceptions', count: 2 }, { value: 'done', label: 'Delivered' }],
+      tab: s.tab, setTab: (v) => this.setState({ tab: v }),
+      oceanOn: s.modes.includes('ocean'), airOn: s.modes.includes('air'), landOn: s.modes.includes('land'),
+      toggleOcean: () => this.toggle('ocean'), toggleAir: () => this.toggle('air'), toggleLand: () => this.toggle('land'),
+      columns, rows, selected: s.selected, setSelected: (k) => this.setState({ selected: k }),
+      sort: s.sort, onSort: (k) => this.setState(st => ({ sort: { key: k, dir: st.sort.key === k && st.sort.dir === 'asc' ? 'desc' : 'asc' } })),
+      page: s.page, setPage: (p) => this.setState({ page: p }),
+      openRow: (r) => this.setState({ row: r }), closeRow: () => this.setState({ row: null }),
+      drawerOpen: !!row, drawerTitle: row ? row.id : '', drawerLane: row ? row.lane + ' · ' + row.value : '', drawerProgress: row ? row.progress : 0, drawerMode: row ? row.mode : 'ocean',
+      events: [{ time: '08 Sep', title: 'Departed origin', done: true }, { time: '10 Sep', title: 'AI ETA revised −6h', done: true, ai: true }, { time: row ? row.eta : '—', title: 'Delivery', current: true }],
+    };
+  }
+}
+</script>
+</body>
+</html>

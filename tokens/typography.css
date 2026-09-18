@@ -1,0 +1,23 @@
+:root{
+--font-display:"Saira Condensed",system-ui,sans-serif;
+--font-body:"IBM Plex Sans",system-ui,sans-serif;
+--font-mono:"IBM Plex Mono",ui-monospace,monospace;
+/* Display (Saira Condensed) */
+--text-display-xl:64px;--lh-display-xl:1;/* @kind other */
+--text-display-lg:48px;--lh-display-lg:1.05;/* @kind other */
+--text-display-md:36px;--lh-display-md:1.1;/* @kind other */
+--text-display-sm:28px;--lh-display-sm:1.15;/* @kind other */
+--text-heading:22px;--lh-heading:1.2;/* @kind other */
+/* Body (IBM Plex Sans) */
+--text-body-lg:17px;--lh-body-lg:1.6;/* @kind other */
+--text-body:15px;--lh-body:1.55;/* @kind other */
+--text-body-sm:13px;--lh-body-sm:1.5;/* @kind other */
+/* Mono captions (IBM Plex Mono 500) */
+--text-caption:12px;--lh-caption:1.4;/* @kind other */
+--text-caption-sm:11px;
+--tracking-caption:.08em;
+--tracking-display:-.01em;
+--weight-display:700;--weight-display-sub:600;--weight-display-light:500;
+--weight-body:400;--weight-body-medium:500;--weight-body-semibold:600;
+--weight-mono:500;
+}

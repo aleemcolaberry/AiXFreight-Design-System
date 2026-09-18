@@ -1,0 +1,15 @@
+import React from 'react';
+import { IconButton } from '../core/IconButton.jsx';
+export function Dialog({ open = true, title, eyebrow, children, footer, onClose, width = 520, inline, style }) {
+  React.useEffect(() => { if (!open || !onClose) return; const h = (e) => { if (e.key === 'Escape') onClose(); }; document.addEventListener('keydown', h); return () => document.removeEventListener('keydown', h); }, [open, onClose]);
+  if (!open) return null;
+  const panel = React.createElement('div', { role: 'dialog', 'aria-modal': !inline, 'aria-label': title, style: { width: '100%', maxWidth: width, background: 'var(--surface-card)', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-lg)', display: 'flex', flexDirection: 'column', overflow: 'hidden', fontFamily: 'var(--font-body)', ...style } },
+    React.createElement('header', { style: { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '24px 24px 0', gap: 16 } },
+      React.createElement('div', { style: { minWidth: 0, flex: '1 1 auto' } }, eyebrow ? React.createElement('div', { style: { fontFamily: 'var(--font-mono)', fontWeight: 500, fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 4 } }, eyebrow) : null,
+        React.createElement('h2', { style: { fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 28, lineHeight: 1.1, textTransform: 'uppercase', margin: 0, overflowWrap: 'anywhere', textWrap: 'balance' } }, title)),
+      onClose ? React.createElement(IconButton, { icon: 'x', label: 'Close', onClick: onClose }) : null),
+    React.createElement('div', { style: { padding: 24, color: 'var(--text-secondary)', fontSize: 15, lineHeight: 1.55 } }, children),
+    footer ? React.createElement('footer', { style: { display: 'flex', justifyContent: 'flex-end', gap: 8, padding: '16px 24px', background: 'var(--surface-sunken)' } }, footer) : null);
+  if (inline) return panel;
+  return React.createElement('div', { onClick: onClose, style: { position: 'fixed', inset: 0, background: 'rgba(10,25,49,.6)', backdropFilter: 'blur(4px)', display: 'grid', placeItems: 'center', padding: 24, zIndex: 100 } }, React.createElement('div', { onClick: (e) => e.stopPropagation(), style: { width: '100%', display: 'flex', justifyContent: 'center' } }, panel));
+}

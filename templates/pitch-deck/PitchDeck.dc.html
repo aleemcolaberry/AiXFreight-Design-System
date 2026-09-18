@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Presentation deck" description="1920×1080 deck: title, section header, big number, three-up, table, quote, closing — navy/white rhythm with the route motif" -->
+<helmet><script src="./ds-base.js"></script><style>html,body{margin:0;height:100%;background:#0A1931}</style></helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+<section data-label="Title" style="overflow:hidden;background:#0A1931;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:100px 120px 90px;font-family:'IBM Plex Sans',sans-serif;position:relative;overflow:hidden">
+<img src="../../assets/logo/mark-dark.svg" alt="" style="position:absolute;right:120px;top:120px;width:560px">
+<img src="../../assets/logo/lockup-horizontal-dark.svg" alt="AiXFreight" style="position:absolute;left:120px;top:90px;height:64px">
+<div style="font:500 26px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#FF6B00;margin-bottom:28px">Q3 2026 · Investor update</div>
+<h1 style="margin:0;font:700 128px/.95 'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:-.01em;max-width:1200px">Freight that thinks ahead of the route</h1>
+<p style="margin:36px 0 0;font-size:34px;color:#8FA3BA;max-width:900px;line-height:1.4">Multimodal booking, tracking and AI rerouting across land, air and ocean.</p>
+</section>
+<section data-label="Section" style="overflow:hidden;background:#FF6B00;color:#0A1931;display:flex;flex-direction:column;justify-content:flex-end;padding:100px 120px 90px;font-family:'IBM Plex Sans',sans-serif">
+<div style="font:500 28px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px">01 · Traction</div>
+<h2 style="margin:0;font:700 160px/.95 'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:-.01em">Where we are</h2>
+</section>
+<section data-label="Big number" style="overflow:hidden;background:#fff;color:#0A1931;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:100px 120px 80px;font-family:'IBM Plex Sans',sans-serif;gap:80px">
+<div><div style="font:500 26px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">On-time delivery rate</div><div style="font:700 340px/.9 'Saira Condensed',sans-serif;letter-spacing:-.02em;color:#0A1931;margin:20px 0 0">96.2<span style="color:#FF6B00">%</span></div></div>
+<div style="display:flex;flex-direction:column;gap:36px;font-size:36px;line-height:1.45;color:#475569"><p style="margin:0">Up from 91.8% in Q2 after AI rerouting went live on ocean lanes.</p><p style="margin:0">Industry average for mixed-mode forwarders sits at 84%.</p></div>
+</section>
+<section data-label="Three-up" style="overflow:hidden;background:#F8FAFC;color:#0A1931;display:flex;flex-direction:column;padding:100px 120px 80px;font-family:'IBM Plex Sans',sans-serif">
+<div style="font:500 26px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">02 · Platform</div>
+<h2 style="margin:16px 0 64px;font:700 84px/1 'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:-.01em">One chain across three modes</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;flex:1">
+<div style="background:#fff;border:1px solid #E2E8F0;border-radius:24px;padding:48px;display:flex;flex-direction:column;gap:20px"><div style="width:120px;height:80px;border:16px solid #3A4450;border-radius:999px"></div><h3 style="margin:16px 0 0;font:600 52px/1.05 'Saira Condensed',sans-serif;text-transform:uppercase">Land &amp; rail</h3><p style="margin:0;font-size:30px;line-height:1.45;color:#475569">Cross-border trucking and intermodal rail with live telematics.</p></div>
+<div style="background:#fff;border:1px solid #E2E8F0;border-radius:24px;padding:48px;display:flex;flex-direction:column;gap:20px"><div style="width:120px;height:80px;border:16px solid #FFAB00;border-radius:999px"></div><h3 style="margin:16px 0 0;font:600 52px/1.05 'Saira Condensed',sans-serif;text-transform:uppercase">Air</h3><p style="margin:0;font-size:30px;line-height:1.45;color:#475569">Priority uplift on 140 lanes when the AI needs to protect a deadline.</p></div>
+<div style="background:#fff;border:1px solid #E2E8F0;border-radius:24px;padding:48px;display:flex;flex-direction:column;gap:20px"><div style="width:120px;height:80px;border:16px solid #0F55A0;border-radius:999px"></div><h3 style="margin:16px 0 0;font:600 52px/1.05 'Saira Condensed',sans-serif;text-transform:uppercase">Ocean</h3><p style="margin:0;font-size:30px;line-height:1.45;color:#475569">FCL and LCL with congestion forecasts and eco-lane options.</p></div>
+</div></section>
+<section data-label="Table" style="overflow:hidden;background:#fff;color:#0A1931;display:flex;flex-direction:column;padding:100px 120px 80px;font-family:'IBM Plex Sans',sans-serif">
+<div style="font:500 26px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">03 · Unit economics</div>
+<h2 style="margin:16px 0 56px;font:700 84px/1 'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:-.01em">Savings per shipment by mode</h2>
+<table style="width:100%;border-collapse:collapse;font-size:32px">
+<thead><tr><th style="text-align:left;padding:20px 24px;border-bottom:3px solid #0A1931;font:500 24px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">Mode</th><th style="text-align:right;padding:20px 24px;border-bottom:3px solid #0A1931;font:500 24px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">Shipments</th><th style="text-align:right;padding:20px 24px;border-bottom:3px solid #0A1931;font:500 24px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">Avg saving</th><th style="text-align:right;padding:20px 24px;border-bottom:3px solid #0A1931;font:500 24px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">On-time</th></tr></thead>
+<tbody>
+<tr><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;font-weight:600"><span style="display:inline-block;width:20px;height:20px;border-radius:999px;background:#0F55A0;margin-right:16px;vertical-align:middle"></span>Ocean</td><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;text-align:right;font-family:'IBM Plex Mono',monospace">6,120</td><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;text-align:right;font-family:'IBM Plex Mono',monospace">$860</td><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;text-align:right;font-family:'IBM Plex Mono',monospace">95.1%</td></tr>
+<tr><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;font-weight:600"><span style="display:inline-block;width:20px;height:20px;border-radius:999px;background:#3A4450;margin-right:16px;vertical-align:middle"></span>Land &amp; rail</td><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;text-align:right;font-family:'IBM Plex Mono',monospace">2,480</td><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;text-align:right;font-family:'IBM Plex Mono',monospace">$310</td><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;text-align:right;font-family:'IBM Plex Mono',monospace">97.4%</td></tr>
+<tr><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;font-weight:600"><span style="display:inline-block;width:20px;height:20px;border-radius:999px;background:#2FA8DC;margin-right:16px;vertical-align:middle"></span>Air</td><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;text-align:right;font-family:'IBM Plex Mono',monospace">1,790</td><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;text-align:right;font-family:'IBM Plex Mono',monospace">$1,240</td><td style="padding:26px 24px;border-bottom:1px solid #E2E8F0;text-align:right;font-family:'IBM Plex Mono',monospace">98.0%</td></tr>
+<tr><td style="padding:26px 24px;font-weight:700"><span style="display:inline-block;width:20px;height:20px;border-radius:999px;background:#FF6B00;margin-right:16px;vertical-align:middle"></span>All modes</td><td style="padding:26px 24px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:700">10,390</td><td style="padding:26px 24px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:700">$794</td><td style="padding:26px 24px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:700">96.2%</td></tr>
+</tbody></table></section>
+<section data-label="Quote" style="overflow:hidden;background:#0A1931;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:100px 160px 80px;font-family:'IBM Plex Sans',sans-serif">
+<div style="font:700 200px/.6 'Saira Condensed',sans-serif;color:#FF6B00;margin-bottom:24px">“</div>
+<blockquote style="margin:0;font:600 72px/1.15 'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:-.01em;max-width:1500px">The AI moved our pallets to air before the port even announced the delay.</blockquote>
+<div style="margin-top:48px;font:500 26px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8FA3BA">Head of Logistics · Nordwind Components</div>
+</section>
+<section data-label="Closing" style="overflow:hidden;background:#0A1931;color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 120px 80px;font-family:'IBM Plex Sans',sans-serif;gap:40px">
+<img src="../../assets/logo/lockup-vertical-dark.svg" alt="AiXFreight" style="height:360px">
+<h2 style="margin:0;font:700 96px/1 'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:-.01em">One journey</h2>
+<div style="font:500 28px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8FA3BA">aixfreight.com · hello@aixfreight.com</div>
+</section>
+</x-import>
+</x-dc>
+</body>
+</html>

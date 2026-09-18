@@ -1,0 +1,17 @@
+<!-- @dsCard group="Components" viewport="700x520" name="Navigation" subtitle="SidebarNav, Topbar, Breadcrumb, Stepper, Pagination, DropdownMenu" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css"><script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script><script src="../../_ds_bundle.js"></script>
+<style>body{padding:16px;background:#fff}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:14px}.lbl{font:500 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);width:80px;flex:none}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const { Button, IconButton, Badge, ModeBadge, Tag, Icon, Logo, RouteLine, Input, Select, Checkbox, Radio, Switch, Textarea, Card, Tabs, Dialog, Toast, Tooltip, Drawer, Breadcrumb, Pagination, Stepper, SidebarNav, Topbar, DropdownMenu, Alert, Progress, Skeleton, EmptyState, Avatar, StatCard, Table, Timeline, Accordion } = window.AiXFreightDesignSystem_0c3a26;
+function App(){const [p,setP]=React.useState(3);const [nav,setNav]=React.useState('ship');return <>
+<div style={{display:'flex',border:'1px solid var(--border-default)',borderRadius:12,overflow:'hidden',height:230,marginBottom:16}}>
+<SidebarNav base="../.." value={nav} onChange={setNav} items={[{value:'dash',label:'Dashboard',icon:'layoutDashboard'},{value:'ship',label:'Shipments',icon:'package',count:3},{value:'routes',label:'Routes',icon:'route'},{value:'docs',label:'Documents',icon:'fileText'}]} style={{minHeight:0}}/>
+<div style={{flex:1,minWidth:0}}><Topbar title="Shipments" breadcrumb={<Breadcrumb items={[{label:'Home'}]} />} actions={<Button size="sm" icon="plus">New quote</Button>} user={{name:'Maya Krishnan'}} notifications/><div style={{padding:20}}><Stepper steps={['Details','Routes','Confirm']} current={1}/></div></div></div>
+<div className="row"><span className="lbl">Breadcrumb</span><Breadcrumb items={[{label:'Shipments'},{label:'Ocean'},'AIX-48211']}/></div>
+<div className="row"><span className="lbl">Pagination</span><Pagination page={p} pageCount={7} total={128} pageSize={20} onChange={setP} style={{flex:1}}/></div>
+<div className="row" style={{marginBottom:0}}><span className="lbl">Dropdown</span><DropdownMenu open trigger={<Button variant="secondary" size="sm" iconRight="chevronDown">Actions</Button>} items={[{label:'Share tracking',icon:'route',shortcut:'S'},{label:'Download docs',icon:'download'},'-',{label:'Cancel shipment',icon:'x',danger:true}]}/><div style={{width:220}}/></div>
+</>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

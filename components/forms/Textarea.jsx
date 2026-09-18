@@ -1,0 +1,9 @@
+import React from 'react';
+export function Textarea({ label, hint, error, required, rows = 4, maxLength, value, defaultValue, onChange, disabled, placeholder, style }) {
+  const [focus, setFocus] = React.useState(false); const [len, setLen] = React.useState((value ?? defaultValue ?? '').length);
+  return React.createElement('label', { style: { display: 'flex', flexDirection: 'column', gap: 6, fontFamily: 'var(--font-body)', ...style } },
+    label ? React.createElement('span', { style: { fontFamily:'var(--font-mono)',fontWeight:500,fontSize:11,letterSpacing:'.08em',textTransform:'uppercase', color: error ? 'var(--color-danger)' : 'var(--text-secondary)' } }, label, required ? React.createElement('span', { style: { color: 'var(--accent)' } }, ' *') : null) : null,
+    React.createElement('textarea', { rows, maxLength, value, defaultValue, disabled, placeholder, onFocus: () => setFocus(true), onBlur: () => setFocus(false), onChange: (e) => { setLen(e.target.value.length); onChange && onChange(e); },
+      style: { resize: 'vertical', padding: '10px 12px', background: disabled ? 'var(--surface-sunken)' : 'var(--surface-card)', border: '1px solid ' + (error ? 'var(--color-danger)' : focus ? 'var(--border-strong)' : 'var(--border-default)'), borderRadius: 'var(--radius-md)', boxShadow: focus ? '0 0 0 3px rgba(10,25,49,.12)' : 'none', fontFamily: 'var(--font-body)', fontSize: 14, lineHeight: 1.5, color: 'var(--text-primary)', outline: 0, transition: 'box-shadow var(--duration-fast), border-color var(--duration-fast)' } }),
+    React.createElement('span', { style: { display: 'flex', justifyContent: 'space-between', fontSize: 12, color: error ? 'var(--color-danger)' : 'var(--text-muted)' } }, React.createElement('span', null, error || hint || ''), maxLength ? React.createElement('span', { style: { fontFamily: 'var(--font-mono)' } }, len + '/' + maxLength) : null));
+}

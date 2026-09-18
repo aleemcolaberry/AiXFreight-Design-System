@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Settings / form page" description="Two-column settings form: section nav, grouped fields, AI automation controls, sticky save bar" -->
+<helmet><script src="./ds-base.js"></script><style>body{margin:0;background:#F8FAFC}</style></helmet>
+<div style="display:flex;min-height:100vh;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#0A1931">
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.SidebarNav" base="../.." value="settings" items="{{ nav }}" hint-size="240px,100vh"></x-import>
+<main style="flex:1;min-width:0;display:flex;flex-direction:column">
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Topbar" title="Settings" search="{{ false }}" user="{{ user }}" hint-size="100%,56px"></x-import>
+<div style="padding:28px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;align-items:start;max-width:1100px">
+<nav style="display:flex;flex-direction:column;gap:2px;position:sticky;top:28px">
+<a href="#" style="display:flex;align-items:center;height:36px;padding:0 12px;border-radius:8px;background:#fff;border:1px solid #E2E8F0;color:#0A1931;font-weight:600;font-size:14px;text-decoration:none">Organization</a>
+<a href="#" style="display:flex;align-items:center;height:36px;padding:0 12px;border-radius:8px;color:#475569;font-weight:500;font-size:14px;text-decoration:none">Automation</a>
+<a href="#" style="display:flex;align-items:center;height:36px;padding:0 12px;border-radius:8px;color:#475569;font-weight:500;font-size:14px;text-decoration:none">Notifications</a>
+<a href="#" style="display:flex;align-items:center;height:36px;padding:0 12px;border-radius:8px;color:#475569;font-weight:500;font-size:14px;text-decoration:none">Billing</a>
+</nav>
+<div style="display:flex;flex-direction:column;gap:20px">
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Card" eyebrow="Organization" title="Company profile" hint-size="100%,300px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Input" label="Company name" default-value="Nordwind Components GmbH" required="{{ true }}" hint-size="100%,66px"></x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Input" label="EORI number" default-value="DE 4821 1907 4411" hint="Used on customs declarations" hint-size="100%,66px"></x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Select" label="Default incoterm" options="{{ incoterms }}" value="FOB" hint-size="100%,66px"></x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Select" label="Currency" options="{{ currencies }}" value="EUR" hint-size="100%,66px"></x-import>
+</div>
+<div style="margin-top:16px"><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Textarea" label="Default delivery instructions" max-length="{{ 280 }}" rows="{{ 3 }}" default-value="Deliver to dock 4. Forklift available on site." hint-size="100%,120px"></x-import></div>
+</x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Card" eyebrow="Automation" title="AI copilot" hint-size="100%,260px">
+<div style="display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:16px"><div><div style="font-weight:600;font-size:14px">Auto-apply reroutes</div><div style="font-size:13px;color:#475569">Applies recommendations below the threshold without review.</div></div><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Switch" checked="{{ auto }}" on-change="{{ setAuto }}" hint-size="40px,22px"></x-import></div>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Input" label="Cost threshold" default-value="2,000" prefix="$" suffix="per shipment" disabled="{{ autoOff }}" hint-size="100%,66px"></x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Radio" label="Optimize for" options="{{ goals }}" value="{{ goal }}" on-change="{{ setGoal }}" direction="row" hint-size="100%,60px"></x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Alert" tone="ai" title="Estimated impact" hint-size="100%,60px">{{ impact }}</x-import>
+</div></x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Card" eyebrow="Notifications" title="Alerts" hint-size="100%,160px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Checkbox" checked="{{ true }}" label="ETA changes over 6 hours" hint-size="100%,20px"></x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Checkbox" checked="{{ true }}" label="Customs holds" hint-size="100%,20px"></x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Checkbox" label="Weekly savings summary" hint-size="100%,20px"></x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Checkbox" checked="{{ true }}" label="AI recommendations" hint-size="100%,20px"></x-import>
+</div></x-import>
+<div style="position:sticky;bottom:0;display:flex;justify-content:flex-end;gap:8px;padding:16px 0;background:linear-gradient(180deg,rgba(248,250,252,0),#F8FAFC 40%)"><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Button" variant="ghost" hint-size="90px,40px">Discard</x-import><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Button" icon="check" on-click="{{ save }}" hint-size="140px,40px">Save changes</x-import></div>
+</div></div></main>
+<sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}"><div style="position:fixed;right:24px;bottom:24px;z-index:200"><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Toast" tone="success" title="Settings saved" message="Applies to new shipments from now." on-close="{{ dismiss }}" hint-size="380px,70px"></x-import></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { auto: true, goal: 'Balanced', saved: false };
+  renderVals() {
+    const s = this.state; const imp = { 'Lowest cost': 'About $3,900 saved per month; 1.2 more days average transit.', 'Balanced': 'About $2,400 saved per month; on-time rate held at 96%.', 'Fastest': 'Transit down 2.1 days average; about $1,800 more per month.' };
+    return {
+      nav: [{ value: 'dash', label: 'Dashboard', icon: 'layoutDashboard' }, { value: 'ship', label: 'Shipments', icon: 'package' }, { value: 'routes', label: 'Routes', icon: 'route' }, { value: 'docs', label: 'Documents', icon: 'fileText' }, { value: 'settings', label: 'Settings', icon: 'settings' }],
+      user: { name: 'Maya Krishnan' }, incoterms: ['FOB', 'CIF', 'DDP', 'EXW'], currencies: ['EUR', 'USD', 'GBP', 'CNY'], goals: ['Lowest cost', 'Balanced', 'Fastest'],
+      auto: s.auto, autoOff: !s.auto, setAuto: (v) => this.setState({ auto: v }), goal: s.goal, setGoal: (v) => this.setState({ goal: v }), impact: imp[s.goal],
+      saved: s.saved, save: () => { this.setState({ saved: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ saved: false }), 3500); }, dismiss: () => this.setState({ saved: false }),
+    };
+  }
+}
+</script>
+</body>
+</html>

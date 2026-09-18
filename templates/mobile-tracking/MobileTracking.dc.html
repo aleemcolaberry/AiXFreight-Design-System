@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Mobile tracking screen" description="390×844 consignee tracking view: navy header with route motif, ETA card, milestones, AI notice" -->
+<helmet><script src="./ds-base.js"></script><style>body{margin:0;background:#E2E8F0;display:grid;place-items:center;min-height:100vh;padding:24px}</style></helmet>
+<div style="width:390px;height:844px;background:#F8FAFC;border-radius:44px;overflow:hidden;box-shadow:0 30px 80px rgba(10,25,49,.35);display:flex;flex-direction:column;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#0A1931;position:relative">
+<header style="background:#0A1931;color:#fff;padding:60px 24px 28px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:center;justify-content:space-between"><img src="../../assets/logo/mark-dark.svg" alt="AiXFreight" style="height:32px"><span style="font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8FA3BA">Tracking</span></div>
+<div><div style="font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8FA3BA">AIX-48211</div><h1 style="margin:6px 0 0;font:700 34px/1 'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:-.01em">Shenzhen <span style="color:#8FA3BA">→</span> Hamburg</h1></div>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.RouteLine" from="land" to="ocean" progress="{{ 62 }}" ai-at="{{ 0.55 }}" inverse="{{ true }}" height="{{ 64 }}" hint-size="100%,64px"></x-import>
+</header>
+<div style="flex:1;overflow:auto;padding:20px 20px 100px;display:flex;flex-direction:column;gap:14px">
+<section style="background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+<div><div style="font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">Estimated delivery</div><div style="font:700 36px/1 'Saira Condensed',sans-serif;margin-top:6px">14 Sep</div><div style="font:500 12px 'IBM Plex Mono',monospace;color:#475569;margin-top:4px">09:40 · Hamburg DC</div></div>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Badge" tone="success" dot="{{ true }}" hint-size="80px,22px">On time</x-import>
+</section>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<section style="background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:16px"><div style="font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">Mode</div><div style="margin-top:8px"><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.ModeBadge" mode="ocean" size="sm" hint-size="70px,22px"></x-import></div></section>
+<section style="background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:16px"><div style="font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">Cargo</div><div style="font:500 13px 'IBM Plex Mono',monospace;margin-top:8px">2 × 40HC</div></section>
+</div>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Alert" tone="ai" title="ETA revised −6h" hint-size="100%,70px">A faster weather window through Malacca. No action needed.</x-import>
+<section style="background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:20px"><div style="font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5;margin-bottom:16px">Milestones</div>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Timeline" orientation="vertical" events="{{ events }}" hint-size="100%,260px"></x-import></section>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;padding:16px 20px 32px;background:linear-gradient(180deg,rgba(248,250,252,0),#F8FAFC 40%)"><x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Button" size="lg" full-width="{{ true }}" icon="bell" hint-size="100%,48px">Notify me on delivery</x-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return { events: [
+      { time: '08 Sep · 14:20', title: 'Departed Yantian terminal', where: 'Shenzhen, CN', done: true },
+      { time: '09 Sep · 03:05', title: 'Vessel MSC Aurora underway', where: 'South China Sea', done: true },
+      { time: '10 Sep · 11:00', title: 'AI ETA revised −6h', where: 'Malacca Strait', done: true, ai: true },
+      { time: '13 Sep', title: 'Arrival Port of Hamburg', where: 'Hamburg, DE', current: true },
+      { time: '14 Sep · 09:40', title: 'Delivery — Hamburg DC', where: 'Billbrook' },
+    ] };
+  }
+}
+</script>
+</body>
+</html>

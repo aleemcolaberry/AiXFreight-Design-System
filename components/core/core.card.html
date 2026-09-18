@@ -1,0 +1,20 @@
+<!-- @dsCard group="Components" viewport="700x340" name="Core" subtitle="Buttons, icon buttons, badges, mode pills, tags, icons" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{padding:16px;background:var(--surface-page)}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:14px}.lbl{font:500 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);width:70px;flex:none}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const { ThemeToggle, Button, IconButton, Badge, ModeBadge, Tag, Icon, Logo, Input, Select, Checkbox, Radio, Switch, Card, Tabs, Dialog, Toast, Tooltip } = window.AiXFreightDesignSystem_0c3a26;
+function App(){const [sel,setSel]=React.useState('Ocean');return <>
+<div className="row"><span className="lbl">Variants</span><Button>Primary</Button><Button variant="navy">Navy</Button><Button variant="secondary">Secondary</Button><Button variant="ghost">Ghost</Button><Button variant="danger">Danger</Button><Button disabled>Disabled</Button></div>
+<div className="row"><span className="lbl">Sizes</span><Button size="sm" icon="plus">Small</Button><Button icon="sparkles">Apply AI route</Button><Button size="lg" iconRight="arrowRight">Large</Button><IconButton icon="bell" label="Alerts" badge/><IconButton icon="filter" label="Filter" variant="outline"/><IconButton icon="plus" label="New" variant="filled"/></div>
+<div className="row"><span className="lbl">Badges</span><Badge>Draft</Badge><Badge tone="success" dot>On time</Badge><Badge tone="warning" dot>At risk</Badge><Badge tone="danger" dot>Delayed</Badge><Badge tone="info">Customs</Badge><Badge tone="ai">AI suggested</Badge><Badge tone="navy">Priority</Badge></div>
+<div className="row"><span className="lbl">Modes</span><ModeBadge mode="land"/><ModeBadge mode="rail"/><ModeBadge mode="air"/><ModeBadge mode="ocean"/><ModeBadge mode="eco"/><ModeBadge mode="ai"/><ModeBadge mode="ocean" size="sm" iconOnly/><ModeBadge mode="air" size="sm"/></div>
+<div className="row"><span className="lbl">Tags</span>{['Ocean','Air','Land'].map(t=><Tag key={t} selected={sel===t} onClick={()=>setSel(t)}>{t}</Tag>)}<Tag onRemove={()=>{}}>Hamburg</Tag><Tag onRemove={()=>{}}>40HC</Tag></div>
+<div className="row"><span className="lbl">Theme</span><ThemeToggle size="md"/><ThemeToggle variant="icon"/></div>
+<div className="row" style={{marginBottom:0}}><span className="lbl">Icons</span>{Icon.names.slice(0,22).map(n=><Icon key={n} name={n} size={20} color="var(--text-secondary)"/>)}</div>
+</>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

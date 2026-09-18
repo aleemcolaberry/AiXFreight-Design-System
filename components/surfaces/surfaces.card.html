@@ -1,0 +1,21 @@
+<!-- @dsCard group="Components" viewport="700x620" name="Surfaces" subtitle="Card, Tabs, Dialog, Toast, Tooltip" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{padding:16px;background:#fff}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:14px}.lbl{font:500 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);width:70px;flex:none}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const { Button, IconButton, Badge, ModeBadge, Tag, Icon, Logo, Input, Select, Checkbox, Radio, Switch, Card, Tabs, Dialog, Toast, Tooltip } = window.AiXFreightDesignSystem_0c3a26;
+function App(){const [t,setT]=React.useState('all');return <>
+<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginBottom:12}}>
+<Card eyebrow="Shipment" title="AIX-48211" actions={<Badge tone="success" dot>On time</Badge>} footer={<><span className="aix-caption">ETA 14 Sep · 09:40</span><Button size="sm" variant="ghost" iconRight="arrowRight">Details</Button></>} interactive><div style={{display:'flex',gap:8,alignItems:'center'}}><ModeBadge mode="ocean" size="sm"/><span style={{fontSize:13,color:'var(--text-secondary)'}}>Shenzhen → Hamburg · 2 × 40HC</span></div></Card>
+<Card inverse eyebrow="AI recommendation" title="Switch lane 2 to air" footer={<><span className="aix-caption" style={{color:'var(--text-on-inverse-muted)'}}>Confidence 94%</span><Button size="sm" icon="sparkles">Apply</Button></>}><p style={{fontSize:13,color:'var(--text-on-inverse-muted)'}}>Port congestion adds 4.2 days. +$1,120 keeps the Friday window.</p></Card>
+</div>
+<div style={{display:'flex',gap:24,alignItems:'flex-start',marginBottom:12}}><Tabs items={[{value:'all',label:'All',count:24},{value:'exc',label:'Exceptions',count:3},{value:'done',label:'Delivered'}]} value={t} onChange={setT} style={{flex:1}}/><Tabs variant="pill" items={['Map','List','Timeline']}/></div>
+<div style={{display:'flex',gap:12,alignItems:'flex-start'}}>
+<Dialog inline width={330} eyebrow="Confirm" title="Reroute to air?" onClose={()=>{}} footer={<><Button variant="ghost" size="sm">Cancel</Button><Button size="sm" icon="sparkles">Apply</Button></>}>Adds $1,120. Protects the Friday delivery window.</Dialog>
+<div style={{display:'flex',flexDirection:'column',gap:10}}><Toast tone="ai" title="Route updated" message="3 pallets moved to air." action="Undo" onClose={()=>{}} style={{width:320}}/><Toast tone="danger" title="Customs hold" message="MSKU 482 119-0 flagged at Rotterdam." style={{width:320}}/><div style={{paddingTop:28,paddingLeft:60}}><Tooltip content="Confidence 94%" open><Badge tone="ai">AI suggested</Badge></Tooltip></div></div>
+</div></>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

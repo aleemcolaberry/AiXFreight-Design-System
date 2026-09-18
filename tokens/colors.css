@@ -1,0 +1,149 @@
+:root{
+/* Brand */
+--color-navy:#0A1931;
+--color-navy-800:#12244A;
+--color-navy-700:#1B3160;
+--color-ai-orange:#FF6B00;
+--color-ai-orange-600:#E05E00;
+--color-ai-orange-100:#FFE8D6;
+--color-gold:#FFAB00;
+--color-gold-100:#FFF1CC;
+/* Mode colors (industry convention) */
+--color-land:#3A4450;
+--color-land-dark:#E2E8F0;
+--color-air:#2FA8DC;
+--color-air-dark:#3FC0F0;
+--color-ocean:#0F55A0;
+--color-ocean-dark:#4A9BE8;
+--color-eco:#0F8B8F;
+--color-eco-100:#D5F0F0;
+/* Neutrals */
+--color-slate:#475569;
+--color-gray:#8593A5;
+--color-steel:#8FA3BA;
+--color-mist:#E2E8F0;
+--color-fog:#F1F5F9;
+--color-snow:#F8FAFC;
+--color-white:#FFFFFF;
+/* Semantic status */
+--color-success:#0F8B8F;
+--color-success-bg:#D5F0F0;
+--color-warning:#FFAB00;
+--color-warning-fg:#8A5A00;
+--color-warning-bg:#FFF1CC;
+--color-danger:#D63B1F;
+--color-danger-bg:#FBE1DB;
+--color-info:#0F55A0;
+--color-info-bg:#DCE9F7;
+/* Semantic aliases — light */
+--surface-page:#F8FAFC;
+--surface-card:#FFFFFF;
+--surface-sunken:#F1F5F9;
+--surface-inverse:#0A1931;
+--surface-inverse-raised:#12244A;
+--text-primary:#0A1931;
+--text-secondary:#475569;
+--text-muted:#8593A5;
+--text-on-inverse:#FFFFFF;
+--text-on-inverse-muted:#8FA3BA;
+--text-on-accent:#FFFFFF;
+--text-link:#0F55A0;
+--text-link-hover:#0A1931;
+--border-default:#E2E8F0;
+--border-strong:#8593A5;
+--border-inverse:#1B3160;
+--accent:#FF6B00;
+--accent-hover:#E05E00;
+--accent-soft:#FFE8D6;
+--fill-selected:#0A1931;
+--fill-selected-fg:#FFFFFF;
+--fill-selected-hover:#1B3160;
+--focus-ring:0 0 0 3px rgba(255,107,0,.35);
+}
+
+
+/* ── Theming ───────────────────────────────────────────────
+   Light is the default. Three ways to switch:
+   1. <html data-theme="dark">  — explicit dark
+   2. <html data-theme="light"> — explicit light (beats system preference)
+   3. no attribute / data-theme="auto" — follows prefers-color-scheme
+   Brand primitives (--color-navy, --accent, --color-gold) never change; only semantic aliases and dark-mode steps flip.
+   Use the ThemeToggle component or window.AiXTheme.set('dark'|'light'|'auto') to switch at runtime. */
+[data-theme="dark"]{
+--surface-page:#0A1931;
+--surface-card:#12244A;
+--surface-sunken:#1B3160;
+--surface-inverse:#0A1931;
+--surface-inverse-raised:#1B3160;
+--text-primary:#FFFFFF;
+--text-secondary:#C7D2DE;
+--text-muted:#8FA3BA;
+--text-on-inverse:#FFFFFF;
+--text-on-inverse-muted:#8FA3BA;
+--text-link:#4A9BE8;
+--text-link-hover:#FFFFFF;
+--border-default:#1B3160;
+--border-strong:#8593A5;
+--border-inverse:#2A4470;
+--fill-selected:#4A9BE8;
+--fill-selected-fg:#0A1931;
+--fill-selected-hover:#6FB2F0;
+--color-land:#E2E8F0;
+--color-air:#3FC0F0;
+--color-ocean:#4A9BE8;
+--color-info:#4A9BE8;
+--color-info-bg:#15335F;
+--color-success:#3FC7CB;
+--color-success-bg:#0F3A3C;
+--color-eco:#3FC7CB;
+--color-warning-fg:#FFC44D;
+--color-warning-bg:#3D2E00;
+--color-danger:#FF7A5C;
+--color-danger-bg:#4A1A10;
+--accent-soft:#4A2A10;
+--color-ai-orange-600:#FF8A33;
+--color-mist:#2A4470;
+--shadow-sm:0 1px 2px rgba(0,0,0,.4);
+--shadow-md:0 4px 12px rgba(0,0,0,.45),0 1px 3px rgba(0,0,0,.3);
+--shadow-lg:0 16px 40px rgba(0,0,0,.6);
+}
+@media (prefers-color-scheme: dark){
+:root:not([data-theme="light"]):not([data-theme="dark"]),[data-theme="auto"]{
+--surface-page:#0A1931;
+--surface-card:#12244A;
+--surface-sunken:#1B3160;
+--surface-inverse:#0A1931;
+--surface-inverse-raised:#1B3160;
+--text-primary:#FFFFFF;
+--text-secondary:#C7D2DE;
+--text-muted:#8FA3BA;
+--text-on-inverse:#FFFFFF;
+--text-on-inverse-muted:#8FA3BA;
+--text-link:#4A9BE8;
+--text-link-hover:#FFFFFF;
+--border-default:#1B3160;
+--border-strong:#8593A5;
+--border-inverse:#2A4470;
+--fill-selected:#4A9BE8;
+--fill-selected-fg:#0A1931;
+--fill-selected-hover:#6FB2F0;
+--color-land:#E2E8F0;
+--color-air:#3FC0F0;
+--color-ocean:#4A9BE8;
+--color-info:#4A9BE8;
+--color-info-bg:#15335F;
+--color-success:#3FC7CB;
+--color-success-bg:#0F3A3C;
+--color-eco:#3FC7CB;
+--color-warning-fg:#FFC44D;
+--color-warning-bg:#3D2E00;
+--color-danger:#FF7A5C;
+--color-danger-bg:#4A1A10;
+--accent-soft:#4A2A10;
+--color-ai-orange-600:#FF8A33;
+--color-mist:#2A4470;
+--shadow-sm:0 1px 2px rgba(0,0,0,.4);
+--shadow-md:0 4px 12px rgba(0,0,0,.45),0 1px 3px rgba(0,0,0,.3);
+--shadow-lg:0 16px 40px rgba(0,0,0,.6);
+}
+}

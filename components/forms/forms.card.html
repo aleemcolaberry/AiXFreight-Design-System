@@ -1,0 +1,16 @@
+<!-- @dsCard group="Components" viewport="700x290" name="Forms" subtitle="Input, Select, Checkbox, Radio, Switch" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{padding:16px;background:#fff}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:14px}.lbl{font:500 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);width:70px;flex:none}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const { Button, IconButton, Badge, ModeBadge, Tag, Icon, Logo, Input, Select, Checkbox, Radio, Switch, Card, Tabs, Dialog, Toast, Tooltip } = window.AiXFreightDesignSystem_0c3a26;
+function App(){const [m,setM]=React.useState('Ocean');const [c,setC]=React.useState(true);const [r,setR]=React.useState('FOB');const [s,setS]=React.useState(true);return <>
+<div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:12,marginBottom:16}}><Input label="Origin" icon="mapPin" placeholder="Shenzhen, CN" required/><Input label="Weight" defaultValue="18200" suffix="kg"/><Input label="Container" defaultValue="MSKU 482 119-0" error="Check digit invalid"/></div>
+<div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:12,marginBottom:16}}><Select label="Mode" options={['Ocean','Air','Land']} value={m} onChange={setM}/><Select label="Incoterm" placeholder="Choose…" options={['FOB','CIF','DDP']}/><Input label="Disabled" disabled defaultValue="Read only"/></div>
+<div className="row" style={{gap:28,marginBottom:0}}><Checkbox checked={c} onChange={setC} label="Customs brokerage" description="Handled by AiXFreight"/><Checkbox indeterminate label="Insurance"/><Radio options={['FOB','CIF','DDP']} value={r} onChange={setR} direction="row"/><Switch checked={s} onChange={setS} label="AI auto-reroute"/><Switch size="sm" label="Off"/></div>
+</>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

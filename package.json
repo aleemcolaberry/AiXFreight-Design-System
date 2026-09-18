@@ -1,0 +1,43 @@
+{
+  "name": "@aixfreight/design-system",
+  "version": "1.0.1",
+  "description": "AiXFreight design system — tokens, React components, templates",
+  "license": "UNLICENSED",
+  "private": true,
+  "homepage": "https://aleemcolaberry.github.io/AiXFreight-Design-System/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aleemcolaberry/AiXFreight-Design-System.git"
+  },
+  "main": "_ds_bundle.js",
+  "style": "styles.css",
+  "files": [
+    "styles.css",
+    "tokens",
+    "components",
+    "assets",
+    "_ds_bundle.js",
+    "README.md",
+    "DESIGN-GUIDE.md",
+    "guidelines"
+  ],
+  "scripts": {
+    "start": "npx --yes serve -l 8080 ."
+  },
+  "peerDependencies": {
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "exports": {
+    ".": "./_ds_bundle.js",
+    "./styles.css": "./styles.css",
+    "./tokens.json": "./tokens/tokens.json",
+    "./tailwind": "./tokens/tailwind.preset.js"
+  },
+  "keywords": [
+    "design-system",
+    "aixfreight",
+    "tokens",
+    "react"
+  ]
+}
