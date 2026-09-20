@@ -129,25 +129,90 @@ This repo is the unbundled export of the Claude Design project **AiXFreight Desi
 4. Add focus-trap and arrow-key navigation once the target framework is known (Headless UI or Radix if React).
 5. Photography direction and one or two approved hero images.
 
-## Building with Claude Code
+## Building applications with the skill pack
 
-The repo ships a Claude Code skill at [.claude/skills/aixfreight-design-system/](.claude/skills/aixfreight-design-system/). It teaches Claude how to locate the design system, which integration mode to use (static prototype, React app, or non-React port), how to compose pages from the components, the house voice, the AI recommendation pattern, and a definition of done. It also bundles a page starter and a checker script.
+The repo ships a Claude Code skill at [.claude/skills/aixfreight-design-system/](.claude/skills/aixfreight-design-system/). Installed, it makes Claude Code build AiXFreight screens the way this design system intends: right components, right tokens, the house voice, the AI recommendation pattern, every state handled, and a checker that catches the mechanical mistakes. This section is the developer walkthrough. The packaged copy is [aixfreight-design-system.skill](aixfreight-design-system.skill).
 
-Install it in one of three ways:
+### 1. Install the skill (once)
 
-1. **Working inside this repo:** nothing to do. Claude Code picks up `.claude/skills/` automatically. Ask for "the exceptions page for the control tower" and the skill triggers.
-2. **In your product repo:** copy the folder to `<your-repo>/.claude/skills/aixfreight-design-system/` and commit it, so every developer on the project gets it.
-3. **For yourself on every project:** copy it to `~/.claude/skills/aixfreight-design-system/`, or open the packaged `aixfreight-design-system.skill` file in Claude and choose "Save skill".
+| Situation | What to do |
+|---|---|
+| You work inside this repo | Nothing. Claude Code reads `.claude/skills/` automatically. |
+| Your product has its own repo | Copy `.claude/skills/aixfreight-design-system/` into `<your-repo>/.claude/skills/` and commit it. Everyone who clones the product gets the skill. |
+| You want it on every project | Copy the folder to `~/.claude/skills/aixfreight-design-system/`, or open `aixfreight-design-system.skill` in Claude and choose **Save skill**. |
 
-Check any page you build against the mechanical rules (palette, gradients, emoji, one orange button per view, labels on icon buttons, overflow) with:
+Check it is active: run `claude` in the project and type `/aixfreight-design-system`. The skill's description also triggers on its own whenever a request mentions AiXFreight, the control tower, loads, shipments, quotes, carriers or any page for the product.
+
+### 2. Put the design-system runtime where Claude can find it
+
+The skill locates the design system by searching for `_ds_manifest.json`. Give it one of these:
+
+- **This repo cloned next to your product**, for example `../AiXFreight-Design-System`. Good for prototypes.
+- **A copy inside the product**, for example `_ds/aixfreight/` holding `styles.css`, `tokens/`, `assets/logo/` and `_ds_bundle.js` (add `components/` if you import source). This is what the reference app does. To upgrade later, replace the folder.
+
+If neither exists, Claude asks where the design system is; tell it the path or let it clone `aleemcolaberry/AiXFreight-Design-System`.
+
+### 3. Pick the integration mode and say it once
+
+The skill supports three modes and asks you to choose per project:
+
+- **A. Static page or prototype**: HTML files, React from a CDN or a vendored copy, the compiled bundle, Babel in the browser. No build tooling. Best for demos and click-throughs.
+- **B. React app** (Vite, Next, Remix): copy `tokens/`, `styles.css`, `assets/logo/` and `components/` into `src/design-system/` and import components from source. Do not load the bundle in a bundled app.
+- **C. Non-React stack** (Vue, Svelte, Angular, server templates): use `styles.css` and the tokens as-is, port the components you need from their `.d.ts` contracts and `.jsx` source, keep the prop names.
+
+Tailwind works in every mode through `tokens/tailwind.preset.js`.
+
+### 4. Ask for screens the way the skill expects
+
+Write the brief the way a product owner would, then let the skill do the design work. Prompts that work well:
+
+```
+Build the Exceptions page for the control tower: at-risk shipments with lane, mode,
+ETA and what the AI proposes, filter by mode and severity, a side panel with the
+milestones, and a way to apply the AI recommendation. Static HTML prototype.
+```
+
+```
+Add a Settings page to our Vite app in src/pages/Settings.jsx using the design
+system in src/design-system: account, notification matrix, AI automation
+controls, appearance, billing. Must work on a phone.
+```
+
+```
+Review src/pages/Loads.jsx against the AiXFreight design system and fix anything
+off-brand, unreadable in dark mode, or inaccessible.
+```
+
+What Claude does with the skill loaded, in order: names the view's single orange call to action, picks the matching page recipe (app shell, list, detail, settings, landing, deck, mobile), composes from the 36 components before writing custom markup, wires any AI action as cost + impact + confidence → dialog → toast with Undo, writes copy in the house voice, adds loading, empty and error states, and finishes by running the checker and viewing the page in light, dark and at 1440 / 1024 / 390 wide.
+
+### 5. Build a whole app, not just a page
+
+For multi-page products the pattern that worked is:
+
+1. Write a short architecture contract first: routes, shared shell, state, and the shape of a page module. Keep it in `docs/ARCHITECTURE.md` so every page request can point at it.
+2. Let Claude build the shell, router and shared pieces once.
+3. Ask for one page per request (or per parallel agent), each owning exactly one file, each told to read the skill, the contract and the shared core before writing.
+4. Verify with a browser-driven script that signs in and walks every route, not only by reading the code.
+
+The reference implementation is the product app itself: [AiXFreight-UI-V02](https://github.com/aleemcolaberry/AiXFreight-UI-V02) (private). Its `docs/ARCHITECTURE.md` is the contract, `app/core.jsx` is the shared core, and every page under `app/pages/` was produced by Claude Code from the skill plus that contract. Copy its structure for the next product.
+
+### 6. Check before you ship
+
+Run the checker on any file you touched. It flags off-palette hex, gradients, emoji, exclamation marks, more than one orange button per view, icon buttons without labels, placeholder-only fields and unsafe `nowrap`:
 
 ```bash
 node .claude/skills/aixfreight-design-system/scripts/check-page.mjs path/to/page.html
 ```
 
-The root `SKILL.md` is the short entry Claude Design reads; it points at the same full skill.
+Then open the page in a browser in light and dark (run `window.AiXTheme.set('dark')` in the console, because the theme helper resets a static attribute at load) and at desktop, compact and phone widths. The skill's definition of done lists what to confirm.
 
-Two pages built by Claude Code from the skill alone, with no hand edits, live in [examples/](examples/) so the team can see the expected output: an [Exceptions page](examples/exceptions.html) (list, filters, detail drawer, AI recommendation flow) and a [Settings page](examples/settings.html) (account, notification matrix, AI automation controls, appearance, billing, phone layout). Both are served on the live site under `/examples/`.
+### 7. Know the gaps
+
+The skill documents workarounds for the component gaps found so far (keyboard support on clickable tags, Escape closing a drawer under a dialog, card padding, drawer width on phones, missing phone / mail / chat icons, no dark step for eco). They are listed under "Known issues" in [CHANGELOG.md](CHANGELOG.md) and belong to the Claude Design project, not to your app. If you hit a new one, add it there rather than patching the design system inside your product.
+
+### Examples
+
+Two pages built by Claude Code from the skill alone, with no hand edits, live in [examples/](examples/): an [Exceptions page](examples/exceptions.html) and a [Settings page](examples/settings.html). Both are served on the live site under `/examples/`. The root `SKILL.md` is the short entry Claude Design reads; it points at the same full skill.
 
 ## Credits
 
