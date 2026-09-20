@@ -3,6 +3,7 @@
 Brand foundations, 36 React components, 6 page templates and a control-tower UI kit for **AiXFreight**, the AI-driven multimodal freight platform (land · air · ocean · one journey).
 
 - **Live site:** https://aleemcolaberry.github.io/AiXFreight-Design-System/
+- **Read the guides online:** https://aleemcolaberry.github.io/AiXFreight-Design-System/guide.html (this README, the design guide, every rule, the Claude Code skill and its references, in one place)
 - **Design guide (the "why"):** [DESIGN-GUIDE.md](DESIGN-GUIDE.md)
 - **Rules:** [guidelines/](guidelines/) · **Audit and open questions:** [AUDIT.md](AUDIT.md) · **Contributing:** [CONTRIBUTING.md](CONTRIBUTING.md) · **Changes:** [CHANGELOG.md](CHANGELOG.md)
 - **Source of truth:** the Claude Design project this repo is exported from. Edit tokens, components and templates there or here, but keep the two in sync (see [Keeping in sync with Claude Design](#keeping-in-sync-with-claude-design)).

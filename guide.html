@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AiXFreight Design Guide</title>
+<meta name="description" content="Everything a developer needs to build with the AiXFreight design system and its Claude Code skill: design guide, rules, component API, tokens, page recipes, integration.">
+<link rel="icon" href="assets/logo/app-icon.svg">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js" crossorigin="anonymous"></script>
+<style>
+  /* Layout only; every color is a token so the page follows the light/dark preference like the console. */
+  html, body { height: 100%; }
+  body { display: flex; flex-direction: column; overflow: hidden; }
+  .top { flex: none; height: var(--topbar-height); background: var(--surface-inverse); color: var(--text-on-inverse); border-bottom: 1px solid var(--border-inverse); display: flex; align-items: center; gap: 16px; padding: 0 20px; z-index: 20; }
+  .top .title { font-family: var(--font-display); font-weight: 600; font-size: 18px; text-transform: uppercase; letter-spacing: var(--tracking-display); white-space: nowrap; }
+  .top .spacer { flex: 1; min-width: 0; }
+  .top a { color: var(--text-on-inverse-muted); font-size: var(--text-body-sm); font-weight: 500; white-space: nowrap; }
+  .top a:hover { color: var(--text-on-inverse); text-decoration: none; }
+  .ibtn { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: var(--radius-md); border: 1px solid var(--border-inverse); background: transparent; color: var(--text-on-inverse); cursor: pointer; flex: none; }
+  .ibtn:hover { background: var(--surface-inverse-raised); }
+  .ibtn svg { width: 18px; height: 18px; }
+  .search { display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: var(--radius-md); background: var(--surface-inverse-raised); border: 1px solid var(--border-inverse); color: var(--text-on-inverse); width: clamp(160px, 24vw, 300px); }
+  .search:focus-within { box-shadow: var(--focus-ring); }
+  .search input { flex: 1; min-width: 0; background: transparent; border: 0; color: inherit; font: inherit; font-size: var(--text-body-sm); outline: none; box-shadow: none; }
+  .search input::placeholder { color: var(--text-on-inverse-muted); }
+  .frame { flex: 1; min-height: 0; display: flex; }
+  .side { flex: none; width: 300px; background: var(--surface-card); border-right: 1px solid var(--border-default); overflow: auto; padding: 20px 16px 40px; }
+  .group { margin-bottom: 20px; }
+  .group .aix-caption { display: block; padding: 0 12px 8px; }
+  .doc { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: 0; background: transparent; color: var(--text-secondary); font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: var(--radius-md); cursor: pointer; min-width: 0; }
+  .doc:hover { background: var(--surface-sunken); color: var(--text-primary); }
+  .doc.active { background: var(--fill-selected); color: var(--fill-selected-fg); }
+  .doc span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .toc { margin: 4px 0 8px 22px; border-left: 2px solid var(--border-default); display: flex; flex-direction: column; }
+  .toc a { display: block; padding: 5px 12px; font-size: 13px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-left: 2px solid transparent; margin-left: -2px; }
+  .toc a.h3 { padding-left: 24px; font-size: 12px; }
+  .toc a:hover, .toc a.on { color: var(--text-primary); text-decoration: none; border-left-color: var(--accent); }
+  .main { flex: 1; min-width: 0; overflow: auto; background: var(--surface-page); }
+  .page { max-width: 880px; margin: 0 auto; padding: 40px 40px 96px; }
+  .crumb { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .lede { color: var(--text-secondary); font-size: var(--text-body-lg); line-height: var(--lh-body-lg); margin: 8px 0 24px; max-width: 70ch; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-bottom: 28px; }
+  .meta a { font-size: var(--text-body-sm); }
+  .prose { font-size: var(--text-body); line-height: var(--lh-body); color: var(--text-primary); }
+  .prose > :first-child { margin-top: 0; }
+  .prose h1 { font-size: var(--text-display-md); line-height: var(--lh-display-md); margin: 0 0 12px; }
+  .prose h2 { font-size: var(--text-display-sm); line-height: var(--lh-display-sm); font-weight: var(--weight-display-sub); margin: 48px 0 14px; padding-top: 20px; border-top: 1px solid var(--border-default); }
+  .prose h3 { font-size: var(--text-heading); line-height: var(--lh-heading); font-weight: var(--weight-display-sub); margin: 32px 0 10px; }
+  .prose h4 { font-family: var(--font-mono); font-weight: var(--weight-mono); font-size: var(--text-caption); letter-spacing: var(--tracking-caption); text-transform: uppercase; color: var(--text-muted); margin: 24px 0 8px; }
+  .prose p { margin: 0 0 14px; max-width: 76ch; }
+  .prose ul, .prose ol { margin: 0 0 16px; padding-left: 22px; }
+  .prose li { margin: 4px 0; }
+  .prose li > p { margin: 0; }
+  .prose a { text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 2px; }
+  .prose a:hover { text-decoration-color: currentColor; }
+  .prose strong { font-weight: var(--weight-body-semibold); }
+  .prose blockquote { margin: 0 0 16px; padding: 12px 16px; border-left: 3px solid var(--color-gold); background: var(--surface-sunken); border-radius: 0 var(--radius-md) var(--radius-md) 0; color: var(--text-secondary); }
+  .prose hr { border: 0; border-top: 1px solid var(--border-default); margin: 32px 0; }
+  .prose code { font-family: var(--font-mono); font-weight: var(--weight-mono); font-size: .9em; background: var(--surface-sunken); border: 1px solid var(--border-default); border-radius: var(--radius-sm); padding: 1px 6px; overflow-wrap: anywhere; }
+  .prose pre { position: relative; margin: 0 0 18px; padding: 16px 18px; background: var(--surface-inverse); color: var(--text-on-inverse); border-radius: var(--radius-lg); overflow: auto; font-size: 13px; line-height: 1.55; }
+  .prose pre code { background: transparent; border: 0; padding: 0; color: inherit; font-size: inherit; overflow-wrap: normal; white-space: pre; }
+  .prose pre .copy { position: absolute; top: 10px; right: 10px; border: 1px solid var(--border-inverse); background: var(--surface-inverse-raised); color: var(--text-on-inverse); font-family: var(--font-mono); font-size: 11px; letter-spacing: var(--tracking-caption); text-transform: uppercase; padding: 4px 8px; border-radius: var(--radius-sm); cursor: pointer; }
+  .prose pre .copy:hover { border-color: var(--border-strong); }
+  .prose .tbl { overflow-x: auto; margin: 0 0 18px; border: 1px solid var(--border-default); border-radius: var(--radius-lg); background: var(--surface-card); }
+  .prose table { border-collapse: collapse; min-width: 100%; width: max-content; max-width: none; }
+  .prose th { font-family: var(--font-mono); font-weight: var(--weight-mono); font-size: var(--text-caption-sm); letter-spacing: var(--tracking-caption); text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border-default); background: var(--surface-sunken); white-space: nowrap; }
+  .prose td { padding: 10px 14px; border-bottom: 1px solid var(--border-default); vertical-align: top; font-size: 14px; max-width: 46ch; }
+  .prose tr:last-child td { border-bottom: 0; }
+  .prose td code { white-space: nowrap; }
+  .prose img { max-width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--border-default); }
+  .prose h2 a.anchor, .prose h3 a.anchor { text-decoration: none; color: var(--text-muted); margin-left: 8px; opacity: 0; font-family: var(--font-mono); font-weight: 400; }
+  .prose h2:hover a.anchor, .prose h3:hover a.anchor { opacity: 1; }
+  .pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border-default); }
+  .pager a { display: flex; flex-direction: column; gap: 4px; text-decoration: none; min-width: 0; max-width: 48%; }
+  .pager a:hover { text-decoration: none; }
+  .pager .lbl { font-family: var(--font-mono); font-weight: var(--weight-mono); font-size: var(--text-caption-sm); letter-spacing: var(--tracking-caption); text-transform: uppercase; color: var(--text-muted); }
+  .pager .ttl { font-weight: 600; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pager a.next { text-align: right; margin-left: auto; }
+  .state { padding: 48px 0; color: var(--text-secondary); }
+  .skel { height: 14px; border-radius: var(--radius-sm); background: var(--surface-sunken); margin: 10px 0; }
+  .alert { display: flex; gap: 12px; padding: 14px 16px; border-radius: var(--radius-lg); background: var(--color-danger-bg); color: var(--color-danger); border: 1px solid var(--border-default); }
+  .alert a { color: inherit; }
+  .badge { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-weight: var(--weight-mono); font-size: 11px; letter-spacing: var(--tracking-caption); text-transform: uppercase; background: var(--accent-soft); color: var(--color-ai-orange-600); white-space: nowrap; }
+  .badge.navy { background: var(--fill-selected); color: var(--fill-selected-fg); }
+  .scrim { display: none; }
+  .hide-mobile { display: inline-flex; }
+  @media (max-width: 899px) {
+    .side { position: fixed; inset: var(--topbar-height) auto 0 0; width: min(320px, 88vw); transform: translateX(-100%); transition: transform var(--duration-slow) var(--ease-out); z-index: 30; box-shadow: var(--shadow-lg); }
+    .side.open { transform: none; }
+    .scrim { display: block; position: fixed; inset: var(--topbar-height) 0 0 0; background: rgba(10,25,49,.6); z-index: 25; opacity: 0; pointer-events: none; transition: opacity var(--duration-base) var(--ease-out); }
+    .scrim.on { opacity: 1; pointer-events: auto; }
+    .page { padding: 24px 16px 80px; }
+    .hide-mobile { display: none; }
+    .search { width: auto; flex: 1; }
+    .top .title, .top .spacer { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .side, .scrim { transition: none; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="ibtn" id="menuBtn" aria-label="Open contents" aria-expanded="false" aria-controls="side"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  <a href="index.html" aria-label="AiXFreight design system home" style="display:flex;align-items:center"><img src="assets/logo/lockup-horizontal-dark.svg" alt="AiXFreight" style="height:30px;width:auto"></a>
+  <span class="title">Design guide</span>
+  <span class="spacer"></span>
+  <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="q" type="search" placeholder="Filter guides and headings" aria-label="Filter guides and headings"></label>
+  <a class="hide-mobile" href="index.html">System home</a>
+  <a class="hide-mobile" href="https://github.com/aleemcolaberry/AiXFreight-Design-System" rel="noopener">GitHub</a>
+  <button class="ibtn" id="themeBtn" aria-label="Switch theme"><svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</header>
+<div class="frame">
+  <div class="scrim" id="scrim"></div>
+  <nav class="side" id="side" aria-label="Guides"></nav>
+  <main class="main" id="main"><div class="page" id="page"><div class="state"><div class="skel" style="width:40%"></div><div class="skel"></div><div class="skel" style="width:85%"></div><div class="skel" style="width:70%"></div></div></div></main>
+</div>
+<script>
+(() => {
+  // Documents in reading order. Paths are relative to this file (the repo root); they are the same files the repo ships.
+  const GROUPS = [
+    { label: 'Start here', docs: [
+      { path: 'README.md', title: 'Developer quick start', lede: 'Run the system, use tokens and components in a product, deploy, and the guide to building applications with the Claude Code skill pack.' },
+      { path: 'DESIGN-GUIDE.md', title: 'Design guide', lede: 'Context, content fundamentals, visual foundations, iconography, components, theming: the why behind every decision.' },
+    ] },
+    { label: 'Rules', docs: [
+      { path: 'guidelines/accessibility.md', title: 'Accessibility' },
+      { path: 'guidelines/theming.md', title: 'Theming: light and dark' },
+      { path: 'guidelines/layout.md', title: 'Layout and text overflow' },
+      { path: 'guidelines/motion.md', title: 'Motion' },
+      { path: 'guidelines/writing.md', title: 'Writing and voice' },
+      { path: 'guidelines/contributing.md', title: 'Contributing to the system' },
+    ] },
+    { label: 'Claude Code skill', docs: [
+      { path: '.claude/skills/aixfreight-design-system/SKILL.md', title: 'The skill: how Claude builds with this system', lede: 'What Claude Code reads before it builds an AiXFreight screen: integration modes, the build workflow, non-negotiables, voice, pitfalls, definition of done.' },
+      { path: '.claude/skills/aixfreight-design-system/references/components.md', title: 'Component API (all 36)' },
+      { path: '.claude/skills/aixfreight-design-system/references/tokens.md', title: 'Tokens, light and dark' },
+      { path: '.claude/skills/aixfreight-design-system/references/patterns.md', title: 'Page recipes and patterns' },
+      { path: '.claude/skills/aixfreight-design-system/references/integration.md', title: 'Integration guide' },
+    ] },
+    { label: 'Project', docs: [
+      { path: 'CONTRIBUTING.md', title: 'Contributing and PR checklist' },
+      { path: 'CHANGELOG.md', title: 'Changelog and known issues' },
+      { path: 'AUDIT.md', title: 'Audit and open decisions' },
+    ] },
+  ];
+  const DOCS = GROUPS.flatMap((g) => g.docs.map((d) => ({ ...d, group: g.label })));
+  const byPath = (p) => DOCS.find((d) => d.path === p);
+  const $ = (s) => document.querySelector(s);
+  const side = $('#side'), page = $('#page'), main = $('#main'), q = $('#q');
+  const cache = {};
+  let current = null, headings = [];
+
+  // ── Theme (same key and semantics as the design system's ThemeToggle) ──
+  const KEY = 'aix-theme';
+  const sys = () => (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const pref = () => { try { return localStorage.getItem(KEY) || 'auto'; } catch (e) { return 'auto'; } };
+  const resolved = () => (pref() === 'auto' ? sys() : pref());
+  function applyTheme() {
+    const p = pref(), el = document.documentElement;
+    if (p === 'auto') el.removeAttribute('data-theme'); else el.setAttribute('data-theme', p);
+    const dark = resolved() === 'dark';
+    $('#iconMoon').style.display = dark ? 'none' : ''; $('#iconSun').style.display = dark ? '' : 'none';
+    $('#themeBtn').setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+  $('#themeBtn').addEventListener('click', () => { try { localStorage.setItem(KEY, resolved() === 'dark' ? 'light' : 'dark'); } catch (e) {} applyTheme(); });
+  applyTheme();
+
+  // ── Sidebar ──
+  const slug = (s) => String(s).toLowerCase().replace(/<[^>]+>/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 64);
+  function renderSide(filter) {
+    const f = (filter || '').trim().toLowerCase();
+    side.innerHTML = GROUPS.map((g) => {
+      const docs = g.docs.filter((d) => !f || d.title.toLowerCase().includes(f) || (current && d.path === current.path && headings.some((h) => h.text.toLowerCase().includes(f))));
+      if (!docs.length) return '';
+      return `<div class="group"><span class="aix-caption">${g.label}</span>${docs.map((d) => {
+        const on = current && d.path === current.path;
+        const toc = on && headings.length ? `<div class="toc">${headings.filter((h) => !f || h.text.toLowerCase().includes(f) || d.title.toLowerCase().includes(f)).map((h) => `<a class="${h.level === 3 ? 'h3' : ''}" href="#${encodeURIComponent(d.path)}:${h.id}" data-h="${h.id}">${h.text}</a>`).join('')}</div>` : '';
+        return `<button class="doc${on ? ' active' : ''}" data-path="${d.path}" aria-current="${on ? 'page' : 'false'}"><span>${d.title}</span></button>${toc}`;
+      }).join('')}</div>`;
+    }).join('') || '<p class="state">No guide matches.</p>';
+  }
+  side.addEventListener('click', (e) => {
+    const b = e.target.closest('button.doc'); if (b) { location.hash = '#' + encodeURIComponent(b.dataset.path); closeMenu(); return; }
+    const a = e.target.closest('a[data-h]'); if (a) closeMenu();
+  });
+  q.addEventListener('input', () => renderSide(q.value));
+
+  // ── Mobile menu ──
+  const menuBtn = $('#menuBtn'), scrim = $('#scrim');
+  function openMenu() { side.classList.add('open'); scrim.classList.add('on'); menuBtn.setAttribute('aria-expanded', 'true'); }
+  function closeMenu() { side.classList.remove('open'); scrim.classList.remove('on'); menuBtn.setAttribute('aria-expanded', 'false'); }
+  menuBtn.addEventListener('click', () => (side.classList.contains('open') ? closeMenu() : openMenu()));
+  scrim.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+  // ── Markdown rendering ──
+  const renderer = new marked.Renderer();
+  renderer.heading = function ({ text, depth, tokens }) {
+    const inner = this.parser.parseInline(tokens);
+    const id = slug(text);
+    const anchor = depth === 2 || depth === 3 ? `<a class="anchor" href="#${encodeURIComponent(current.path)}:${id}" aria-label="Link to this section">#</a>` : '';
+    return `<h${depth} id="${id}">${inner}${anchor}</h${depth}>\n`;
+  };
+  renderer.table = function (token) {
+    const head = '<tr>' + token.header.map((c) => `<th${c.align ? ` style="text-align:${c.align}"` : ''}>${this.parser.parseInline(c.tokens)}</th>`).join('') + '</tr>';
+    const body = token.rows.map((r) => '<tr>' + r.map((c) => `<td${c.align ? ` style="text-align:${c.align}"` : ''}>${this.parser.parseInline(c.tokens)}</td>`).join('') + '</tr>').join('');
+    return `<div class="tbl"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
+  };
+  renderer.code = function ({ text, lang }) {
+    const esc = text.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    return `<pre><button type="button" class="copy" aria-label="Copy code">Copy</button><code class="lang-${lang || 'text'}">${esc}</code></pre>`;
+  };
+  marked.use({ renderer, gfm: true, breaks: false });
+
+  function stripFrontmatter(md) {
+    const m = md.match(/^---\n([\s\S]*?)\n---\n/);
+    if (!m) return { md, meta: {} };
+    const meta = {};
+    m[1].split('\n').forEach((l) => { const i = l.indexOf(':'); if (i > 0 && !/^\s/.test(l)) meta[l.slice(0, i).trim()] = l.slice(i + 1).trim(); });
+    return { md: md.slice(m[0].length), meta };
+  }
+  function dirOf(p) { const i = p.lastIndexOf('/'); return i < 0 ? '' : p.slice(0, i + 1); }
+  function resolve(base, href) {
+    if (/^(https?:|mailto:|#|\/)/.test(href)) return href;
+    const parts = (dirOf(base) + href).split('/');
+    const out = [];
+    parts.forEach((s) => { if (s === '..') out.pop(); else if (s !== '.' && s !== '') out.push(s); });
+    return out.join('/');
+  }
+
+  async function load(path, headingId) {
+    const doc = byPath(path) || { path, title: path.split('/').pop(), group: 'Linked file' };
+    current = doc;
+    renderSide(q.value);
+    main.scrollTop = 0;
+    page.innerHTML = '<div class="state"><div class="skel" style="width:40%"></div><div class="skel"></div><div class="skel" style="width:85%"></div><div class="skel" style="width:70%"></div></div>';
+    let text = cache[path];
+    if (text == null) {
+      try { const r = await fetch(path, { cache: 'no-cache' }); if (!r.ok) throw new Error(r.status + ' ' + r.statusText); text = await r.text(); cache[path] = text; }
+      catch (err) { page.innerHTML = `<div class="alert"><span>Could not load <code>${path}</code> (${err.message}). This page reads the markdown files over HTTP, so open it from a server or the live site, not from a file:// path.</span></div>`; return; }
+    }
+    const { md, meta } = stripFrontmatter(text);
+    const html = marked.parse(md);
+    const idx = DOCS.indexOf(byPath(path));
+    const prev = idx > 0 ? DOCS[idx - 1] : null, next = idx >= 0 && idx < DOCS.length - 1 ? DOCS[idx + 1] : null;
+    const raw = 'https://github.com/aleemcolaberry/AiXFreight-Design-System/blob/main/' + path;
+    page.innerHTML = `
+      <div class="crumb"><span class="badge navy">${doc.group}</span>${meta.name ? `<span class="badge">skill · ${meta.name}</span>` : ''}</div>
+      ${doc.lede || meta.description ? `<p class="lede">${doc.lede || meta.description}</p>` : ''}
+      <div class="meta"><a href="${raw}" rel="noopener">View source on GitHub</a><a href="${path}" rel="noopener">Raw markdown</a></div>
+      <article class="prose">${html}</article>
+      <nav class="pager" aria-label="Previous and next guide">${prev ? `<a href="#${encodeURIComponent(prev.path)}"><span class="lbl">Previous</span><span class="ttl">${prev.title}</span></a>` : '<span></span>'}${next ? `<a class="next" href="#${encodeURIComponent(next.path)}"><span class="lbl">Next</span><span class="ttl">${next.title}</span></a>` : ''}</nav>`;
+    // Resolve relative links: markdown files open inside this viewer, everything else relative to the repo root.
+    page.querySelectorAll('article a[href]').forEach((a) => {
+      const href = a.getAttribute('href');
+      if (/^(https?:|mailto:)/.test(href)) { a.setAttribute('rel', 'noopener'); a.setAttribute('target', '_blank'); return; }
+      if (href.startsWith('#')) { a.setAttribute('href', '#' + encodeURIComponent(path) + ':' + href.slice(1).replace(/^#/, '')); return; }
+      const [file, frag] = href.split('#');
+      const target = resolve(path, file);
+      if (/\.md$/i.test(target)) a.setAttribute('href', '#' + encodeURIComponent(target) + (frag ? ':' + frag : ''));
+      else a.setAttribute('href', target + (frag ? '#' + frag : ''));
+    });
+    page.querySelectorAll('article img[src]').forEach((img) => { const s = img.getAttribute('src'); if (!/^(https?:|data:)/.test(s)) img.setAttribute('src', resolve(path, s)); });
+    headings = [...page.querySelectorAll('article h2, article h3')].map((h) => ({ id: h.id, text: h.textContent.replace(/#$/, '').trim(), level: Number(h.tagName[1]) }));
+    renderSide(q.value);
+    document.title = `${doc.title} · AiXFreight Design Guide`;
+    if (headingId) { const el = document.getElementById(headingId); if (el) el.scrollIntoView({ block: 'start' }); }
+  }
+  page.addEventListener('click', (e) => {
+    const c = e.target.closest('button.copy');
+    if (c) { const code = c.parentElement.querySelector('code'); navigator.clipboard && navigator.clipboard.writeText(code.textContent).then(() => { c.textContent = 'Copied'; setTimeout(() => { c.textContent = 'Copy'; }, 1500); }); }
+  });
+  // Highlight the visible section in the TOC
+  main.addEventListener('scroll', () => {
+    if (!headings.length) return;
+    let on = headings[0].id;
+    for (const h of headings) { const el = document.getElementById(h.id); if (el && el.getBoundingClientRect().top - main.getBoundingClientRect().top < 120) on = h.id; }
+    side.querySelectorAll('.toc a').forEach((a) => a.classList.toggle('on', a.dataset.h === on));
+  }, { passive: true });
+
+  // ── Routing: #<path> or #<path>:<heading> ──
+  function route() {
+    const h = decodeURIComponent(location.hash.replace(/^#/, ''));
+    if (!h) { location.replace('#' + encodeURIComponent(DOCS[0].path)); return; }
+    const i = h.indexOf(':');
+    const path = i < 0 ? h : h.slice(0, i), heading = i < 0 ? null : h.slice(i + 1);
+    if (current && current.path === path) { if (heading) { const el = document.getElementById(heading); if (el) el.scrollIntoView({ block: 'start' }); } return; }
+    load(path, heading);
+  }
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>
