@@ -1,6 +1,6 @@
 # AiXFreight Design System
 
-Brand foundations, 36 React components, 6 page templates and a control-tower UI kit for **AiXFreight**, the AI-driven multimodal freight platform (land · air · ocean · one journey).
+Brand foundations, 43 React components (seven groups, including failure states and AI disclosure/feedback), 6 page templates and a control-tower UI kit for **AiXFreight**, the AI-driven multimodal freight platform (land · air · ocean · one journey).
 
 - **Live site:** https://aleemcolaberry.github.io/AiXFreight-Design-System/
 - **Read the guides online:** https://aleemcolaberry.github.io/AiXFreight-Design-System/guide.html (this README, the design guide, every rule, the Claude Code skill and its references, in one place)

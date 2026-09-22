@@ -1,4 +1,4 @@
-const { Card, Badge, ModeBadge, Button, Icon, Table, StatCard } = window.AiXFreightDesignSystem_0c3a26;
+const { Card, Badge, ModeBadge, Button, Icon, Table, StatCard, AiDisclosure, AiFeedback } = window.AiXFreightDesignSystem_0c3a26;
 const SHIP_COLS = [{key:'id',label:'Shipment',mono:true},{key:'lane',label:'Lane',muted:true,render:(v,s)=>s.origin+' → '+s.dest},{key:'mode',label:'Mode',render:m=><ModeBadge mode={m} size="sm"/>},{key:'status',label:'Status',render:(v,s)=><Badge tone={s.status} dot>{s.label}</Badge>},{key:'eta',label:'ETA',mono:true,muted:true,nowrap:true}];
 window.SHIP_COLS = SHIP_COLS;
 function Stat({ label, value, delta, tone }) { return <StatCard label={label} value={value} delta={delta} deltaTone={tone}/>; }
@@ -10,9 +10,9 @@ function Dashboard({ go, openRec }) {
       <Table columns={SHIP_COLS} rows={D.shipments.slice(0,4)} onRowClick={s=>go('detail',s)}/>
     </Card>
     <div style={{display:'flex',flexDirection:'column',gap:16}}>
-      {D.recommendations.map(r=><Card key={r.id} inverse eyebrow="AI recommendation" title={r.title} footer={<><span className="aix-caption" style={{color:'var(--text-on-inverse-muted)'}}>Confidence {r.confidence}%</span><Button size="sm" icon="sparkles" onClick={()=>openRec(r)}>Review</Button></>}>
-        <p style={{fontSize:13,color:'var(--text-on-inverse-muted)',lineHeight:1.5}}>{r.body}</p>
-        <div style={{display:'flex',gap:16,marginTop:12}}><span style={{fontFamily:'var(--font-mono)',fontWeight:500,fontSize:13,color:'var(--color-gold)'}}>{r.delta}</span><span style={{fontFamily:'var(--font-mono)',fontWeight:500,fontSize:13,color:'var(--color-eco)'}}>{r.gain}</span></div></Card>)}
+      {D.recommendations.map(r=><Card key={r.id} inverse eyebrow="AI recommendation" title={r.title} footer={<><AiFeedback inverse size="sm" label="" style={{flex:1}}/><Button size="sm" icon="sparkles" onClick={()=>openRec(r)}>Review</Button></>}>
+        <div style={{display:'flex',gap:16,fontFamily:'var(--font-mono)',fontWeight:500,fontSize:13}}><span style={{color:'var(--color-gold)'}}>{r.delta}</span><span style={{color:'var(--color-eco)'}}>{r.gain}</span><span style={{color:'var(--text-on-inverse-muted)'}}>{r.confidence}%</span></div>
+        <AiDisclosure inverse confidence={r.confidence} rationale={r.body} sources={r.sources} limits={r.limits} style={{marginTop:12}}/></Card>)}
     </div>
     <Card eyebrow="Network" title="Mode mix · last 30 days" style={{gridColumn:'1 / -1'}}>
       <div style={{display:'flex',height:14,borderRadius:999,overflow:'hidden',gap:2}}><div style={{flex:54,background:'var(--color-ocean)'}}/><div style={{flex:22,background:'var(--color-land)'}}/><div style={{flex:16,background:'var(--color-air)'}}/><div style={{flex:8,background:'var(--color-eco)'}}/></div>

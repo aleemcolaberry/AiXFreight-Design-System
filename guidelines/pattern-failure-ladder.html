@@ -1,0 +1,11 @@
+<!-- @dsCard group="Patterns" viewport="700x300" name="Failure ladder" subtitle="Which surface for which failure — field · form · page · system · AI. Never a blank screen, never a raw error code" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css"><style>body{background:#fff;padding:16px;font-family:var(--font-body)}.cap{font:500 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}table{width:100%;border-collapse:collapse;font-size:12px}th{text-align:left;padding:6px 8px;border-bottom:2px solid var(--color-navy);font:500 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}td{padding:7px 8px;border-bottom:1px solid var(--border-default);vertical-align:top;line-height:1.4;color:var(--text-secondary)}td:first-child{font-weight:600;color:var(--text-primary)}code{font:500 11px var(--font-mono);background:var(--surface-sunken);padding:1px 5px;border-radius:3px;color:var(--text-primary)}</style></head><body>
+<table><thead><tr><th>Scope</th><th>Surface</th><th>Copy rule</th><th>Recovery</th></tr></thead><tbody>
+<tr><td>One field</td><td><code>Input error</code></td><td>What + how to fix, under the field</td><td>Fix inline; never block typing</td></tr>
+<tr><td>Whole form</td><td><code>FormErrorSummary</code> + field errors</td><td>"Fix N fields" · list linked to fields</td><td>Focus moves to summary, then to field</td></tr>
+<tr><td>One request</td><td><code>Alert danger</code> in place</td><td>Named object + cause + Retry</td><td>Retry keeps user input</td></tr>
+<tr><td>Whole page</td><td><code>ErrorPage</code></td><td>Canonical copy per kind; reference id on 500</td><td>Navy primary → nearest safe place</td></tr>
+<tr><td>Connection</td><td><code>ErrorPage offline</code> or top <code>Alert warning</code></td><td>Show last-update time; data stays visible</td><td>Auto-retry; sync on reconnect</td></tr>
+<tr><td>Irreversible action</td><td><code>ConfirmDialog</code> before · <code>Toast</code> undo after</td><td>Verb in button, consequences as bullets</td><td>Undo window ≥ 8 s when possible</td></tr>
+<tr><td>AI can't decide</td><td><code>AiFallback</code> in the recommendation slot</td><td>Why withheld + manual path, no orange</td><td>Manual route always one click away</td></tr>
+</tbody></table></body></html>

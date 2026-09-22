@@ -1,4 +1,4 @@
-const { Card, Badge, ModeBadge, Button, Tabs, Icon, Switch } = window.AiXFreightDesignSystem_0c3a26;
+const { Card, Badge, ModeBadge, Button, Tabs, Icon, Switch, AiDisclosure, AiFeedback } = window.AiXFreightDesignSystem_0c3a26;
 function ShipmentDetail({ s, openRec }) {
   const D = window.AIX_DATA; const rec = D.recommendations.find(r=>r.shipment===s.id); const [auto,setAuto]=React.useState(true);
   return <div className="aix-page">
@@ -8,8 +8,8 @@ function ShipmentDetail({ s, openRec }) {
       <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',borderTop:'1px solid var(--border-default)'}}>{[['Cargo',s.cargo],['Vessel','MSC Aurora · V.2439'],['Container',s.id.replace('AIX','MSKU')+'-0'],['Declared value',s.value]].map(([l,v])=><div key={l} style={{padding:'16px 24px',borderRight:'1px solid var(--border-default)'}}><div className="aix-caption">{l}</div><div style={{fontFamily:'var(--font-mono)',fontWeight:500,fontSize:14,marginTop:4}}>{v}</div></div>)}</div>
     </Card>
     <div style={{display:'flex',flexDirection:'column',gap:16}}>
-      {rec?<Card inverse eyebrow="AI recommendation" title={rec.title} footer={<><span className="aix-caption" style={{color:'var(--text-on-inverse-muted)'}}>Confidence {rec.confidence}%</span><Button size="sm" icon="sparkles" onClick={()=>openRec(rec)}>Review</Button></>}><p style={{fontSize:13,color:'var(--text-on-inverse-muted)',lineHeight:1.5}}>{rec.body}</p></Card>
-      :<Card inverse eyebrow="AI copilot" title="No action needed"><p style={{fontSize:13,color:'var(--text-on-inverse-muted)',lineHeight:1.5}}>Tracking on plan. ETA confidence 97%. We'll alert you if the window moves by more than 6 hours.</p></Card>}
+      {rec?<Card inverse eyebrow="AI recommendation" title={rec.title} footer={<><AiFeedback inverse size="sm" label="" style={{flex:1}}/><Button size="sm" icon="sparkles" onClick={()=>openRec(rec)}>Review</Button></>}><div style={{display:'flex',gap:16,fontFamily:'var(--font-mono)',fontWeight:500,fontSize:13}}><span style={{color:'var(--color-gold)'}}>{rec.delta}</span><span style={{color:'var(--color-eco)'}}>{rec.gain}</span><span style={{color:'var(--text-on-inverse-muted)'}}>{rec.confidence}%</span></div><AiDisclosure inverse confidence={rec.confidence} rationale={rec.body} sources={rec.sources} limits={rec.limits} style={{marginTop:12}}/></Card>
+      :<Card inverse eyebrow="AI copilot" title="No action needed"><p style={{fontSize:13,color:'var(--text-on-inverse-muted)',lineHeight:1.5}}>Tracking on plan. ETA confidence 97%. We'll alert you if the window moves by more than 6 hours.</p><AiDisclosure inverse confidence={97} title="Why this ETA" rationale="Vessel AIS position and Hamburg berth schedule agree on 14 Sep 09:40." sources={[{label:'MSC Aurora AIS',time:'08:12'},{label:'Port of Hamburg berth plan',time:'07:30'}]} limits={['Inland haulage slot not confirmed']} style={{marginTop:12}}/></Card>}
       <Card eyebrow="Settings" title="Automation"><Switch checked={auto} onChange={setAuto} label="AI auto-reroute under $2,000"/></Card>
     </div>
     <Card eyebrow="Timeline" title="Milestones" style={{gridColumn:'1 / -1'}}>

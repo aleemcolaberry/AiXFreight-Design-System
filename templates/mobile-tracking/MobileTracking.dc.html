@@ -7,7 +7,7 @@
 </head>
 <body>
 <x-dc>
-<!-- @template name="Mobile tracking screen" description="390×844 consignee tracking view: navy header with route motif, ETA card, milestones, AI notice" -->
+<!-- @template name="Mobile tracking screen" description="390×844 consignee tracking view: navy header with route motif, ETA card, milestones, AI notice with Why-this disclosure and feedback" -->
 <helmet><script src="./ds-base.js"></script><style>body{margin:0;background:#E2E8F0;display:grid;place-items:center;min-height:100vh;padding:24px}</style></helmet>
 <div style="width:390px;height:844px;background:#F8FAFC;border-radius:44px;overflow:hidden;box-shadow:0 30px 80px rgba(10,25,49,.35);display:flex;flex-direction:column;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#0A1931;position:relative">
 <header style="background:#0A1931;color:#fff;padding:60px 24px 28px;display:flex;flex-direction:column;gap:18px">
@@ -25,6 +25,8 @@
 <section style="background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:16px"><div style="font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5">Cargo</div><div style="font:500 13px 'IBM Plex Mono',monospace;margin-top:8px">2 × 40HC</div></section>
 </div>
 <x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Alert" tone="ai" title="ETA revised −6h" hint-size="100%,70px">A faster weather window through Malacca. No action needed.</x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.AiDisclosure" title="Why this ETA" confidence="{{ 97 }}" rationale="Vessel AIS position and the Hamburg berth plan agree on 14 Sep 09:40." sources="{{ sources }}" limits="{{ limits }}" hint-size="100%,40px"></x-import>
+<x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.AiFeedback" size="sm" label="Was this update useful?" reasons="{{ reasons }}" hint-size="100%,32px"></x-import>
 <section style="background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:20px"><div style="font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8593A5;margin-bottom:16px">Milestones</div>
 <x-import component-from-global-scope="AiXFreightDesignSystem_0c3a26.Timeline" orientation="vertical" events="{{ events }}" hint-size="100%,260px"></x-import></section>
 </div>
@@ -34,7 +36,7 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:440,&quot;height&quot;:900}}">
 class Component extends DCLogic {
   renderVals() {
-    return { events: [
+    return { sources: [{ label: 'MSC Aurora AIS', time: '08:12' }, { label: 'Port of Hamburg berth plan', time: '07:30' }], limits: ['Inland haulage slot not confirmed'], reasons: ['Wrong ETA', 'Not relevant', 'Too much detail'], events: [
       { time: '08 Sep · 14:20', title: 'Departed Yantian terminal', where: 'Shenzhen, CN', done: true },
       { time: '09 Sep · 03:05', title: 'Vessel MSC Aurora underway', where: 'South China Sea', done: true },
       { time: '10 Sep · 11:00', title: 'AI ETA revised −6h', where: 'Malacca Strait', done: true, ai: true },

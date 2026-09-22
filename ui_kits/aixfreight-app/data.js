@@ -8,8 +8,8 @@ window.AIX_DATA = {
     { id: 'AIX-48150', origin: 'Los Angeles, US', dest: 'Tokyo, JP', mode: 'air', status: 'neutral', label: 'Booked', eta: '12 Sep · 05:30', cargo: '2 pallets · 640 kg', value: '$2,210', progress: 5 },
   ],
   recommendations: [
-    { id: 'r1', title: 'Switch lane 2 to air', body: 'Port congestion at Los Angeles adds 4.2 days to AIX-48197. Moving the priority pallets to air keeps the delivery window.', delta: '+$1,120', gain: '−4.1 days', confidence: 94, shipment: 'AIX-48197' },
-    { id: 'r2', title: 'Consolidate 2 LCL bookings', body: 'AIX-48176 and a Rotterdam LCL share a sailing on 12 Sep. One FCL saves handling and reduces CO₂ by 18%.', delta: '−$860', gain: '−18% CO₂', confidence: 81, shipment: 'AIX-48176' },
+    { id: 'r1', title: 'Switch lane 2 to air', body: 'Port congestion at Los Angeles adds 4.2 days to AIX-48197. Moving the priority pallets to air keeps the delivery window.', delta: '+$1,120', gain: '−4.1 days', confidence: 94, shipment: 'AIX-48197', sources: [{ label: 'Port of LA congestion feed', time: '09:40' }, { label: 'Carrier air rates · 3 quotes', time: '09:38' }], limits: ['Customs dwell at Frankfurt not modelled', 'Air rates valid 2h'] },
+    { id: 'r2', title: 'Consolidate 2 LCL bookings', body: 'AIX-48176 and a Rotterdam LCL share a sailing on 12 Sep. One FCL saves handling and reduces CO₂ by 18%.', delta: '−$860', gain: '−18% CO₂', confidence: 81, shipment: 'AIX-48176', sources: [{ label: 'Rotterdam sailing schedule', time: '08:55' }, { label: 'CO₂ model · GLEC v3', time: '08:55' }], limits: ['Partner LCL cut-off not confirmed'] },
   ],
   events: [
     { t: '08 Sep · 14:20', title: 'Departed Yantian terminal', where: 'Shenzhen, CN', done: true },

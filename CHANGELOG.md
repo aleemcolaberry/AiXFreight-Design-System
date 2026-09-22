@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.2.1 — 2026-09-22
+
+### Changed (repository re-sync)
+- Re-synced from the Claude Design project through the DesignSync connector (v1.1.0 + v1.2.0 above): failure group, AI disclosure/feedback surfaces, six new guideline cards, updated UI kit, index and mobile template, rebuilt bundle/manifest/lint rules.
+- Repository keeps its own `README.md` (developer guide), `.gitignore`, `package.json`, hosting files and the Claude Code skill pack; the design guide lives at `DESIGN-GUIDE.md` (the project's `readme.md`).
+- Not mirrored: `AiXFreight Design System.html` (standalone bundle) and `uploads/pasted-1789966227389-0.png`; both exceed the connector's 256 KiB read cap and nothing references them.
+- Known issues from 1.0.1 below still apply unless fixed in the design project; `Tag` keyboard access, `Dialog`/`Drawer` Esc, `Tabs` arrow keys and `--color-eco-dark` are unchanged in this sync.
+
+### Known issues (found while verifying this sync; fix in the Claude Design project)
+- `components/feedback/feedback.card.html` overflows its declared 700px card width by about 25px: the `AiDisclosure` header (`title` + mono confidence) inside the right-hand column does not shrink because the specimen grid uses `1fr 1fr` instead of `minmax(0,1fr)`.
+- `templates/mobile-tracking/MobileTracking.dc.html` passes `from="land"` to the `RouteLine` import; the template runtime treats `from` as a module path and logs a 404 for `land` (pre-existing since 1.0.0, harmless: the component still renders with its default origin).
+
+## 1.2.0 — 2026-09-21
+
+### Added
+- **Failure group** (`components/failure/`): `ErrorPage` (404 · 403 · 500 · offline · session · maintenance, canonical copy), `FormErrorSummary` (linked list above forms, receives focus), `ConfirmDialog` (verb button, consequences, type-to-confirm), `AiFallback` (six withhold reasons), `ShipmentStatus` + `SHIPMENT_STATES` state machine with `canTransition` / `isAttention`.
+- Icons: `wifiOff`, `lock`, `refresh`, `trash`, `cloudOff`, `anchor`, `logOut`.
+- `guidelines/failure-states.md` and pattern cards: Failure ladder, Shipment lifecycle, AI withholds.
+
+### Changed
+- Destructive `DropdownMenu` items must open `ConfirmDialog` (was left to product code).
+
+## 1.1.0 — 2026-09-21
+
+### Added
+- **AI UX metrics** (`guidelines/ai-ux.md`): six human-experience measures — learnability, trust, user confidence, transparency, response satisfaction, cognitive load — with instrumentation events, targets and signal → investigate prompts. Adapted from *The AI Product Designer Playbook, Part 9*.
+- Components: `AiDisclosure` ("Why this" — rationale, timestamped sources, limits, logs opens) and `AiFeedback` (thumbs + reason chips). Icons `thumbsUp`, `thumbsDown`.
+- Pattern cards: AI UX metrics, AI output anatomy, Trust ≠ confidence / Accuracy ≠ good UX.
+
+### Changed
+- Non-negotiable 5 now requires the disclosure and feedback surfaces on every AI output; confidence is a mono number, never a color or badge.
+- Writing rules for AI rationale and feedback copy.
+
 ## 1.0.1 — 2026-09-18
 
 ### Changed (repository handoff)

@@ -1,0 +1,12 @@
+<!-- @dsCard group="Patterns" viewport="700x230" name="AI withholds" subtitle="Six reasons the model won't recommend — and the manual path each one must offer" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css"><style>body{background:#fff;padding:16px;font-family:var(--font-body)}.g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.c{border:1px dashed var(--border-strong);border-radius:10px;padding:12px}.e{font:500 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}.t{font:600 15px/1.1 var(--font-display);text-transform:uppercase;margin:4px 0 4px}.s{font-size:12px;color:var(--text-secondary);line-height:1.4}.a{font:600 12px var(--font-body);color:var(--color-navy);margin-top:6px}</style></head><body>
+<div class="g">
+<div class="c"><div class="e">lowConfidence</div><div class="t">Below threshold</div><div class="s">Best score under the user's threshold.</div><div class="a">→ Review options</div></div>
+<div class="c"><div class="e">unavailable</div><div class="t">Service down</div><div class="s">Optimiser unreachable; product still works.</div><div class="a">→ Route manually</div></div>
+<div class="c"><div class="e">staleData</div><div class="t">Old inputs</div><div class="s">Feeds not refreshed; show age.</div><div class="a">→ Refresh data</div></div>
+<div class="c"><div class="e">conflict</div><div class="t">Too close to call</div><div class="s">Options inside the error margin.</div><div class="a">→ Compare both</div></div>
+<div class="c"><div class="e">noData</div><div class="t">No history</div><div class="s">&lt; 5 shipments on the lane.</div><div class="a">→ Route manually</div></div>
+<div class="c"><div class="e">blocked</div><div class="t">Policy</div><div class="s">Compliance rule forbids automation.</div><div class="a">→ View rule</div></div>
+</div>
+<div style="font-size:12px;color:var(--text-secondary);margin-top:10px;line-height:1.5">Dashed border, no AI Orange, same footprint as the recommendation card. Log <code style="font:500 11px var(--font-mono)">ai_withheld{kind}</code> — a rising rate is a model-health signal, not a UX one.</div>
+</body></html>

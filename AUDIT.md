@@ -64,6 +64,35 @@ Date 2026-09-17 · Scope: tokens, 36 components, 6 templates, UI kit, guidelines
 - `components/**/*.d.ts` are the API contracts to preserve when porting to another stack.
 - `CONTRIBUTING.md` with PR checklist; `CHANGELOG.md`; `.gitignore`.
 
+## AI UX review (added 2026-09-21)
+
+Checked the AI surfaces against the six AI UX metrics (`guidelines/ai-ux.md`).
+
+| Metric | Before | After |
+|---|---|---|
+| Learnability | Card title = action; no first-use guidance needed | unchanged; instrument `ai_first_apply` |
+| Trust | Undo toast, threshold setting | measured per decision type; "Why this" open rate |
+| User confidence | confidence % only — no evidence to inspect | `AiDisclosure` rationale; dwell + abandon in Dialog |
+| Transparency | **gap** — no sources, no limits anywhere | `AiDisclosure` sources (timestamped) + limits, mandatory |
+| Response satisfaction | **gap** — no feedback control | `AiFeedback` thumbs + reason chips |
+| Cognitive load | three numbers rule implicit | explicit: max 3 numbers on card, ≤ 3 steps to Apply |
+
+Wired into the UI kit (Dashboard cards, Shipment detail, AI dialog) and the mobile tracking template: every AI surface now carries cost · impact · confidence, `AiDisclosure` (sources + limits from `data.js`) and `AiFeedback`.
+
+## Failure-state review (added 2026-09-21, v1.2.0)
+
+Gap: the system covered success paths and single-field errors only. Closed:
+
+| Gap | Now |
+|---|---|
+| No full-page error states | `ErrorPage` × 6 kinds with canonical copy |
+| Per-field errors only | `FormErrorSummary` (WCAG 3.3.1, focus management) |
+| Destructive confirm "left to product" | `ConfirmDialog`, mandated in `failure-states.md` |
+| AI only ever succeeds | `AiFallback` × 6 withhold reasons |
+| Status → color chosen per team | `SHIPMENT_STATES` fixed tones + transitions |
+
+Still open: optimistic UI/conflicts, bulk partial failure, rate limiting, disable-vs-hide permissions, focus trap in overlays, self-hosted fonts.
+
 ## Recommendations (not done — need your input)
 
 1. Replace authored layouts with recreations of your real pages (upload them).
@@ -71,3 +100,4 @@ Date 2026-09-17 · Scope: tokens, 36 components, 6 templates, UI kit, guidelines
 3. Decide whether destructive menu items must confirm via Dialog (pattern says yes; component leaves it to product).
 4. Add focus-trap + arrow-key navigation once the target framework is known (headless-ui / Radix if React).
 5. Photography direction and 1–2 approved hero images.
+6. Pick the analytics sink for the AI events (`ai_first_apply`, `ai_why_opened`, `ai_feedback`…) and set per-surface targets — the specimen numbers are placeholders.

@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"AiXFreightDesignSystem_0c3a26","components":[{"name":"Badge","sourcePath":"components/core/Badge.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Icon","sourcePath":"components/core/Icon.jsx"},{"name":"IconButton","sourcePath":"components/core/IconButton.jsx"},{"name":"Logo","sourcePath":"components/core/Logo.jsx"},{"name":"ModeBadge","sourcePath":"components/core/ModeBadge.jsx"},{"name":"RouteLine","sourcePath":"components/core/RouteLine.jsx"},{"name":"Tag","sourcePath":"components/core/Tag.jsx"},{"name":"ThemeToggle","sourcePath":"components/core/ThemeToggle.jsx"},{"name":"Accordion","sourcePath":"components/data/Accordion.jsx"},{"name":"Avatar","sourcePath":"components/data/Avatar.jsx"},{"name":"StatCard","sourcePath":"components/data/StatCard.jsx"},{"name":"Table","sourcePath":"components/data/Table.jsx"},{"name":"Timeline","sourcePath":"components/data/Timeline.jsx"},{"name":"Alert","sourcePath":"components/feedback/Alert.jsx"},{"name":"EmptyState","sourcePath":"components/feedback/EmptyState.jsx"},{"name":"Progress","sourcePath":"components/feedback/Progress.jsx"},{"name":"Skeleton","sourcePath":"components/feedback/Skeleton.jsx"},{"name":"Checkbox","sourcePath":"components/forms/Checkbox.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"Radio","sourcePath":"components/forms/Radio.jsx"},{"name":"Select","sourcePath":"components/forms/Select.jsx"},{"name":"Switch","sourcePath":"components/forms/Switch.jsx"},{"name":"Textarea","sourcePath":"components/forms/Textarea.jsx"},{"name":"Breadcrumb","sourcePath":"components/navigation/Breadcrumb.jsx"},{"name":"DropdownMenu","sourcePath":"components/navigation/DropdownMenu.jsx"},{"name":"Pagination","sourcePath":"components/navigation/Pagination.jsx"},{"name":"SidebarNav","sourcePath":"components/navigation/SidebarNav.jsx"},{"name":"Stepper","sourcePath":"components/navigation/Stepper.jsx"},{"name":"Topbar","sourcePath":"components/navigation/Topbar.jsx"},{"name":"Card","sourcePath":"components/surfaces/Card.jsx"},{"name":"Dialog","sourcePath":"components/surfaces/Dialog.jsx"},{"name":"Drawer","sourcePath":"components/surfaces/Drawer.jsx"},{"name":"Tabs","sourcePath":"components/surfaces/Tabs.jsx"},{"name":"Toast","sourcePath":"components/surfaces/Toast.jsx"},{"name":"Tooltip","sourcePath":"components/surfaces/Tooltip.jsx"}],"sourceHashes":{"components/core/Badge.jsx":"b579cfef26c0","components/core/Button.jsx":"123b892ed091","components/core/Icon.jsx":"65796fb33229","components/core/IconButton.jsx":"c14dc276711e","components/core/Logo.jsx":"25b64ed4f7f1","components/core/ModeBadge.jsx":"abeed75c8982","components/core/RouteLine.jsx":"075697b5d4ce","components/core/Tag.jsx":"c3b46ebeac1f","components/core/ThemeToggle.jsx":"82fc6ba1a2b1","components/data/Accordion.jsx":"96c38006cec2","components/data/Avatar.jsx":"bde34967964d","components/data/StatCard.jsx":"447ded975c4a","components/data/Table.jsx":"6a80a8b522ed","components/data/Timeline.jsx":"eb25a7cbabab","components/feedback/Alert.jsx":"a6655a8e2737","components/feedback/EmptyState.jsx":"b161d67fe852","components/feedback/Progress.jsx":"3253fb740f2d","components/feedback/Skeleton.jsx":"4d6abbdc7cb4","components/forms/Checkbox.jsx":"e3f58a1edfe1","components/forms/Input.jsx":"9a3933236df2","components/forms/Radio.jsx":"9510827a58b4","components/forms/Select.jsx":"ae9161d71100","components/forms/Switch.jsx":"94e41ce5d646","components/forms/Textarea.jsx":"f617ed630721","components/navigation/Breadcrumb.jsx":"cdf79f73dfd3","components/navigation/DropdownMenu.jsx":"166e0b599bc1","components/navigation/Pagination.jsx":"698cd3582344","components/navigation/SidebarNav.jsx":"581ca6ea2a96","components/navigation/Stepper.jsx":"daefd8a25ad7","components/navigation/Topbar.jsx":"303fdccf9700","components/surfaces/Card.jsx":"de3ef003ec5b","components/surfaces/Dialog.jsx":"04d6399eddc2","components/surfaces/Drawer.jsx":"ba19c525897e","components/surfaces/Tabs.jsx":"482d9a11bdf8","components/surfaces/Toast.jsx":"186286360c01","components/surfaces/Tooltip.jsx":"c057506d7efc","tokens/tailwind.preset.js":"9b7e40bcfcea","ui_kits/aixfreight-app/Dashboard.jsx":"dae00d95659f","ui_kits/aixfreight-app/NewQuote.jsx":"03f2a75b2cf7","ui_kits/aixfreight-app/Shell.jsx":"5a902f133f65","ui_kits/aixfreight-app/ShipmentDetail.jsx":"4f664493b728","ui_kits/aixfreight-app/Shipments.jsx":"1c5c50795161","ui_kits/aixfreight-app/data.js":"67bec13fdb3f"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":4,"namespace":"AiXFreightDesignSystem_0c3a26","components":[{"name":"Badge","sourcePath":"components/core/Badge.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Icon","sourcePath":"components/core/Icon.jsx"},{"name":"IconButton","sourcePath":"components/core/IconButton.jsx"},{"name":"Logo","sourcePath":"components/core/Logo.jsx"},{"name":"ModeBadge","sourcePath":"components/core/ModeBadge.jsx"},{"name":"RouteLine","sourcePath":"components/core/RouteLine.jsx"},{"name":"Tag","sourcePath":"components/core/Tag.jsx"},{"name":"ThemeToggle","sourcePath":"components/core/ThemeToggle.jsx"},{"name":"Accordion","sourcePath":"components/data/Accordion.jsx"},{"name":"Avatar","sourcePath":"components/data/Avatar.jsx"},{"name":"StatCard","sourcePath":"components/data/StatCard.jsx"},{"name":"Table","sourcePath":"components/data/Table.jsx"},{"name":"Timeline","sourcePath":"components/data/Timeline.jsx"},{"name":"AI_FALLBACKS","sourcePath":"components/failure/AiFallback.jsx"},{"name":"AiFallback","sourcePath":"components/failure/AiFallback.jsx"},{"name":"ConfirmDialog","sourcePath":"components/failure/ConfirmDialog.jsx"},{"name":"ERROR_KINDS","sourcePath":"components/failure/ErrorPage.jsx"},{"name":"ErrorPage","sourcePath":"components/failure/ErrorPage.jsx"},{"name":"FormErrorSummary","sourcePath":"components/failure/FormErrorSummary.jsx"},{"name":"SHIPMENT_STATES","sourcePath":"components/failure/ShipmentStatus.jsx"},{"name":"ShipmentStatus","sourcePath":"components/failure/ShipmentStatus.jsx"},{"name":"AiDisclosure","sourcePath":"components/feedback/AiDisclosure.jsx"},{"name":"AiFeedback","sourcePath":"components/feedback/AiFeedback.jsx"},{"name":"Alert","sourcePath":"components/feedback/Alert.jsx"},{"name":"EmptyState","sourcePath":"components/feedback/EmptyState.jsx"},{"name":"Progress","sourcePath":"components/feedback/Progress.jsx"},{"name":"Skeleton","sourcePath":"components/feedback/Skeleton.jsx"},{"name":"Checkbox","sourcePath":"components/forms/Checkbox.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"Radio","sourcePath":"components/forms/Radio.jsx"},{"name":"Select","sourcePath":"components/forms/Select.jsx"},{"name":"Switch","sourcePath":"components/forms/Switch.jsx"},{"name":"Textarea","sourcePath":"components/forms/Textarea.jsx"},{"name":"Breadcrumb","sourcePath":"components/navigation/Breadcrumb.jsx"},{"name":"DropdownMenu","sourcePath":"components/navigation/DropdownMenu.jsx"},{"name":"Pagination","sourcePath":"components/navigation/Pagination.jsx"},{"name":"SidebarNav","sourcePath":"components/navigation/SidebarNav.jsx"},{"name":"Stepper","sourcePath":"components/navigation/Stepper.jsx"},{"name":"Topbar","sourcePath":"components/navigation/Topbar.jsx"},{"name":"Card","sourcePath":"components/surfaces/Card.jsx"},{"name":"Dialog","sourcePath":"components/surfaces/Dialog.jsx"},{"name":"Drawer","sourcePath":"components/surfaces/Drawer.jsx"},{"name":"Tabs","sourcePath":"components/surfaces/Tabs.jsx"},{"name":"Toast","sourcePath":"components/surfaces/Toast.jsx"},{"name":"Tooltip","sourcePath":"components/surfaces/Tooltip.jsx"}],"sourceHashes":{"components/core/Badge.jsx":"b579cfef26c0","components/core/Button.jsx":"123b892ed091","components/core/Icon.jsx":"5047d5342321","components/core/IconButton.jsx":"c14dc276711e","components/core/Logo.jsx":"25b64ed4f7f1","components/core/ModeBadge.jsx":"abeed75c8982","components/core/RouteLine.jsx":"075697b5d4ce","components/core/Tag.jsx":"c3b46ebeac1f","components/core/ThemeToggle.jsx":"82fc6ba1a2b1","components/data/Accordion.jsx":"96c38006cec2","components/data/Avatar.jsx":"bde34967964d","components/data/StatCard.jsx":"447ded975c4a","components/data/Table.jsx":"6a80a8b522ed","components/data/Timeline.jsx":"eb25a7cbabab","components/failure/AiFallback.jsx":"89323a966079","components/failure/ConfirmDialog.jsx":"71d66baf1140","components/failure/ErrorPage.jsx":"5d83adabda8f","components/failure/FormErrorSummary.jsx":"817d2795aeb4","components/failure/ShipmentStatus.jsx":"0c7c95434f93","components/feedback/AiDisclosure.jsx":"2710e3dfe8e0","components/feedback/AiFeedback.jsx":"c7fbbcd369a6","components/feedback/Alert.jsx":"a6655a8e2737","components/feedback/EmptyState.jsx":"b161d67fe852","components/feedback/Progress.jsx":"3253fb740f2d","components/feedback/Skeleton.jsx":"4d6abbdc7cb4","components/forms/Checkbox.jsx":"e3f58a1edfe1","components/forms/Input.jsx":"9a3933236df2","components/forms/Radio.jsx":"9510827a58b4","components/forms/Select.jsx":"ae9161d71100","components/forms/Switch.jsx":"94e41ce5d646","components/forms/Textarea.jsx":"f617ed630721","components/navigation/Breadcrumb.jsx":"cdf79f73dfd3","components/navigation/DropdownMenu.jsx":"166e0b599bc1","components/navigation/Pagination.jsx":"698cd3582344","components/navigation/SidebarNav.jsx":"581ca6ea2a96","components/navigation/Stepper.jsx":"daefd8a25ad7","components/navigation/Topbar.jsx":"303fdccf9700","components/surfaces/Card.jsx":"de3ef003ec5b","components/surfaces/Dialog.jsx":"04d6399eddc2","components/surfaces/Drawer.jsx":"ba19c525897e","components/surfaces/Tabs.jsx":"482d9a11bdf8","components/surfaces/Toast.jsx":"186286360c01","components/surfaces/Tooltip.jsx":"c057506d7efc","tokens/tailwind.preset.js":"9b7e40bcfcea","ui_kits/aixfreight-app/Dashboard.jsx":"b58e9f4f0bfa","ui_kits/aixfreight-app/NewQuote.jsx":"03f2a75b2cf7","ui_kits/aixfreight-app/Shell.jsx":"5a902f133f65","ui_kits/aixfreight-app/ShipmentDetail.jsx":"0186bfb5c463","ui_kits/aixfreight-app/Shipments.jsx":"1c5c50795161","ui_kits/aixfreight-app/data.js":"99bc144b808f"},"inlinedExternals":[],"unexposedExports":[{"name":"canTransition","sourcePath":"components/failure/ShipmentStatus.jsx"},{"name":"isAttention","sourcePath":"components/failure/ShipmentStatus.jsx"}]} */
 
 (() => {
 
@@ -95,7 +95,16 @@ const P = {
   download: 'M12 15V3m9 12v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5 5 5-5',
   filter: 'M22 3H2l8 9.46V19l4 2v-8.54z',
   user: 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
-  train: 'M8 3.1V7a4 4 0 0 0 8 0V3.1M9 15l-1-1m8 1 1-1M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5zm-1 3 1-3m7 3-1-3'
+  thumbsUp: 'M7 10v12M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z',
+  thumbsDown: 'M17 14V2M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z',
+  train: 'M8 3.1V7a4 4 0 0 0 8 0V3.1M9 15l-1-1m8 1 1-1M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5zm-1 3 1-3m7 3-1-3',
+  wifiOff: 'M12 20h.01M8.5 16.429a5 5 0 0 1 7 0M5 12.859a10 10 0 0 1 5.17-2.69M19 12.859a10 10 0 0 0-2.007-1.523M2 8.82a15 15 0 0 1 4.177-2.643M22 8.82a15 15 0 0 0-11.288-3.764M2 2l20 20',
+  lock: 'M5 11h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2zM7 11V7a5 5 0 0 1 10 0v4',
+  refresh: 'M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5',
+  trash: 'M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6m4-6v6',
+  cloudOff: 'm2 2 20 20M5.782 5.782A7 7 0 0 0 9 19h8.5a4.5 4.5 0 0 0 1.307-.193M21.532 16.5A4.5 4.5 0 0 0 17.5 10h-1.79A7 7 0 0 0 8.96 3.35',
+  anchor: 'M12 22V8M5 12H2a10 10 0 0 0 20 0h-3M12 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+  logOut: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 14 5-5-5-5m5 5H9'
 };
 function Icon({
   name = 'package',
@@ -1140,6 +1149,899 @@ function Timeline({
 }
 Object.assign(__ds_scope, { Timeline });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "components/data/Timeline.jsx", error: String((e && e.message) || e) }); }
+
+// components/failure/AiFallback.jsx
+try { (() => {
+// What the AI surface shows when it can't (or shouldn't) recommend. Same slot as the recommendation card, so nothing jumps. Never orange: no AI move to highlight.
+const AI_FALLBACKS = {
+  lowConfidence: {
+    icon: 'alertTriangle',
+    eyebrow: 'Below threshold',
+    title: 'Not confident enough to recommend',
+    body: 'Best option scored {confidence}% — under your {threshold}% threshold. Review the options manually or lower the threshold for this lane.',
+    action: 'Review options',
+    secondary: 'Adjust threshold'
+  },
+  unavailable: {
+    icon: 'cloudOff',
+    eyebrow: 'AI unavailable',
+    title: 'Recommendations paused',
+    body: 'The optimisation service isn’t responding. Shipments and tracking are unaffected; manual routing is available.',
+    action: 'Retry',
+    secondary: 'Route manually'
+  },
+  staleData: {
+    icon: 'clock',
+    eyebrow: 'Stale inputs',
+    title: 'Based on data from {age} ago',
+    body: 'Carrier rates and port feeds haven’t refreshed. This recommendation may no longer hold.',
+    action: 'Refresh data',
+    secondary: 'Use anyway'
+  },
+  conflict: {
+    icon: 'route',
+    eyebrow: 'Conflicting signals',
+    title: 'Two options are within {delta}% of each other',
+    body: 'Cost favours ocean; ETA favours air. The model won’t pick when the difference is inside its error margin.',
+    action: 'Compare both',
+    secondary: null
+  },
+  noData: {
+    icon: 'package',
+    eyebrow: 'Not enough history',
+    title: 'No recommendation for this lane yet',
+    body: 'Fewer than 5 past shipments on this route. The model needs more examples before it can recommend.',
+    action: 'Route manually',
+    secondary: null
+  },
+  blocked: {
+    icon: 'lock',
+    eyebrow: 'Policy',
+    title: 'Recommendation withheld',
+    body: 'A compliance rule ({rule}) prevents automated routing on this shipment. A human must decide.',
+    action: 'View rule',
+    secondary: null
+  }
+};
+const fill = (s, vars) => s.replace(/\{(\w+)\}/g, (_, k) => vars[k] != null ? vars[k] : '—');
+function AiFallback({
+  kind = 'lowConfidence',
+  title,
+  body,
+  action,
+  secondary,
+  onAction,
+  onSecondary,
+  confidence,
+  threshold,
+  age,
+  delta,
+  rule,
+  inverse,
+  compact,
+  style
+}) {
+  const k = AI_FALLBACKS[kind] || AI_FALLBACKS.lowConfidence;
+  const vars = {
+    confidence,
+    threshold,
+    age,
+    delta,
+    rule
+  };
+  const fg = inverse ? 'var(--text-on-inverse)' : 'var(--text-primary)',
+    muted = inverse ? 'var(--text-on-inverse-muted)' : 'var(--text-muted)',
+    sec = inverse ? 'var(--text-on-inverse-muted)' : 'var(--text-secondary)';
+  const cap = {
+    fontFamily: 'var(--font-mono)',
+    fontWeight: 500,
+    fontSize: 11,
+    letterSpacing: '.08em',
+    textTransform: 'uppercase',
+    color: muted
+  };
+  return React.createElement('div', {
+    role: 'status',
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 10,
+      padding: compact ? 14 : 20,
+      borderRadius: 'var(--radius-lg)',
+      border: inverse ? '1px dashed var(--border-inverse)' : '1px dashed var(--border-strong)',
+      background: inverse ? 'var(--surface-inverse-raised)' : 'var(--surface-card)',
+      color: fg,
+      fontFamily: 'var(--font-body)',
+      minWidth: 0,
+      ...style
+    }
+  }, React.createElement('div', {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8
+    }
+  }, React.createElement(__ds_scope.Icon, {
+    name: 'sparkles',
+    size: 14,
+    color: muted
+  }), React.createElement('span', {
+    style: cap
+  }, k.eyebrow), confidence != null ? React.createElement('span', {
+    style: {
+      ...cap,
+      marginLeft: 'auto',
+      color: sec
+    }
+  }, `${confidence}% conf.`) : null), React.createElement('div', {
+    style: {
+      display: 'flex',
+      gap: 12,
+      alignItems: 'flex-start'
+    }
+  }, React.createElement(__ds_scope.Icon, {
+    name: k.icon,
+    size: 22,
+    color: kind === 'unavailable' || kind === 'blocked' ? 'var(--color-danger)' : 'var(--color-warning-fg)',
+    style: {
+      marginTop: 2
+    }
+  }), React.createElement('div', {
+    style: {
+      minWidth: 0,
+      flex: 1
+    }
+  }, React.createElement('div', {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontWeight: 600,
+      fontSize: compact ? 18 : 22,
+      lineHeight: 1.1,
+      textTransform: 'uppercase',
+      textWrap: 'balance',
+      overflowWrap: 'anywhere'
+    }
+  }, fill(title || k.title, vars)), React.createElement('p', {
+    style: {
+      margin: '6px 0 0',
+      color: sec,
+      fontSize: 14,
+      lineHeight: 1.5,
+      textWrap: 'pretty'
+    }
+  }, fill(body || k.body, vars)))), React.createElement('div', {
+    style: {
+      display: 'flex',
+      gap: 8,
+      flexWrap: 'wrap'
+    }
+  }, React.createElement(__ds_scope.Button, {
+    variant: inverse ? 'inverse' : 'navy',
+    size: 'sm',
+    onClick: onAction,
+    icon: kind === 'unavailable' || kind === 'staleData' ? 'refresh' : undefined
+  }, action || k.action), secondary || secondary === undefined && k.secondary ? React.createElement(__ds_scope.Button, {
+    variant: inverse ? 'inverse' : 'ghost',
+    size: 'sm',
+    onClick: onSecondary
+  }, secondary || k.secondary) : null));
+}
+Object.assign(__ds_scope, { AI_FALLBACKS, AiFallback });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/failure/AiFallback.jsx", error: String((e && e.message) || e) }); }
+
+// components/failure/ErrorPage.jsx
+try { (() => {
+// Full-page failure surface. One canonical copy set per kind so teams never invent tone; overridable per prop.
+const ERROR_KINDS = {
+  notFound: {
+    code: '404',
+    icon: 'search',
+    title: 'Page not found',
+    description: 'The link may be outdated, or the shipment was moved. Check the ID and try again.',
+    action: 'Back to dashboard',
+    secondary: 'Search shipments'
+  },
+  forbidden: {
+    code: '403',
+    icon: 'lock',
+    title: 'You don’t have access',
+    description: 'This view is limited to your organisation’s admins. Ask an admin to grant the Shipments · Edit permission.',
+    action: 'Request access',
+    secondary: 'Back'
+  },
+  server: {
+    code: '500',
+    icon: 'alertTriangle',
+    title: 'Something broke on our side',
+    description: 'Your data is safe. We logged the error and the team is notified. Try again in a moment.',
+    action: 'Retry',
+    secondary: 'Status page'
+  },
+  offline: {
+    code: 'OFFLINE',
+    icon: 'wifiOff',
+    title: 'You’re offline',
+    description: 'Live tracking paused. Showing the last update we received; changes will sync when you reconnect.',
+    action: 'Retry connection',
+    secondary: null
+  },
+  expired: {
+    code: 'SESSION',
+    icon: 'clock',
+    title: 'Session expired',
+    description: 'You were signed out after 8 hours of inactivity. Unsaved changes on this page were kept locally.',
+    action: 'Sign in again',
+    secondary: null
+  },
+  maintenance: {
+    code: 'MAINTENANCE',
+    icon: 'settings',
+    title: 'Scheduled maintenance',
+    description: 'AiXFreight is being updated. Tracking links still work; booking returns at the time below.',
+    action: 'Check status',
+    secondary: null
+  }
+};
+function ErrorPage({
+  kind = 'server',
+  code,
+  title,
+  description,
+  action,
+  secondary,
+  onAction,
+  onSecondary,
+  reference,
+  lastUpdated,
+  compact,
+  style
+}) {
+  const k = ERROR_KINDS[kind] || ERROR_KINDS.server;
+  const cap = {
+    fontFamily: 'var(--font-mono)',
+    fontWeight: 500,
+    fontSize: 11,
+    letterSpacing: '.08em',
+    textTransform: 'uppercase',
+    color: 'var(--text-muted)'
+  };
+  const tone = kind === 'server' ? 'var(--color-danger)' : kind === 'offline' || kind === 'maintenance' ? 'var(--color-warning-fg)' : 'var(--text-muted)';
+  return React.createElement('div', {
+    role: kind === 'server' ? 'alert' : 'region',
+    'aria-label': title || k.title,
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      textAlign: 'center',
+      gap: 8,
+      padding: compact ? 32 : '72px 32px',
+      fontFamily: 'var(--font-body)',
+      color: 'var(--text-primary)',
+      ...style
+    }
+  }, React.createElement('span', {
+    style: {
+      display: 'grid',
+      placeItems: 'center',
+      width: 64,
+      height: 64,
+      borderRadius: 999,
+      border: '3px solid var(--border-default)',
+      color: tone,
+      marginBottom: 12
+    }
+  }, React.createElement(__ds_scope.Icon, {
+    name: k.icon,
+    size: 28
+  })), React.createElement('div', {
+    style: {
+      ...cap,
+      color: tone
+    }
+  }, code || k.code), React.createElement('h1', {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontWeight: 700,
+      fontSize: compact ? 28 : 40,
+      lineHeight: 1.05,
+      textTransform: 'uppercase',
+      margin: 0,
+      textWrap: 'balance',
+      overflowWrap: 'anywhere'
+    }
+  }, title || k.title), React.createElement('p', {
+    style: {
+      margin: 0,
+      color: 'var(--text-secondary)',
+      fontSize: 15,
+      maxWidth: 440,
+      lineHeight: 1.55,
+      textWrap: 'pretty'
+    }
+  }, description || k.description), lastUpdated ? React.createElement('div', {
+    style: {
+      ...cap,
+      marginTop: 4
+    }
+  }, 'Last update ' + lastUpdated) : null, React.createElement('div', {
+    style: {
+      display: 'flex',
+      gap: 8,
+      marginTop: 16,
+      flexWrap: 'wrap',
+      justifyContent: 'center'
+    }
+  }, React.createElement(__ds_scope.Button, {
+    variant: 'navy',
+    icon: kind === 'server' || kind === 'offline' ? 'refresh' : undefined,
+    onClick: onAction
+  }, action || k.action), secondary || secondary === undefined && k.secondary ? React.createElement(__ds_scope.Button, {
+    variant: 'secondary',
+    onClick: onSecondary
+  }, secondary || k.secondary) : null), reference ? React.createElement('div', {
+    style: {
+      ...cap,
+      marginTop: 20,
+      letterSpacing: '.04em',
+      textTransform: 'none'
+    }
+  }, 'Reference ' + reference) : null);
+}
+Object.assign(__ds_scope, { ERROR_KINDS, ErrorPage });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/failure/ErrorPage.jsx", error: String((e && e.message) || e) }); }
+
+// components/failure/FormErrorSummary.jsx
+try { (() => {
+// Form-level error list (WCAG 3.3.1 / 3.3.3). Rendered above the form; each item links to the field. Focus lands here on submit failure.
+function FormErrorSummary({
+  errors = [],
+  title,
+  onFocusField,
+  autoFocus = true,
+  style
+}) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (autoFocus && errors.length && ref.current) ref.current.focus();
+  }, [errors.length, autoFocus]);
+  if (!errors.length) return null;
+  const n = errors.length;
+  const go = (e, err) => {
+    e.preventDefault();
+    if (onFocusField) return onFocusField(err.field);
+    const el = document.getElementById(err.field);
+    if (el) {
+      el.focus();
+      if (el.getBoundingClientRect().top < 0) window.scrollBy(0, el.getBoundingClientRect().top - 80);
+    }
+  };
+  return React.createElement('div', {
+    ref,
+    tabIndex: -1,
+    role: 'alert',
+    'aria-labelledby': 'aix-fes-title',
+    style: {
+      display: 'flex',
+      gap: 12,
+      padding: '14px 16px',
+      background: 'var(--color-danger-bg)',
+      border: '1px solid var(--color-danger)',
+      borderRadius: 'var(--radius-md)',
+      fontFamily: 'var(--font-body)',
+      fontSize: 14,
+      lineHeight: 1.5,
+      color: 'var(--text-primary)',
+      outline: 'none',
+      ...style
+    }
+  }, React.createElement(__ds_scope.Icon, {
+    name: 'alertTriangle',
+    size: 18,
+    color: 'var(--color-danger)',
+    style: {
+      marginTop: 2
+    }
+  }), React.createElement('div', {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, React.createElement('div', {
+    id: 'aix-fes-title',
+    style: {
+      fontWeight: 600,
+      color: 'var(--color-danger)'
+    }
+  }, title || (n === 1 ? 'Fix 1 field to continue' : `Fix ${n} fields to continue`)), React.createElement('ol', {
+    style: {
+      margin: '6px 0 0',
+      padding: '0 0 0 18px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 4,
+      color: 'var(--text-secondary)'
+    }
+  }, errors.map((err, i) => React.createElement('li', {
+    key: err.field || i
+  }, React.createElement('a', {
+    href: '#' + err.field,
+    onClick: e => go(e, err),
+    style: {
+      color: 'var(--text-primary)',
+      fontWeight: 600,
+      textDecoration: 'underline',
+      textUnderlineOffset: 3
+    }
+  }, err.label), err.message ? React.createElement('span', null, ' — ' + err.message) : null)))));
+}
+Object.assign(__ds_scope, { FormErrorSummary });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/failure/FormErrorSummary.jsx", error: String((e && e.message) || e) }); }
+
+// components/failure/ShipmentStatus.jsx
+try { (() => {
+// Canonical shipment lifecycle. One source of truth for label ↔ tone ↔ allowed transitions so no product team picks its own colors.
+const SHIPMENT_STATES = {
+  draft: {
+    label: 'Draft',
+    tone: 'neutral',
+    next: ['quoted', 'cancelled'],
+    terminal: false
+  },
+  quoted: {
+    label: 'Quoted',
+    tone: 'info',
+    next: ['booked', 'expired', 'cancelled'],
+    terminal: false
+  },
+  booked: {
+    label: 'Booked',
+    tone: 'navy',
+    next: ['pickedUp', 'cancelled'],
+    terminal: false
+  },
+  pickedUp: {
+    label: 'Picked up',
+    tone: 'info',
+    next: ['inTransit', 'exception'],
+    terminal: false
+  },
+  inTransit: {
+    label: 'In transit',
+    tone: 'info',
+    dot: true,
+    next: ['customsHold', 'outForDelivery', 'exception', 'delayed'],
+    terminal: false
+  },
+  delayed: {
+    label: 'Delayed',
+    tone: 'warning',
+    dot: true,
+    next: ['inTransit', 'exception', 'outForDelivery'],
+    terminal: false
+  },
+  customsHold: {
+    label: 'Customs hold',
+    tone: 'warning',
+    dot: true,
+    next: ['inTransit', 'exception'],
+    terminal: false
+  },
+  exception: {
+    label: 'Exception',
+    tone: 'danger',
+    dot: true,
+    next: ['inTransit', 'cancelled', 'returned'],
+    terminal: false
+  },
+  outForDelivery: {
+    label: 'Out for delivery',
+    tone: 'info',
+    dot: true,
+    next: ['delivered', 'exception'],
+    terminal: false
+  },
+  delivered: {
+    label: 'Delivered',
+    tone: 'success',
+    next: [],
+    terminal: true
+  },
+  returned: {
+    label: 'Returned',
+    tone: 'neutral',
+    next: [],
+    terminal: true
+  },
+  cancelled: {
+    label: 'Cancelled',
+    tone: 'neutral',
+    next: [],
+    terminal: true
+  },
+  expired: {
+    label: 'Expired',
+    tone: 'neutral',
+    next: ['quoted'],
+    terminal: true
+  }
+};
+const canTransition = (from, to) => !!(SHIPMENT_STATES[from] && SHIPMENT_STATES[from].next.includes(to));
+const isAttention = s => ['delayed', 'customsHold', 'exception'].includes(s);
+function ShipmentStatus({
+  status = 'draft',
+  since,
+  detail,
+  size = 'md',
+  style
+}) {
+  const s = SHIPMENT_STATES[status] || {
+    label: status,
+    tone: 'neutral'
+  };
+  const badge = React.createElement(__ds_scope.Badge, {
+    tone: s.tone,
+    dot: s.dot,
+    style: size === 'sm' ? {
+      height: 20,
+      fontSize: 10
+    } : undefined
+  }, s.label);
+  if (!since && !detail) return badge;
+  const cap = {
+    fontFamily: 'var(--font-mono)',
+    fontWeight: 500,
+    fontSize: 11,
+    letterSpacing: '.06em',
+    color: 'var(--text-muted)',
+    whiteSpace: 'nowrap'
+  };
+  return React.createElement('span', {
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 8,
+      minWidth: 0,
+      ...style
+    }
+  }, badge, since ? React.createElement('span', {
+    style: cap
+  }, since) : null, detail ? React.createElement('span', {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: 13,
+      color: isAttention(status) ? 'var(--text-primary)' : 'var(--text-secondary)',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      minWidth: 0
+    },
+    title: detail
+  }, detail) : null);
+}
+Object.assign(__ds_scope, { SHIPMENT_STATES, canTransition, isAttention, ShipmentStatus });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/failure/ShipmentStatus.jsx", error: String((e && e.message) || e) }); }
+
+// components/feedback/AiDisclosure.jsx
+try { (() => {
+// Transparency surface for AI output: "Why this?" → rationale, sources with timestamps, known limits. Collapsed by default so it adds no cognitive load until asked.
+function AiDisclosure({
+  title = 'Why this recommendation',
+  confidence,
+  rationale,
+  sources = [],
+  limits = [],
+  defaultOpen = false,
+  open: openProp,
+  onToggle,
+  inverse,
+  style
+}) {
+  const [inner, setInner] = React.useState(defaultOpen);
+  const open = openProp === undefined ? inner : openProp;
+  const toggle = () => {
+    setInner(!open);
+    onToggle && onToggle(!open);
+  };
+  const fg = inverse ? 'var(--text-on-inverse)' : 'var(--text-primary)';
+  const muted = inverse ? 'var(--text-on-inverse-muted)' : 'var(--text-muted)';
+  const sec = inverse ? 'var(--text-on-inverse-muted)' : 'var(--text-secondary)';
+  const border = inverse ? 'var(--border-inverse)' : 'var(--border-default)';
+  const cap = {
+    fontFamily: 'var(--font-mono)',
+    fontWeight: 500,
+    fontSize: 11,
+    letterSpacing: '.08em',
+    textTransform: 'uppercase',
+    color: muted,
+    whiteSpace: 'nowrap',
+    flex: 'none'
+  };
+  const id = React.useId ? React.useId() : 'aidisc';
+  return React.createElement('div', {
+    style: {
+      border: `1px solid ${border}`,
+      borderRadius: 'var(--radius-md)',
+      fontFamily: 'var(--font-body)',
+      color: fg,
+      minWidth: 0,
+      ...style
+    }
+  }, React.createElement('button', {
+    type: 'button',
+    'aria-expanded': open,
+    'aria-controls': id,
+    onClick: toggle,
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 10,
+      width: '100%',
+      minHeight: 40,
+      padding: '8px 12px',
+      border: 0,
+      background: 'transparent',
+      color: fg,
+      fontFamily: 'var(--font-body)',
+      fontWeight: 600,
+      fontSize: 13,
+      textAlign: 'left',
+      cursor: 'pointer'
+    }
+  }, React.createElement(__ds_scope.Icon, {
+    name: 'sparkles',
+    size: 16,
+    color: 'var(--accent)'
+  }), React.createElement('span', {
+    style: {
+      flex: 1,
+      minWidth: 0,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
+    },
+    title
+  }, title), confidence != null ? React.createElement('span', {
+    style: {
+      ...cap,
+      color: sec
+    },
+    title: 'Model confidence'
+  }, `${confidence}% conf.`) : null, React.createElement(__ds_scope.Icon, {
+    name: 'chevronDown',
+    size: 16,
+    color: muted,
+    style: {
+      transform: open ? 'rotate(180deg)' : 'none',
+      transition: 'transform var(--duration-base) var(--ease-out)'
+    }
+  })), open ? React.createElement('div', {
+    id,
+    style: {
+      padding: '0 12px 12px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 12,
+      fontSize: 13,
+      lineHeight: 1.5
+    }
+  }, rationale ? React.createElement('p', {
+    style: {
+      margin: 0,
+      color: fg
+    }
+  }, rationale) : null, sources.length ? React.createElement('div', null, React.createElement('div', {
+    style: {
+      ...cap,
+      marginBottom: 6
+    }
+  }, 'Sources'), React.createElement('ul', {
+    style: {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 4
+    }
+  }, sources.map((s, i) => React.createElement('li', {
+    key: i,
+    style: {
+      display: 'flex',
+      gap: 10,
+      alignItems: 'baseline',
+      minWidth: 0
+    }
+  }, React.createElement(__ds_scope.Icon, {
+    name: 'fileText',
+    size: 14,
+    color: muted,
+    style: {
+      alignSelf: 'center'
+    }
+  }), s.href ? React.createElement('a', {
+    href: s.href,
+    style: {
+      color: inverse ? 'var(--color-ocean-dark)' : 'var(--text-link)',
+      flex: 1,
+      minWidth: 0,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
+    },
+    title: s.label
+  }, s.label) : React.createElement('span', {
+    style: {
+      color: fg,
+      flex: 1,
+      minWidth: 0,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
+    },
+    title: s.label
+  }, s.label), s.time ? React.createElement('span', {
+    style: {
+      ...cap,
+      marginLeft: 'auto',
+      flex: 'none'
+    }
+  }, s.time) : null)))) : null, limits.length ? React.createElement('div', null, React.createElement('div', {
+    style: {
+      ...cap,
+      marginBottom: 6
+    }
+  }, 'Limits'), React.createElement('ul', {
+    style: {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 4,
+      color: sec
+    }
+  }, limits.map((l, i) => React.createElement('li', {
+    key: i,
+    style: {
+      display: 'flex',
+      gap: 8
+    }
+  }, React.createElement(__ds_scope.Icon, {
+    name: 'alertTriangle',
+    size: 14,
+    color: 'var(--color-warning-fg)',
+    style: {
+      marginTop: 3
+    }
+  }), React.createElement('span', null, l))))) : null) : null);
+}
+Object.assign(__ds_scope, { AiDisclosure });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/feedback/AiDisclosure.jsx", error: String((e && e.message) || e) }); }
+
+// components/feedback/AiFeedback.jsx
+try { (() => {
+// Response-satisfaction signal for AI output: thumbs + one-tap reason on thumbs-down. Feeds the "Response satisfaction" metric (guidelines/ai-ux.md).
+function AiFeedback({
+  value,
+  onChange,
+  reasons = ['Wrong cost', 'Wrong ETA', 'Not relevant', 'Too much to review'],
+  reason,
+  onReason,
+  label = 'Was this useful?',
+  thanks = 'Thanks — this tunes future recommendations.',
+  inverse,
+  size = 'md',
+  style
+}) {
+  const [inner, setInner] = React.useState(value ?? null);
+  const [innerReason, setInnerReason] = React.useState(reason ?? null);
+  const v = value === undefined ? inner : value;
+  const r = reason === undefined ? innerReason : reason;
+  const pick = n => {
+    const next = v === n ? null : n;
+    setInner(next);
+    onChange && onChange(next);
+    if (next !== 'down') {
+      setInnerReason(null);
+      onReason && onReason(null);
+    }
+  };
+  const pickReason = x => {
+    setInnerReason(x);
+    onReason && onReason(x);
+  };
+  const h = size === 'sm' ? 32 : 40;
+  const mutedFg = inverse ? 'var(--text-on-inverse-muted)' : 'var(--text-secondary)';
+  const border = inverse ? 'var(--border-inverse)' : 'var(--border-strong)';
+  const btn = (n, icon, onColor, onBg) => {
+    const on = v === n;
+    return React.createElement('button', {
+      type: 'button',
+      'aria-pressed': on,
+      'aria-label': n === 'up' ? 'Useful' : 'Not useful',
+      onClick: () => pick(n),
+      style: {
+        width: h,
+        height: h,
+        display: 'grid',
+        placeItems: 'center',
+        borderRadius: 'var(--radius-md)',
+        border: `1px solid ${on ? onColor : border}`,
+        background: on ? onBg : 'transparent',
+        color: on ? onColor : mutedFg,
+        cursor: 'pointer',
+        transition: 'background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)'
+      }
+    }, React.createElement(__ds_scope.Icon, {
+      name: icon,
+      size: size === 'sm' ? 16 : 18
+    }));
+  };
+  return React.createElement('div', {
+    role: 'group',
+    'aria-label': label,
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 10,
+      fontFamily: 'var(--font-body)',
+      ...style
+    }
+  }, React.createElement('div', {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 12,
+      flexWrap: 'wrap'
+    }
+  }, React.createElement('span', {
+    style: {
+      fontSize: 13,
+      color: mutedFg,
+      minWidth: 0
+    }
+  }, v ? thanks : label), React.createElement('div', {
+    style: {
+      display: 'flex',
+      gap: 6,
+      marginLeft: 'auto'
+    }
+  }, btn('up', 'thumbsUp', 'var(--color-eco)', 'var(--color-eco-100)'), btn('down', 'thumbsDown', 'var(--color-danger)', 'var(--color-danger-bg)'))), v === 'down' && reasons.length ? React.createElement('div', {
+    role: 'radiogroup',
+    'aria-label': 'What was wrong?',
+    style: {
+      display: 'flex',
+      gap: 6,
+      flexWrap: 'wrap'
+    }
+  }, reasons.map(x => {
+    const on = r === x;
+    return React.createElement('button', {
+      key: x,
+      type: 'button',
+      role: 'radio',
+      'aria-checked': on,
+      onClick: () => pickReason(x),
+      style: {
+        height: 28,
+        padding: '0 10px',
+        borderRadius: 999,
+        border: `1px solid ${on ? 'var(--fill-selected)' : border}`,
+        background: on ? 'var(--fill-selected)' : 'transparent',
+        color: on ? 'var(--fill-selected-fg)' : mutedFg,
+        fontFamily: 'var(--font-mono)',
+        fontWeight: 500,
+        fontSize: 11,
+        letterSpacing: '.06em',
+        textTransform: 'uppercase',
+        cursor: 'pointer'
+      }
+    }, x);
+  })) : null);
+}
+Object.assign(__ds_scope, { AiFeedback });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/feedback/AiFeedback.jsx", error: String((e && e.message) || e) }); }
 
 // components/feedback/Alert.jsx
 try { (() => {
@@ -2696,6 +3598,123 @@ function Dialog({
 Object.assign(__ds_scope, { Dialog });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "components/surfaces/Dialog.jsx", error: String((e && e.message) || e) }); }
 
+// components/failure/ConfirmDialog.jsx
+try { (() => {
+// Destructive / irreversible confirmation. Verb repeats in the primary button; optional typed confirmation for high-stakes actions (cancel booking, delete org).
+function ConfirmDialog({
+  open = true,
+  title,
+  eyebrow = 'Confirm',
+  children,
+  verb = 'Delete',
+  cancelLabel = 'Keep',
+  tone = 'danger',
+  consequences = [],
+  typeToConfirm,
+  onConfirm,
+  onCancel,
+  loading,
+  inline,
+  style
+}) {
+  const [typed, setTyped] = React.useState('');
+  React.useEffect(() => {
+    if (!open) setTyped('');
+  }, [open]);
+  const ok = !typeToConfirm || typed.trim() === typeToConfirm;
+  const cap = {
+    fontFamily: 'var(--font-mono)',
+    fontWeight: 500,
+    fontSize: 11,
+    letterSpacing: '.08em',
+    textTransform: 'uppercase',
+    color: 'var(--text-muted)'
+  };
+  return React.createElement(__ds_scope.Dialog, {
+    open,
+    title,
+    eyebrow,
+    onClose: onCancel,
+    width: 480,
+    inline,
+    style,
+    footer: [React.createElement(__ds_scope.Button, {
+      key: 'c',
+      variant: 'secondary',
+      onClick: onCancel,
+      disabled: loading
+    }, cancelLabel), React.createElement(__ds_scope.Button, {
+      key: 'k',
+      variant: tone === 'danger' ? 'danger' : 'navy',
+      disabled: !ok,
+      loading,
+      onClick: onConfirm,
+      icon: tone === 'danger' ? 'trash' : undefined
+    }, verb)]
+  }, children ? React.createElement('p', {
+    style: {
+      margin: 0
+    }
+  }, children) : null, consequences.length ? React.createElement('ul', {
+    style: {
+      margin: '12px 0 0',
+      padding: 0,
+      listStyle: 'none',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 6,
+      fontSize: 14
+    }
+  }, consequences.map((c, i) => React.createElement('li', {
+    key: i,
+    style: {
+      display: 'flex',
+      gap: 8,
+      alignItems: 'flex-start'
+    }
+  }, React.createElement(__ds_scope.Icon, {
+    name: 'alertTriangle',
+    size: 16,
+    color: tone === 'danger' ? 'var(--color-danger)' : 'var(--color-warning-fg)',
+    style: {
+      marginTop: 3
+    }
+  }), React.createElement('span', null, c)))) : null, typeToConfirm ? React.createElement('div', {
+    style: {
+      marginTop: 16,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 6
+    }
+  }, React.createElement('label', {
+    htmlFor: 'aix-confirm-input',
+    style: cap
+  }, 'Type ', React.createElement('span', {
+    style: {
+      color: 'var(--text-primary)'
+    }
+  }, typeToConfirm), ' to confirm'), React.createElement('input', {
+    id: 'aix-confirm-input',
+    value: typed,
+    onChange: e => setTyped(e.target.value),
+    autoComplete: 'off',
+    spellCheck: false,
+    style: {
+      height: 'var(--control-height-md)',
+      padding: '0 12px',
+      border: '1px solid var(--border-strong)',
+      borderRadius: 'var(--radius-md)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: 14,
+      color: 'var(--text-primary)',
+      background: 'var(--surface-card)',
+      outline: 'none'
+    }
+  })) : null);
+}
+Object.assign(__ds_scope, { ConfirmDialog });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/failure/ConfirmDialog.jsx", error: String((e && e.message) || e) }); }
+
 // components/surfaces/Drawer.jsx
 try { (() => {
 function Drawer({
@@ -3220,7 +4239,9 @@ const {
   Button,
   Icon,
   Table,
-  StatCard
+  StatCard,
+  AiDisclosure,
+  AiFeedback
 } = window.AiXFreightDesignSystem_0c3a26;
 const SHIP_COLS = [{
   key: 'id',
@@ -3320,43 +4341,48 @@ function Dashboard({
     inverse: true,
     eyebrow: "AI recommendation",
     title: r.title,
-    footer: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
-      className: "aix-caption",
+    footer: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(AiFeedback, {
+      inverse: true,
+      size: "sm",
+      label: "",
       style: {
-        color: 'var(--text-on-inverse-muted)'
+        flex: 1
       }
-    }, "Confidence ", r.confidence, "%"), /*#__PURE__*/React.createElement(Button, {
+    }), /*#__PURE__*/React.createElement(Button, {
       size: "sm",
       icon: "sparkles",
       onClick: () => openRec(r)
     }, "Review"))
-  }, /*#__PURE__*/React.createElement("p", {
-    style: {
-      fontSize: 13,
-      color: 'var(--text-on-inverse-muted)',
-      lineHeight: 1.5
-    }
-  }, r.body), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: 16,
-      marginTop: 12
+      fontFamily: 'var(--font-mono)',
+      fontWeight: 500,
+      fontSize: 13
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
-      fontFamily: 'var(--font-mono)',
-      fontWeight: 500,
-      fontSize: 13,
       color: 'var(--color-gold)'
     }
   }, r.delta), /*#__PURE__*/React.createElement("span", {
     style: {
-      fontFamily: 'var(--font-mono)',
-      fontWeight: 500,
-      fontSize: 13,
       color: 'var(--color-eco)'
     }
-  }, r.gain))))), /*#__PURE__*/React.createElement(Card, {
+  }, r.gain), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: 'var(--text-on-inverse-muted)'
+    }
+  }, r.confidence, "%")), /*#__PURE__*/React.createElement(AiDisclosure, {
+    inverse: true,
+    confidence: r.confidence,
+    rationale: r.body,
+    sources: r.sources,
+    limits: r.limits,
+    style: {
+      marginTop: 12
+    }
+  })))), /*#__PURE__*/React.createElement(Card, {
     eyebrow: "Network",
     title: "Mode mix \xB7 last 30 days",
     style: {
@@ -3785,7 +4811,9 @@ const {
   Button,
   Tabs,
   Icon,
-  Switch
+  Switch,
+  AiDisclosure,
+  AiFeedback
 } = window.AiXFreightDesignSystem_0c3a26;
 function ShipmentDetail({
   s,
@@ -3913,23 +4941,48 @@ function ShipmentDetail({
     inverse: true,
     eyebrow: "AI recommendation",
     title: rec.title,
-    footer: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
-      className: "aix-caption",
+    footer: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(AiFeedback, {
+      inverse: true,
+      size: "sm",
+      label: "",
       style: {
-        color: 'var(--text-on-inverse-muted)'
+        flex: 1
       }
-    }, "Confidence ", rec.confidence, "%"), /*#__PURE__*/React.createElement(Button, {
+    }), /*#__PURE__*/React.createElement(Button, {
       size: "sm",
       icon: "sparkles",
       onClick: () => openRec(rec)
     }, "Review"))
-  }, /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: 13,
-      color: 'var(--text-on-inverse-muted)',
-      lineHeight: 1.5
+      display: 'flex',
+      gap: 16,
+      fontFamily: 'var(--font-mono)',
+      fontWeight: 500,
+      fontSize: 13
     }
-  }, rec.body)) : /*#__PURE__*/React.createElement(Card, {
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: 'var(--color-gold)'
+    }
+  }, rec.delta), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: 'var(--color-eco)'
+    }
+  }, rec.gain), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: 'var(--text-on-inverse-muted)'
+    }
+  }, rec.confidence, "%")), /*#__PURE__*/React.createElement(AiDisclosure, {
+    inverse: true,
+    confidence: rec.confidence,
+    rationale: rec.body,
+    sources: rec.sources,
+    limits: rec.limits,
+    style: {
+      marginTop: 12
+    }
+  })) : /*#__PURE__*/React.createElement(Card, {
     inverse: true,
     eyebrow: "AI copilot",
     title: "No action needed"
@@ -3939,7 +4992,23 @@ function ShipmentDetail({
       color: 'var(--text-on-inverse-muted)',
       lineHeight: 1.5
     }
-  }, "Tracking on plan. ETA confidence 97%. We'll alert you if the window moves by more than 6 hours.")), /*#__PURE__*/React.createElement(Card, {
+  }, "Tracking on plan. ETA confidence 97%. We'll alert you if the window moves by more than 6 hours."), /*#__PURE__*/React.createElement(AiDisclosure, {
+    inverse: true,
+    confidence: 97,
+    title: "Why this ETA",
+    rationale: "Vessel AIS position and Hamburg berth schedule agree on 14 Sep 09:40.",
+    sources: [{
+      label: 'MSC Aurora AIS',
+      time: '08:12'
+    }, {
+      label: 'Port of Hamburg berth plan',
+      time: '07:30'
+    }],
+    limits: ['Inland haulage slot not confirmed'],
+    style: {
+      marginTop: 12
+    }
+  })), /*#__PURE__*/React.createElement(Card, {
     eyebrow: "Settings",
     title: "Automation"
   }, /*#__PURE__*/React.createElement(Switch, {
@@ -4249,7 +5318,15 @@ window.AIX_DATA = {
     delta: '+$1,120',
     gain: '−4.1 days',
     confidence: 94,
-    shipment: 'AIX-48197'
+    shipment: 'AIX-48197',
+    sources: [{
+      label: 'Port of LA congestion feed',
+      time: '09:40'
+    }, {
+      label: 'Carrier air rates · 3 quotes',
+      time: '09:38'
+    }],
+    limits: ['Customs dwell at Frankfurt not modelled', 'Air rates valid 2h']
   }, {
     id: 'r2',
     title: 'Consolidate 2 LCL bookings',
@@ -4257,7 +5334,15 @@ window.AIX_DATA = {
     delta: '−$860',
     gain: '−18% CO₂',
     confidence: 81,
-    shipment: 'AIX-48176'
+    shipment: 'AIX-48176',
+    sources: [{
+      label: 'Rotterdam sailing schedule',
+      time: '08:55'
+    }, {
+      label: 'CO₂ model · GLEC v3',
+      time: '08:55'
+    }],
+    limits: ['Partner LCL cut-off not confirmed']
   }],
   events: [{
     t: '08 Sep · 14:20',
@@ -4316,6 +5401,26 @@ __ds_ns.StatCard = __ds_scope.StatCard;
 __ds_ns.Table = __ds_scope.Table;
 
 __ds_ns.Timeline = __ds_scope.Timeline;
+
+__ds_ns.AI_FALLBACKS = __ds_scope.AI_FALLBACKS;
+
+__ds_ns.AiFallback = __ds_scope.AiFallback;
+
+__ds_ns.ConfirmDialog = __ds_scope.ConfirmDialog;
+
+__ds_ns.ERROR_KINDS = __ds_scope.ERROR_KINDS;
+
+__ds_ns.ErrorPage = __ds_scope.ErrorPage;
+
+__ds_ns.FormErrorSummary = __ds_scope.FormErrorSummary;
+
+__ds_ns.SHIPMENT_STATES = __ds_scope.SHIPMENT_STATES;
+
+__ds_ns.ShipmentStatus = __ds_scope.ShipmentStatus;
+
+__ds_ns.AiDisclosure = __ds_scope.AiDisclosure;
+
+__ds_ns.AiFeedback = __ds_scope.AiFeedback;
 
 __ds_ns.Alert = __ds_scope.Alert;
 

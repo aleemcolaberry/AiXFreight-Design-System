@@ -2,7 +2,7 @@
 
 AiXFreight is an AI-driven multimodal freight platform — land (road & rail), air and ocean, booked, tracked and rerouted by an AI copilot. Tagline from the brand kit: **"One Journey · routes inside, plane departing."** The mark is three interlocking chain links (land asphalt, priority gold, ocean blue) with a dashed gold flight path leaving the gold link.
 
-This is the design guide. Developers should start with `README.md` (quick start, repository layout, deployment). Designers start here: **`index.html`** — the design-system landing page (foundations, ten UX laws applied, guidance, all 35 live components, six templates, light/dark toggle).
+Start here: **`index.html`** — the design-system landing page (foundations, ten UX laws applied, guidance, all 38 live components, six templates, light/dark toggle).
 
 ## Sources
 
@@ -20,7 +20,7 @@ This is the design guide. Developers should start with `README.md` (quick start,
 - **Numbers over adjectives**: "−4.1 days · +$1,120 · confidence 94%" rather than "much faster". Money in mono. Middle dot `·` separates facts; `→` separates origin → destination.
 - **IDs are chunked** for memory (Miller): `AIX-48211`, `MSKU 482 119-0`.
 - **No emoji, no exclamation marks.** Mode names lower-case in prose ("ocean", "air"), capitalized in pills.
-- **AI honesty**: every AI output shows a confidence % and a cost/impact delta; actions confirm with a toast that offers Undo.
+- **AI honesty**: every AI output shows a confidence % and a cost/impact delta, a "Why this" disclosure (rationale ≤ 2 sentences, timestamped sources, limits), and a thumbs feedback control; actions confirm with a toast that offers Undo. Confidence is a mono number, never a color or badge. Six human metrics per AI surface: `guidelines/ai-ux.md`.
 - Examples: "Switch lane 2 to air" · "Port congestion at Los Angeles adds 4.2 days." · "Tracking on plan. ETA confidence 97%." · "Not in kit — this surface was not part of the provided materials."
 
 ## Visual foundations
@@ -51,16 +51,17 @@ This is the design guide. Developers should start with `README.md` (quick start,
 
 ## Components
 
-36 components authored from brand guidelines (no source inventory). Namespace `AiXFreightDesignSystem_0c3a26`. Each has `.jsx` + `.d.ts` + `.prompt.md`; each group has a `*.card.html` specimen.
+43 components authored from brand guidelines (no source inventory). Namespace `AiXFreightDesignSystem_0c3a26`. Each has `.jsx` + `.d.ts` + `.prompt.md`; each group has a `*.card.html` specimen.
 
 - `components/core/` — Button, IconButton, Badge, ModeBadge, Tag, Icon, Logo, RouteLine, ThemeToggle
 - `components/forms/` — Input, Select, Textarea, Checkbox, Radio, Switch
 - `components/navigation/` — SidebarNav, Topbar, Breadcrumb, Stepper, Pagination, DropdownMenu
-- `components/feedback/` — Alert, Progress, Skeleton, EmptyState
+- `components/feedback/` — Alert, Progress, Skeleton, EmptyState, AiDisclosure, AiFeedback
 - `components/data/` — Table, StatCard, Timeline, Avatar, Accordion
 - `components/surfaces/` — Card, Tabs, Dialog, Drawer, Toast, Tooltip
+- `components/failure/` — ErrorPage, FormErrorSummary, ConfirmDialog, AiFallback, ShipmentStatus (rules: `guidelines/failure-states.md`)
 
-**Intentional additions**: ModeBadge (the land/air/ocean/eco/AI mode code is the brand's core system), RouteLine (the brand route motif drawn from tokens), Icon (wrapper for the Lucide subset), Logo (renders the real lockup files).
+**Intentional additions**: ModeBadge (the land/air/ocean/eco/AI mode code is the brand's core system), RouteLine (the brand route motif drawn from tokens), Icon (wrapper for the Lucide subset), Logo (renders the real lockup files), AiDisclosure + AiFeedback (the transparency and response-satisfaction surfaces required by the AI UX metrics).
 
 ## Theming
 
@@ -68,19 +69,18 @@ Full rules: `guidelines/theming.md`. Switch with the `ThemeToggle` component (Li
 
 ## Guidance (prose)
 
-`guidelines/accessibility.md` · `theming.md` · `motion.md` · `layout.md` · `writing.md` · `contributing.md` — with matching specimen cards (Accessibility, Interaction, Layout, Patterns, Brand groups).
+`guidelines/accessibility.md` · `theming.md` · `motion.md` · `layout.md` · `writing.md` · `ai-ux.md` (six AI UX metrics, instrumentation, signal → investigate) · `contributing.md` — with matching specimen cards (Accessibility, Interaction, Layout, Patterns, Brand groups).
 
 ## Index
 
 - `index.html` — design-system landing page (foundations, 10 UX laws, live components, templates)
 - `styles.css` → `tokens/` `fonts.css` (Google Fonts import), `colors.css`, `typography.css`, `spacing.css`, `effects.css`, `base.css`
-- `guidelines/` — 48 specimen cards (Colors, Type, Spacing, Brand, Accessibility, Interaction, Layout, Patterns) + 5 prose docs
+- `guidelines/` — 54 specimen cards (Colors, Type, Spacing, Brand, Accessibility, Interaction, Layout, Patterns incl. AI UX metrics, AI output anatomy, Trust ≠ confidence, Failure ladder, Shipment lifecycle, AI withholds) + 7 prose docs
 - `assets/logo/` — brand marks and lockups
-- `components/{core,forms,navigation,feedback,data,surfaces}/` — 35 components with `.d.ts`, `.prompt.md`, and `*.card.html` per group
+- `components/{core,forms,navigation,feedback,data,surfaces,failure}/` — 43 components with `.d.ts`, `.prompt.md`, and `*.card.html` per group
 - `ui_kits/aixfreight-app/` — control-tower click-through (Dashboard → Shipments → Detail → New quote, AI dialog, toasts)
 - `templates/` — app-shell, landing-page, data-table-page, settings-page, pitch-deck (1920×1080, 7 slide types), mobile-tracking (390×844)
 - `README.md` — GitHub landing / developer quick start · `AUDIT.md` — heuristic audit · `CONTRIBUTING.md` · `CHANGELOG.md` · `package.json`
-- `.github/PULL_REQUEST_TEMPLATE.md` — the pull-request checklist from `CONTRIBUTING.md`
 - `tokens/tokens.json` (DTCG) · `tokens/tailwind.preset.js`
 - `thumbnail.html` — homepage tile · `SKILL.md` — agent skill entry
-- `DESIGN-GUIDE.md` — this file (was `readme.md` in the Claude Design project; renamed so it can sit next to `README.md` on case-insensitive filesystems)
+- `readme.md` — this file

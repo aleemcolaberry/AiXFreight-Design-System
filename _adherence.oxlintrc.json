@@ -18,6 +18,7 @@
             "group": [
               "components/core/**",
               "components/data/**",
+              "components/failure/**",
               "components/feedback/**",
               "components/forms/**",
               "components/navigation/**",
@@ -47,6 +48,26 @@
       {
         "selector": "JSXOpeningElement[name.name='Accordion'] > JSXAttribute > JSXIdentifier[name!=/^(?:items|multiple|defaultOpen|style|key|ref|className|style|children)$/]",
         "message": "<Accordion> doesn't accept that prop. Declared props: items, multiple, defaultOpen, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='AiDisclosureSource'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|time|href|key|ref|className|style|children)$/]",
+        "message": "<AiDisclosureSource> doesn't accept that prop. Declared props: label, time, href."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='AiFallback'] > JSXAttribute > JSXIdentifier[name!=/^(?:kind|title|body|action|secondary|onAction|onSecondary|confidence|threshold|age|delta|rule|inverse|compact|style|key|ref|className|style|children)$/]",
+        "message": "<AiFallback> doesn't accept that prop. Declared props: kind, title, body, action, secondary, onAction, onSecondary, confidence, threshold, age, delta, rule, inverse, compact, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='AiFeedback'] > JSXAttribute > JSXIdentifier[name!=/^(?:value|onChange|reasons|reason|onReason|label|thanks|inverse|size|style|key|ref|className|style|children)$/]",
+        "message": "<AiFeedback> doesn't accept that prop. Declared props: value, onChange, reasons, reason, onReason, label, thanks, inverse, size, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='AiFeedback'] > JSXAttribute[name.name='value'] > Literal[value!=/^(?:up|down)$/]",
+        "message": "<AiFeedback> value must be one of 'up' | 'down'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='AiFeedback'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|md)$/]",
+        "message": "<AiFeedback> size must be one of 'sm' | 'md'."
       },
       {
         "selector": "JSXOpeningElement[name.name='Alert'] > JSXAttribute > JSXIdentifier[name!=/^(?:tone|title|children|action|onAction|onClose|style|key|ref|className|style|children)$/]",
@@ -101,6 +122,14 @@
         "message": "<Checkbox> doesn't accept that prop. Declared props: checked, onChange, label, description, disabled, indeterminate, style."
       },
       {
+        "selector": "JSXOpeningElement[name.name='ConfirmDialog'] > JSXAttribute > JSXIdentifier[name!=/^(?:open|title|eyebrow|children|verb|cancelLabel|tone|consequences|typeToConfirm|onConfirm|onCancel|loading|inline|style|key|ref|className|style|children)$/]",
+        "message": "<ConfirmDialog> doesn't accept that prop. Declared props: open, title, eyebrow, children, verb, cancelLabel, tone, consequences, typeToConfirm, onConfirm, onCancel, loading, inline, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ConfirmDialog'] > JSXAttribute[name.name='tone'] > Literal[value!=/^(?:danger|warning)$/]",
+        "message": "<ConfirmDialog> tone must be one of 'danger' | 'warning'."
+      },
+      {
         "selector": "JSXOpeningElement[name.name='Dialog'] > JSXAttribute > JSXIdentifier[name!=/^(?:open|title|eyebrow|children|footer|onClose|width|inline|style|key|ref|className|style|children)$/]",
         "message": "<Dialog> doesn't accept that prop. Declared props: open, title, eyebrow, children, footer, onClose, width, inline, style."
       },
@@ -123,6 +152,14 @@
       {
         "selector": "JSXOpeningElement[name.name='EmptyState'] > JSXAttribute > JSXIdentifier[name!=/^(?:icon|eyebrow|title|description|action|compact|style|key|ref|className|style|children)$/]",
         "message": "<EmptyState> doesn't accept that prop. Declared props: icon, eyebrow, title, description, action, compact, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ErrorPage'] > JSXAttribute > JSXIdentifier[name!=/^(?:kind|code|title|description|action|secondary|onAction|onSecondary|reference|lastUpdated|compact|style|key|ref|className|style|children)$/]",
+        "message": "<ErrorPage> doesn't accept that prop. Declared props: kind, code, title, description, action, secondary, onAction, onSecondary, reference, lastUpdated, compact, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='FormError'] > JSXAttribute > JSXIdentifier[name!=/^(?:field|label|message|key|ref|className|style|children)$/]",
+        "message": "<FormError> doesn't accept that prop. Declared props: field, label, message."
       },
       {
         "selector": "JSXOpeningElement[name.name='Icon'] > JSXAttribute > JSXIdentifier[name!=/^(?:name|size|color|strokeWidth|style|key|ref|className|style|children)$/]",
@@ -211,6 +248,14 @@
       {
         "selector": "JSXOpeningElement[name.name='Select'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|md|lg)$/]",
         "message": "<Select> size must be one of 'sm' | 'md' | 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ShipmentStatus'] > JSXAttribute > JSXIdentifier[name!=/^(?:status|since|detail|size|style|key|ref|className|style|children)$/]",
+        "message": "<ShipmentStatus> doesn't accept that prop. Declared props: status, since, detail, size, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ShipmentStatus'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|md)$/]",
+        "message": "<ShipmentStatus> size must be one of 'sm' | 'md'."
       },
       {
         "selector": "JSXOpeningElement[name.name='SidebarNav'] > JSXAttribute > JSXIdentifier[name!=/^(?:items|value|onChange|base|footer|collapsed|style|key|ref|className|style|children)$/]",
@@ -317,6 +362,15 @@
       "Accordion": {
         "replaces": []
       },
+      "AiDisclosureSource": {
+        "replaces": []
+      },
+      "AiFallback": {
+        "replaces": []
+      },
+      "AiFeedback": {
+        "replaces": []
+      },
       "Alert": {
         "replaces": []
       },
@@ -338,6 +392,9 @@
       "Checkbox": {
         "replaces": []
       },
+      "ConfirmDialog": {
+        "replaces": []
+      },
       "Dialog": {
         "replaces": []
       },
@@ -348,6 +405,12 @@
         "replaces": []
       },
       "EmptyState": {
+        "replaces": []
+      },
+      "ErrorPage": {
+        "replaces": []
+      },
+      "FormError": {
         "replaces": []
       },
       "Icon": {
@@ -378,6 +441,9 @@
         "replaces": []
       },
       "Select": {
+        "replaces": []
+      },
+      "ShipmentStatus": {
         "replaces": []
       },
       "SidebarNav": {

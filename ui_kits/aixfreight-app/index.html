@@ -7,7 +7,7 @@
 <style>html,body,#root{height:100%}body{overflow:hidden}.aix-page{padding:28px;display:grid;gap:20px;align-content:start;grid-template-columns:minmax(0,2fr) minmax(0,1fr)}.aix-page.wide{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}.aix-stats{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}@media (max-width:1279px){.aix-page,.aix-page.wide{grid-template-columns:minmax(0,1fr)}.aix-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}</style></head><body><div id="root"></div>
 <script type="text/babel" src="Shell.jsx"></script><script type="text/babel" src="Dashboard.jsx"></script><script type="text/babel" src="Shipments.jsx"></script><script type="text/babel" src="ShipmentDetail.jsx"></script><script type="text/babel" src="NewQuote.jsx"></script>
 <script type="text/babel">
-const { Button, Dialog, Toast } = window.AiXFreightDesignSystem_0c3a26;
+const { Button, Dialog, Toast, AiDisclosure } = window.AiXFreightDesignSystem_0c3a26;
 function App(){
   const [page,setPage]=React.useState('dashboard'); const [sel,setSel]=React.useState(window.AIX_DATA.shipments[0]); const [rec,setRec]=React.useState(null); const [toast,setToast]=React.useState(null);
   const go=(p,s)=>{ if(s) setSel(s); setPage(p); };
@@ -25,7 +25,7 @@ function App(){
         {['routes','docs','settings'].includes(page)&&<div style={{padding:80,textAlign:'center',color:'var(--text-muted)'}}><p className="aix-caption">Not in kit</p><p style={{marginTop:8}}>This surface was not part of the provided materials.</p></div>}
       </div>
     </main>
-    {rec&&<Dialog eyebrow={'AI recommendation · '+rec.shipment} title={rec.title} onClose={()=>setRec(null)} footer={<><Button variant="ghost" onClick={()=>setRec(null)}>Dismiss</Button><Button icon="sparkles" onClick={apply}>Apply recommendation</Button></>}><p>{rec.body}</p><div style={{display:'flex',gap:24,marginTop:16,fontFamily:'var(--font-mono)',fontWeight:500,fontSize:14}}><span>Cost <b style={{color:'var(--color-ai-orange-600)'}}>{rec.delta}</b></span><span>Impact <b style={{color:'var(--color-eco)'}}>{rec.gain}</b></span><span>Confidence <b>{rec.confidence}%</b></span></div></Dialog>}
+    {rec&&<Dialog eyebrow={'AI recommendation · '+rec.shipment} title={rec.title} onClose={()=>setRec(null)} footer={<><Button variant="ghost" onClick={()=>setRec(null)}>Dismiss</Button><Button icon="sparkles" onClick={apply}>Apply recommendation</Button></>}><div style={{display:'flex',gap:24,fontFamily:'var(--font-mono)',fontWeight:500,fontSize:14}}><span>Cost <b style={{color:'var(--color-ai-orange-600)'}}>{rec.delta}</b></span><span>Impact <b style={{color:'var(--color-eco)'}}>{rec.gain}</b></span><span>Confidence <b>{rec.confidence}%</b></span></div><AiDisclosure defaultOpen confidence={rec.confidence} rationale={rec.body} sources={rec.sources} limits={rec.limits} style={{marginTop:16}}/></Dialog>}
     {toast&&<div style={{position:'fixed',right:24,bottom:24,zIndex:200}}><Toast {...toast} onClose={()=>setToast(null)}/></div>}
   </div>;
 }
