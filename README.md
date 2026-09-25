@@ -215,6 +215,10 @@ The skill documents workarounds for the component gaps found so far (keyboard su
 
 Two pages built by Claude Code from the skill alone, with no hand edits, live in [examples/](examples/): an [Exceptions page](examples/exceptions.html) and a [Settings page](examples/settings.html). Both are served on the live site under `/examples/`. The root `SKILL.md` is the short entry Claude Design reads; it points at the same full skill.
 
+### Case study: re-skinning a shipped build
+
+[case-studies/uat-console/](case-studies/uat-console/) documents how the skill was used to review and fix a live, framework-free product console (the AIXFreight UAT build) without touching its behaviour: every page and popup before and after, in light, dark, tablet and mobile; the measured contrast, hover and focus audit; the exact prompts given to Claude Code; and how the changes were verified against the product's own guard tests. Client identity and personal data in the screenshots are redacted because this site is public.
+
 ## Credits
 
 Brand kit: `uploads/AIXFreight-46c/` (logo option 46c, `THEME.md`). Fonts via Google Fonts (OFL). Icons: Lucide subset (ISC), inlined in `components/core/Icon.jsx`. Proprietary to AiXFreight; not licensed for reuse outside the product (`"license": "UNLICENSED"` in `package.json`).
