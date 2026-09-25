@@ -85,8 +85,10 @@
   pre.code{margin:0;padding:16px;border-radius:var(--radius-md);background:var(--surface-inverse);color:var(--text-on-inverse);font-family:var(--font-mono);font-size:12.5px;line-height:1.55;white-space:pre-wrap;overflow:auto}
   pre.code .add{color:var(--color-eco-dark,#3FC7CB)}pre.code .del{color:#FF7A5C}pre.code .cm{color:var(--text-on-inverse-muted)}
   footer{background:var(--color-navy);color:var(--text-on-inverse-muted);padding:36px 0}footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  @media (max-width:1180px){.top .title{display:none}}
   @media (max-width:1000px){.item-body,.grid2,.grid3,.steps{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
-  @media (max-width:760px){.wrap{padding:0 16px}.top nav{display:none}.compare{grid-template-columns:1fr}.hero{padding:48px 0 40px}section.block{padding:48px 0}.top .title{display:none}}
+  @media (max-width:900px){.top nav{display:none}}
+  @media (max-width:760px){.wrap{padding:0 16px}.compare{grid-template-columns:1fr}.hero{padding:48px 0 40px}section.block{padding:48px 0}}
 </style>
 </head>
 <body>
@@ -219,7 +221,13 @@
 <span class="del">- .txn-grid{display:grid;grid-template-columns:1fr 1.3fr .8fr 1.3fr 1.7fr .6fr .7fr 1.3fr;…}</span>
 <span class="add">+ .txn-grid{display:grid;column-gap:12px;grid-template-columns:1fr 1.3fr .8fr 1.3fr 1.7fr .6fr .7fr 1.3fr;…}</span>
 <span class="add">+ .txn-grid>:nth-child(3){min-width:150px}  /* Time stays one line */</span>
-<span class="add">+ .txn-sec{…position:sticky;left:0}</span></pre></div>
+<span class="add">+ .txn-sec{…position:sticky;left:0}</span>
+<span class="cm">/* second pass: inside the detail pane, two aligned lines instead of a scroll */</span>
+<span class="add">+ .detail{container-type:inline-size}
++ @container (max-width:1099px){
++   #cmp-detail-pane .txn-th.txn-grid,#cmp-detail-pane .txn-th.txn-grid+.txn-body{min-width:0}
++   #cmp-detail-pane .txn-grid{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:6px}
++ }</span></pre></div>
     <div class="card"><h3>Focus, hover, overflow</h3><pre class="code"><span class="add">+ body input:focus-visible,body select:focus-visible,
 + body textarea:focus-visible,body .xsel-trigger:focus-visible{
 +   outline:2px solid var(--teal);outline-offset:1px}</span>
